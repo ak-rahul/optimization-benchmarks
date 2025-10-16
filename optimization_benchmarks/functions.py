@@ -1,3 +1,23 @@
+"""
+Optimization Benchmark Functions
+
+This module implements classical benchmark functions for testing optimization algorithms.
+Mathematical formulations are based on established academic literature[1][2].
+
+References:
+-----------
+[1] Adorio, E. P. (2005). MVF - Multivariate Test Functions Library in C
+    for Unconstrained Global Optimization. University of the Philippines Diliman.
+[2] Surjanovic, S. & Bingham, D. (2013). Virtual Library of Simulation 
+    Experiments: Test Functions and Datasets. Simon Fraser University.
+
+All implementations in this module are original Python code written for this package.
+Mathematical formulations are not subject to copyright as they represent established
+mathematical knowledge from academic literature.
+"""
+
+import numpy as np
+
 import numpy as np
 
 def ackley(x: np.ndarray) -> float:

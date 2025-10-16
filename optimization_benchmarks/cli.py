@@ -1,6 +1,15 @@
-#!/usr/bin/env python
 """
-Command-line interface for evaluating optimization benchmark functions.
+Command-line interface for optimization-benchmarks package.
+
+Provides utilities to evaluate benchmark functions from the command line,
+supporting single evaluations, batch processing from CSV files, and 
+function introspection.
+
+Part of the optimization-benchmarks package[1].
+
+References:
+-----------
+[1] Adorio, E. P. (2005). MVF - Multivariate Test Functions Library in C.
 """
 
 import argparse
