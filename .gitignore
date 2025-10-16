@@ -39,6 +39,7 @@ env/
 htmlcov/
 coverage.xml
 .tox/
+test_install/
 
 # Distribution
 dist/
