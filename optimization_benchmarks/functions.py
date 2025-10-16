@@ -2,18 +2,35 @@
 Optimization Benchmark Functions
 
 This module implements classical benchmark functions for testing optimization algorithms.
-Mathematical formulations are based on established academic literature[1][2].
+All implementations are original Python code based on mathematical formulations from
+academic literature.
+
+Mathematical formulations are based on:
 
 References:
 -----------
-[1] Adorio, E. P. (2005). MVF - Multivariate Test Functions Library in C
-    for Unconstrained Global Optimization. University of the Philippines Diliman.
-[2] Surjanovic, S. & Bingham, D. (2013). Virtual Library of Simulation 
-    Experiments: Test Functions and Datasets. Simon Fraser University.
+[1] Adorio, E. P. (2005). MVF - Multivariate Test Functions Library in C for
+    Unconstrained Global Optimization. University of the Philippines Diliman.
+    
+[2] Surjanovic, S. & Bingham, D. (2013). Virtual Library of Simulation Experiments:
+    Test Functions and Datasets. Simon Fraser University.
+    Retrieved from: https://www.sfu.ca/~ssurjano/
 
-All implementations in this module are original Python code written for this package.
-Mathematical formulations are not subject to copyright as they represent established
-mathematical knowledge from academic literature.
+[3] Jamil, M., & Yang, X. S. (2013). A literature survey of benchmark functions for
+    global optimization problems. International Journal of Mathematical Modelling
+    and Numerical Optimisation, 4(2), 150-194.
+
+[4] Moré, J. J., Garbow, B. S., & Hillstrom, K. E. (1981). Testing Unconstrained
+    Optimization Software. ACM Transactions on Mathematical Software, 7(1), 17-41.
+
+Notes:
+------
+- Mathematical formulas are not subject to copyright as they represent established
+  mathematical knowledge from academic literature.
+- All Python implementations in this module are original code written for this package.
+- Each function includes domain constraints and global minimum information in its docstring.
+
+License: MIT
 """
 
 import numpy as np
