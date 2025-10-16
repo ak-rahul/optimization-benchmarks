@@ -10,7 +10,7 @@ readme = "README.md"
 requires-python = ">=3.8"
 license = {text = "MIT"}
 authors = [
-    {name = "Your Name", email = "your.email@example.com"}
+    {name = "AK Rahul"}
 ]
 maintainers = [
     {name = "Your Name", email = "your.email@example.com"}
@@ -63,11 +63,9 @@ docs = [
 ]
 
 [project.urls]
-Homepage = "https://github.com/yourusername/optimization-benchmarks"
-Documentation = "https://optimization-benchmarks.readthedocs.io"
+Homepage = "https://github.com/ak-rahul/optimization-benchmarks"
 Repository = "https://github.com/yourusername/optimization-benchmarks"
 "Bug Tracker" = "https://github.com/yourusername/optimization-benchmarks/issues"
-Changelog = "https://github.com/yourusername/optimization-benchmarks/blob/main/CHANGELOG.md"
 
 [project.scripts]
 optbench = "optimization_benchmarks.cli:main"
