@@ -202,11 +202,12 @@ class TestGlobalMinima:
         assert abs(sphere2(x)) < 1e-8
     
     def test_step2_minimum(self):
-        """Step2: f(0) = 0[1]."""
+        """Step2: f(x) = 6n + sum(floor(xi)) where minimum is at x=0[1]."""
         x = np.zeros(5)
         result = step2(x)
-        assert result == 0
-    
+        # For x = [0, 0, 0, 0, 0]: floor(0) = 0, so result = 6*5 + 0 = 30
+        assert result == 30
+
     def test_sum_squares_minimum(self):
         """Sum Squares: f(0) = 0[1]."""
         x = np.zeros(10)
