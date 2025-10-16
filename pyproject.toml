@@ -1,0 +1,17 @@
+[project]
+name = "optimization-benchmarks"
+version = "0.1.0"
+description = "A collection of 53 optimization benchmark functions implemented in Python"
+authors = [{name = "Your Name", email = "you@example.com"}]
+readme = "README.md"
+license = {text = "MIT"}
+requires-python = ">=3.8"
+dependencies = ["numpy"]
+
+[tool.pytest.ini_options]
+python_files = "test_*.py"
+
+[project.urls]
+Homepage = "https://github.com/yourusername/optimization-benchmarks"
+Repository = "https://github.com/yourusername/optimization-benchmarks"
+Bug Tracker = "https://github.com/yourusername/optimization-benchmarks/issues"
