@@ -5,6 +5,8 @@ Tests verify that benchmark functions return expected global minimum values
 at known optimal points. All test functions are based on formulations from
 the MVF C library[1] and academic literature.
 
+Version 0.1.1 adds tests for metadata functionality.
+
 References:
 -----------
 [1] Adorio, E. P. (2005). MVF - Multivariate Test Functions Library in C
@@ -23,7 +25,9 @@ from optimization_benchmarks import (
     rosenbrock_ext1, rosenbrock_ext2, schaffer1, schaffer2,
     schwefel1_2, schwefel2_21, schwefel2_22, schwefel2_26, schwefel3_2,
     sphere, sphere2, step, step2, stretched_v, sum_squares,
-    trecanni, trefethen4, zettl
+    trecanni, trefethen4, zettl,
+    # Metadata imports (new in v0.1.1)
+    BENCHMARK_SUITE, get_function_info, get_all_functions, get_bounds,
 )
 
 
@@ -206,8 +210,7 @@ class TestGlobalMinima:
         x = np.zeros(5)
         result = step2(x)
         # For x = [0, 0, 0, 0, 0]: floor(0) = 0, so result = 6*5 + 0 = 30
-        assert result == 30
-
+        assert result == 30  
     def test_sum_squares_minimum(self):
         """Sum Squares: f(0) = 0[1]."""
         x = np.zeros(10)
@@ -240,6 +243,85 @@ class TestFunctionProperties:
         """Rosenbrock function should be non-negative."""
         x = np.random.uniform(-5, 5, 10)
         assert rosenbrock(x) >= 0
+
+
+class TestMetadata:
+    """Test metadata functionality (new in v0.1.1)."""
+    
+    def test_benchmark_suite_exists(self):
+        """Test that BENCHMARK_SUITE exists and has functions."""
+        assert len(BENCHMARK_SUITE) > 0
+        assert len(BENCHMARK_SUITE) == 55
+    
+    def test_get_all_functions(self):
+        """Test get_all_functions returns correct list."""
+        functions = get_all_functions()
+        assert 'ackley' in functions
+        assert 'sphere' in functions
+        assert 'rosenbrock' in functions
+        assert len(functions) == 55
+    
+    def test_get_function_info(self):
+        """Test get_function_info works correctly."""
+        info = get_function_info('ackley')
+        assert 'function' in info
+        assert 'bounds' in info
+        assert 'default_dim' in info
+        assert 'known_minimum' in info
+        assert info['known_minimum'] == 0.0
+    
+    def test_get_function_info_invalid(self):
+        """Test get_function_info raises error for invalid function."""
+        with pytest.raises(ValueError):
+            get_function_info('nonexistent_function')
+    
+    def test_get_bounds_default_dim(self):
+        """Test get_bounds returns correct bounds with default dimension."""
+        bounds = get_bounds('ackley')
+        assert len(bounds) == 10  # default_dim for ackley
+        assert all(b == (-30, 30) for b in bounds)
+    
+    def test_get_bounds_custom_dim(self):
+        """Test get_bounds returns correct bounds with custom dimension."""
+        bounds = get_bounds('sphere', dim=5)
+        assert len(bounds) == 5
+        assert all(b == (-100, 100) for b in bounds)
+    
+    def test_get_bounds_specific(self):
+        """Test get_bounds for function with specific bounds."""
+        bounds = get_bounds('branin')
+        assert len(bounds) == 2
+        assert bounds[0] == (-5, 10)
+        assert bounds[1] == (0, 15)
+    
+    def test_metadata_completeness(self):
+        """Test that all metadata has required fields."""
+        required_fields = ['function', 'bounds', 'default_dim', 'known_minimum', 'optimal_point']
+        
+        for name, meta in BENCHMARK_SUITE.items():
+            for field in required_fields:
+                assert field in meta, f"Function {name} missing field {field}"
+    
+    def test_metadata_function_callable(self):
+        """Test that function in metadata is callable."""
+        for name, meta in BENCHMARK_SUITE.items():
+            assert callable(meta['function']), f"Function {name} is not callable"
+    
+    def test_metadata_known_minimum_at_optimum(self):
+        """Test that functions achieve known minimum at optimal point."""
+        test_cases = [
+            ('ackley', np.zeros(10), 0.0),
+            ('sphere', np.zeros(10), 0.0),
+            ('beale', np.array([3.0, 0.5]), 0.0),
+            ('booth', np.array([1.0, 3.0]), 0.0),
+        ]
+        
+        for name, x, expected_min in test_cases:
+            meta = BENCHMARK_SUITE[name]
+            func = meta['function']
+            result = func(x)
+            assert abs(result - expected_min) < 1e-6, \
+                f"{name}: expected {expected_min}, got {result}"
 
 
 if __name__ == "__main__":

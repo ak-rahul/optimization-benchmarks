@@ -77,6 +77,92 @@ print(f"{name}: f(x*) = {best_f}")
 
 ---
 
+## 🎯 Using Benchmark Metadata (New in v0.1.1)
+
+Version 0.1.1 introduces comprehensive metadata for all 55 functions, eliminating the need to manually specify bounds and known minima:
+
+```
+from optimization_benchmarks import BENCHMARK_SUITE, get_function_info
+import numpy as np
+```
+
+### Get all available functions
+```
+from optimization_benchmarks import get_all_functions
+print(f"Total functions: {len(get_all_functions())}")  # 55
+```
+
+### Get metadata for a specific function
+```
+info = get_function_info('ackley')
+func = info['function']
+bounds = info['bounds'] * info['default_dim']  # 10D by default
+known_min = info['known_minimum']
+```
+
+### Test at known minimum
+```
+x = np.zeros(info['default_dim'])
+result = func(x)
+print(f"Ackley(0) = {result:.6f}, Expected: {known_min}")
+```
+
+### Simple Benchmarking with Metadata
+
+```
+from optimization_benchmarks import BENCHMARK_SUITE
+import numpy as np
+
+def simple_random_search(func, bounds, n_iter=1000):
+    """Simple random search optimizer."""
+    best_x = None
+    best_cost = float('inf')
+    
+    for _ in range(n_iter):
+        x = np.array([np.random.uniform(b, b) for b in bounds])
+        cost = func(x)
+        if cost < best_cost:
+            best_cost = cost
+            best_x = x
+    
+    return best_x, best_cost
+```
+
+### Benchmark on all functions - no manual bounds needed!
+```
+for name, meta in BENCHMARK_SUITE.items():
+    func = meta['function']
+    bounds = meta['bounds'] * meta['default_dim']
+    known_min = meta['known_minimum']
+    
+    best_x, best_cost = simple_random_search(func, bounds)
+    error = abs(best_cost - known_min)
+    
+    print(f"{name:20s} | Found: {best_cost:12.6f} | "
+          f"Expected: {known_min:12.6f} | Error: {error:10.6f}")
+```
+
+### Metadata Helper Functions
+
+| Function | Description |
+|----------|-------------|
+| `BENCHMARK_SUITE` | Dictionary with all 55 functions and metadata |
+| `get_all_functions()` | Returns list of all function names |
+| `get_function_info(name)` | Returns metadata for specific function |
+| `get_bounds(name, dim=None)` | Returns bounds for given dimension |
+| `get_function_list()` | Returns formatted string with all functions |
+
+### Metadata Fields
+
+Each entry in `BENCHMARK_SUITE` contains:
+- **`function`**: The callable function
+- **`bounds`**: List of (min, max) tuples for each dimension
+- **`default_dim`**: Recommended test dimension
+- **`known_minimum`**: Known global minimum value
+- **`optimal_point`**: Location(s) of the global minimum
+
+---
+
 
 ## 🎮 Command-Line Interface
 
