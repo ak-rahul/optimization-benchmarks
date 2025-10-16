@@ -25,7 +25,7 @@ pip install optimization-benchmarks
 ```
 ### From Source
 ```
-git clone https://github.com/yourusername/optimization-benchmarks.git
+git clone https://github.com/ak-rahul/optimization-benchmarks.git
 cd optimization-benchmarks
 pip install -e .
 ```
