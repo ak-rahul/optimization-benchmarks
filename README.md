@@ -163,6 +163,560 @@ Each entry in `BENCHMARK_SUITE` contains:
 
 ---
 
+## 🎨 Visualization Features (New in v0.2.0)
+
+### Installation with Visualization
+
+Install with visualization support
+```
+pip install optimization-benchmarks[viz]
+```
+
+Or install all optional features
+```
+pip install optimization-benchmarks[all]
+```
+
+### 2D Contour Plots
+```
+from optimization_benchmarks.visualization import plot_function_2d
+import matplotlib.pyplot as plt
+```
+Create 2D contour plot
+```
+fig = plot_function_2d('ackley', show_optimum=True, resolution=100)
+plt.savefig('ackley_2d.png')
+plt.show()
+```
+
+Custom bounds
+```
+fig = plot_function_2d('sphere', bounds=[(-10, 10), (-10, 10)])
+plt.show()
+```
+
+### 3D Surface Plots
+
+```
+from optimization_benchmarks.visualization import plot_function_3d
+```
+
+Create 3D surface plot
+```
+fig = plot_function_3d('rastrigin', resolution=50, elevation=30, azimuth=45)
+plt.show()
+```
+
+Different colormap
+```
+fig = plot_function_3d('griewank', cmap='plasma')
+plt.show()
+```
+
+### Convergence Visualization
+
+```
+from optimization_benchmarks.visualization import plot_convergence
+```
+
+Simple convergence plot
+```
+history = [100, 50, 25, 10, 5, 1, 0.5, 0.1, 0.01]
+fig = plot_convergence(history, function_name='sphere', known_minimum=0.0)
+plt.show()
+```
+
+With logarithmic scale
+```
+fig = plot_convergence(history, log_scale=True)
+plt.show()
+```
+
+With multiple series (best and current)
+```
+history_dict = {
+'best': [10, 5, 2, 1, 0.5, 0.1],
+'current': [10, 7, 3, 2, 1, 0.5],
+'iterations': range(6)
+}
+fig = plot_convergence(history_dict, function_name='ackley', known_minimum=0.0)
+plt.show()
+```
+
+### Optimization Trajectory
+
+```
+from optimization_benchmarks.visualization import plot_trajectory_2d
+import numpy as np
+```
+
+Your optimization path (must be 2D)
+```
+trajectory = np.array([
+[5.0, 5.0], # Starting point
+[3.0, 3.0],
+[1.0, 1.0],
+[0.1, 0.1],
+[0.0, 0.0] # End point
+])
+
+fig = plot_trajectory_2d('sphere', trajectory)
+plt.show()
+```
+
+### Algorithm Comparison
+```
+from optimization_benchmarks.visualization import plot_algorithm_comparison
+```
+
+Results from multiple algorithms
+```
+results = {
+'Simulated Annealing': {
+'sphere': {'error': 0.001, 'time': 1.2},
+'ackley': {'error': 0.01, 'time': 1.5},
+'rastrigin': {'error': 0.1, 'time': 2.0}
+},
+'Genetic Algorithm': {
+'sphere': {'error': 0.01, 'time': 0.8},
+'ackley': {'error': 0.05, 'time': 1.0},
+'rastrigin': {'error': 0.5, 'time': 1.5}
+}
+}
+```
+
+Compare by error
+```
+fig = plot_algorithm_comparison(results, metric='error')
+plt.show()
+```
+
+Compare by time
+```
+fig = plot_algorithm_comparison(results, metric='time')
+plt.show()
+```
+
+### Benchmark Summary Dashboard
+```
+from optimization_benchmarks.visualization import plot_benchmark_summary
+```
+
+Your benchmark results
+```
+results = [
+{'function': 'sphere', 'error': 0.001, 'time': 1.0},
+{'function': 'ackley', 'error': 0.01, 'time': 1.5},
+{'function': 'rastrigin', 'error': 0.1, 'time': 2.0},
+{'function': 'rosenbrock', 'error': 1.0, 'time': 2.5},
+{'function': 'griewank', 'error': 0.05, 'time': 1.8}
+]
+```
+
+Creates 4-panel summary: error bars, time bars, error distribution, success rates
+```
+fig = plot_benchmark_summary(results)
+plt.savefig('summary.png', dpi=300)
+plt.show()
+```
+
+---
+
+## 🔬 Systematic Benchmarking (New in v0.2.0)
+
+### Quick Benchmarking
+```
+from optimization_benchmarks.benchmarking import quick_benchmark
+```
+
+Your optimization algorithm
+```
+def my_optimizer(func, bounds, max_iter=1000):
+"""Your optimization algorithm."""
+# ... your implementation ...
+return best_x, best_cost
+```
+
+Quick test on common functions
+```
+results = quick_benchmark(
+my_optimizer,
+function_names=['sphere', 'ackley', 'rastrigin'],
+n_runs=5,
+max_iter=1000
+)
+```
+
+### Detailed Benchmarking with BenchmarkRunner
+```
+from optimization_benchmarks.benchmarking import BenchmarkRunner
+```
+
+Create benchmark runner
+```
+runner = BenchmarkRunner(
+algorithm=my_optimizer,
+algorithm_name='MyOptimizer',
+n_runs=10, # 10 independent runs per function
+seed=42, # For reproducibility
+verbose=True # Show progress
+)
+```
+
+Run on all 55+ functions
+```
+results = runner.run_suite(max_iter=5000)
+```
+
+Or test specific functions
+```
+results = runner.run_suite(
+functions=['sphere', 'ackley', 'rastrigin', 'rosenbrock', 'griewank'],
+max_iter=2000
+)
+```
+
+Custom dimensions
+```
+results = runner.run_suite(
+functions=['sphere', 'ackley'],
+dimensions={'sphere': 10, 'ackley': 5},
+max_iter=3000
+)
+```
+
+Save results
+```
+runner.save_results('results.csv', format='csv')
+runner.save_results('results.json', format='json')
+```
+
+Get summary statistics
+```
+stats = runner.get_summary_stats()
+print(f"Success rate: {stats['success_rate']*100:.1f}%")
+print(f"Mean error: {stats['error_mean']:.6f}")
+print(f"Total time: {stats['time_total']:.2f}s")
+```
+
+### Testing Multiple Algorithms
+```
+from optimization_benchmarks.benchmarking import BenchmarkRunner
+```
+```
+algorithms = {
+'SimulatedAnnealing': simulated_annealing,
+'GeneticAlgorithm': genetic_algorithm,
+'ParticleSwarm': particle_swarm
+}
+
+test_functions = ['sphere', 'ackley', 'rastrigin', 'rosenbrock']
+all_results = {}
+
+for name, algo in algorithms.items():
+print(f"\nTesting {name}...")
+runner = BenchmarkRunner(algo, algorithm_name=name, n_runs=10)
+results = runner.run_suite(functions=test_functions)
+all_results[name] = results
+runner.save_results(f'{name}_results.csv')
+```
+
+Compare algorithms
+```
+from optimization_benchmarks.visualization import plot_algorithm_comparison
+fig = plot_algorithm_comparison(all_results, metric='error')
+plt.savefig('algorithm_comparison.png')
+```
+
+---
+
+## 🛠️ Utility Functions (New in v0.2.0)
+
+### Bounds Normalization
+```
+from optimization_benchmarks.utils import normalize_bounds
+```
+Replicate single bound to all dimensions
+```
+bounds = normalize_bounds([(-5, 5)], dim=10)
+```
+Result: [(-5, 5), (-5, 5), ..., (-5, 5)] # 10 times
+
+Different bounds per dimension
+```
+bounds = normalize_bounds([(-5, 5), (-10, 10), (0, 1)], dim=3)
+```
+
+Result: [(-5, 5), (-10, 10), (0, 1)]
+
+From simple tuple,
+```
+bounds = normalize_bounds((-5, 5), dim=5)
+```
+
+Result: [(-5, 5)] * 5
+
+
+### Random Point Generation
+
+```
+from optimization_benchmarks.utils import generate_random_point
+
+bounds = [(-5, 5), (-10, 10)]
+```
+
+Uniform random
+```
+point = generate_random_point(bounds, method='uniform')
+```
+
+Normal distribution (centered, 99.7% within bounds)
+```
+point = generate_random_point(bounds, method='normal')
+```
+
+Center-biased (beta distribution)
+```
+point = generate_random_point(bounds, method='center_biased')
+```
+
+### Bounds Checking and Clipping
+```
+from optimization_benchmarks.utils import check_bounds, clip_to_bounds
+
+bounds = [(-5, 5), (-5, 5)]
+point = np.array([10, -10])
+```
+
+Check if within bounds
+```
+is_valid = check_bounds(point, bounds) # False
+```
+
+Clip to bounds
+```
+clipped = clip_to_bounds(point, bounds)
+```
+
+Result: [5, -5]
+
+### Coordinate Transformations
+
+```
+from optimization_benchmarks.utils import scale_to_unit, scale_from_unit
+
+bounds = [(-10, 10), (-5, 5)]
+point = np.array()
+```
+
+Scale to unit hypercube ^n​
+```
+unit_point = scale_to_unit(point, bounds)
+```
+
+Result: [0.5, 0.5]
+
+Scale back to original bounds
+```
+original = scale_from_unit(unit_point, bounds)
+```
+
+### Bounds Information
+```
+from optimization_benchmarks.utils import (
+get_bounds_range,
+get_bounds_center,
+generate_grid_points
+)
+
+bounds = [(-5, 5), (-10, 10)]
+```
+
+Get range of each dimension
+```
+ranges = get_bounds_range(bounds)
+```
+
+Get center point
+```
+center = get_bounds_center(bounds)
+```
+
+Generate grid of points
+```
+grid = generate_grid_points(bounds, points_per_dim=10)
+```
+
+### Distance to Optimum
+```
+from optimization_benchmarks.utils import calculate_distance_to_optimum
+
+current_point = np.array()​
+optimal_point = np.array()
+```
+Euclidean distance
+```
+distance = calculate_distance_to_optimum(current_point, optimal_point)
+
+Result: 1.4142135623730951
+Multiple optima (returns minimum distance)
+optimal_points = [np.array(), np.array(), np.array()]​​
+distance = calculate_distance_to_optimum(current_point, optimal_points)
+```
+
+Result: 0.0
+
+
+---
+
+## 💡 Complete Usage Example
+```
+import numpy as np
+import matplotlib.pyplot as plt
+from optimization_benchmarks import (
+BENCHMARK_SUITE,
+BenchmarkRunner,
+normalize_bounds,
+generate_random_point,
+clip_to_bounds,
+plot_function_2d,
+plot_convergence,
+plot_trajectory_2d,
+plot_benchmark_summary
+)
+```
+
+1. Define your optimizer with history tracking
+
+```
+def my_optimizer(func, bounds, max_iter=1000):
+bounds = normalize_bounds(bounds, len(bounds))
+```
+
+# Initialize
+```
+current = generate_random_point(bounds)
+current_cost = func(current)
+best = current.copy()
+best_cost = current_cost
+
+history = [best_cost]
+trajectory = [best.copy()]
+```
+
+# Optimization loop
+```
+for i in range(max_iter):
+    # Generate neighbor
+    neighbor = current + np.random.randn(len(bounds)) * 0.1
+    neighbor = clip_to_bounds(neighbor, bounds)
+    cost = func(neighbor)
+    
+    # Update if better
+    if cost < current_cost:
+        current = neighbor
+        current_cost = cost
+        if cost < best_cost:
+            best = current.copy()
+            best_cost = cost
+            trajectory.append(best.copy())
+    
+    history.append(best_cost)
+
+return best, best_cost
+```
+
+2. Visualize a test function
+```
+plot_function_2d('ackley', show_optimum=True)
+plt.savefig('test_function.png')
+plt.close()
+```
+
+3. Run benchmark suite
+```
+runner = BenchmarkRunner(
+my_optimizer,
+algorithm_name='MyOptimizer',
+n_runs=10,
+seed=42
+)
+
+results = runner.run_suite(
+functions=['sphere', 'ackley', 'rastrigin', 'rosenbrock', 'griewank'],
+max_iter=5000
+)
+```
+
+4. Save and visualize results
+```
+runner.save_results('my_results.csv')
+plot_benchmark_summary(results)
+plt.savefig('benchmark_summary.png')
+plt.show()
+```
+
+5. Print statistics
+```
+stats = runner.get_summary_stats()
+print(f"\nResults:")
+print(f" Success rate: {stats['success_rate']*100:.1f}%")
+print(f" Mean error: {stats['error_mean']:.6f}")
+print(f" Total time: {stats['time_total']:.2f}s")
+```
+
+
+---
+
+## 📊 Supported Functions
+
+The package supports **55+ benchmark functions** including:
+
+### Multimodal Functions
+`ackley`, `rastrigin`, `rastrigin2`, `griewank`, `levy`, `michalewicz`, `schwefel2_26`, `katsuura`, `langerman`
+
+### Unimodal Functions
+`sphere`, `sphere2`, `rosenbrock`, `rosenbrock_ext1`, `rosenbrock_ext2`, `sum_squares`, `hyperellipsoid`, `schwefel1_2`, `schwefel2_21`, `schwefel2_22`, `schwefel3_2`
+
+### 2D Test Functions
+`beale`, `booth`, `matyas`, `himmelblau`, `easom`, `goldstein_price`, `branin`, `branin2`, `camel3`, `camel6`, `bohachevsky1`, `bohachevsky2`, `schaffer1`, `schaffer2`, `leon`, `trecanni`, `mccormick`, `eggholder`, `chichinadze`, `hosaki`, `zettl`
+
+### Special Functions
+`box_betts`, `colville`, `corana`, `kowalik`, `exp2`, `gear`, `holzman1`, `holzman2`, `stretched_v`, `trefethen4`, `step`, `step2`, `maxmod`, `multimod`
+
+**All functions work automatically with the new utilities!**
+
+---
+
+## 🔧 Installation & Requirements
+
+Basic (only numpy required)
+```
+pip install optimization-benchmarks
+```
+
+With visualization
+```
+pip install optimization-benchmarks[viz]
+```
+
+Development
+```
+pip install optimization-benchmarks[dev]
+```
+
+Everything
+```
+pip install optimization-benchmarks[all]
+```
+
+
+### Requirements
+- **Core**: Python 3.8+, NumPy ≥1.20.0
+- **Visualization**: matplotlib ≥3.3.0 (optional)
+- **Development**: pytest, pytest-cov, black, flake8, mypy, isort (optional)
+
+---
 
 ## 🎮 Command-Line Interface
 
@@ -191,39 +745,6 @@ optbench --function sphere --input points.csv --output results.json
 
 ---
 
-
-## 📚 Available Functions
-
-### Multimodal Functions
-- `ackley` - Multiple local minima with deep global minimum
-- `rastrigin` - Highly multimodal with regular structure
-- `griewank` - Multimodal with product term
-- `schwefel2_26` - Deceptive with distant global minimum
-- `levy` - Multimodal with sharp global minimum
-- `michalewicz` - Steep ridges and valleys
-
-### Unimodal Functions
-- `sphere` - Simple convex quadratic
-- `rosenbrock` - Narrow curved valley
-- `sum_squares` - Weighted sphere function
-- `hyperellipsoid` - Axis-parallel ellipsoid
-
-### 2D Test Functions
-- `beale` - Narrow valley
-- `booth` - Simple quadratic
-- `matyas` - Plate-like surface
-- `himmelblau` - Four identical local minima
-- `goldstein_price` - Multiple local minima
-- `easom` - Flat surface with narrow peak
-
-### Special Functions
-- `branin` - Three global minima
-- `camel3` - Three-hump camel function
-- `camel6` - Six-hump camel function
-- `kowalik` - Parameter estimation problem
-- `langerman` - Multimodal test function
-
-**And 30+ more functions!** 
 
 ## 🔬 Function Properties
 

@@ -26,123 +26,113 @@ References:
 License: MIT
 """
 
-from .functions import (
-    ackley, beale, bohachevsky1, bohachevsky2, booth, box_betts,
-    branin, branin2, camel3, camel6, chichinadze, colville,
-    corana, easom, eggholder, exp2, fraudenstein_roth, gear,
-    goldstein_price, griewank, himmelblau, holzman1, holzman2,
-    hosaki, hyperellipsoid, katsuura, kowalik, langerman,
-    lennard_jones, leon, levy, maxmod, matyas, mccormick,
-    michalewicz, multimod, rastrigin, rastrigin2, rosenbrock,
-    rosenbrock_ext1, rosenbrock_ext2, schaffer1, schaffer2,
-    schwefel1_2, schwefel2_21, schwefel2_22, schwefel2_26,
-    schwefel3_2, sphere, sphere2, step, step2, stretched_v,
-    sum_squares, trecanni, trefethen4, watson, xor, zettl,
-    zimmerman,
-)
-
-# Import metadata module (new in v0.1.1)
-from .metadata import (
-    BENCHMARK_SUITE,
-    get_function_info,
-    get_all_functions,
-    get_bounds,
-    get_function_list,
-)
-
-__version__ = "0.1.1"
-__author__ = "Your Name"
+__version__ = "0.2.0"
+__author__ = "AK Rahul"
 __license__ = "MIT"
 
 
-class BenchmarkFunction:
-    """
-    Wrapper class for optimization benchmark functions.
-    
-    Each instance wraps a Python function that takes a NumPy array
-    and returns a float.
-    """
-    def __init__(self, func):
-        self._func = func
-        self.name = func.__name__
-        self.__doc__ = func.__doc__
+# Import all benchmark functions
+from .functions import (
+    ackley, rastrigin, rastrigin2, griewank, levy, michalewicz, schwefel2_26,
+    sphere, sphere2, rosenbrock, rosenbrock_ext1, rosenbrock_ext2, sum_squares,
+    hyperellipsoid, schwefel1_2, schwefel2_21, schwefel2_22, schwefel3_2,
+    step, step2, maxmod, multimod, katsuura,
+    beale, booth, matyas, himmelblau, easom, goldstein_price,
+    branin, branin2, camel3, camel6, bohachevsky1, bohachevsky2,
+    schaffer1, schaffer2, leon, trecanni, mccormick, eggholder,
+    chichinadze, hosaki, zettl, holzman1, holzman2, langerman,
+    stretched_v, trefethen4, box_betts, colville, corana, kowalik, exp2, gear
+)
 
-    def __call__(self, x):
-        return self._func(x)
+# Import metadata utilities
+from .metadata import (
+    BENCHMARK_SUITE,
+    get_all_functions,
+    get_function_info,
+    get_bounds,
+    get_function_list
+)
 
-    def __repr__(self):
-        return f"<BenchmarkFunction: {self.name}>"
+# Import NEW utilities (v0.2.0)
+from .utils import (
+    normalize_bounds,
+    generate_random_point,
+    check_bounds,
+    scale_to_unit,
+    scale_from_unit,
+    clip_to_bounds,
+    get_bounds_range,
+    get_bounds_center,
+    generate_grid_points,
+    calculate_distance_to_optimum
+)
 
+# Import NEW benchmarking tools (v0.2.0)
+from .benchmarking import (
+    BenchmarkRunner,
+    quick_benchmark
+)
 
-# Populate the global registry
-FUNCTIONS = {
-    fn.__name__.lower(): BenchmarkFunction(fn) for fn in (
-        ackley, beale, bohachevsky1, bohachevsky2, booth, box_betts,
-        branin, branin2, camel3, camel6, chichinadze, colville,
-        corana, easom, eggholder, exp2, fraudenstein_roth, gear,
-        goldstein_price, griewank, himmelblau, holzman1, holzman2,
-        hosaki, hyperellipsoid, katsuura, kowalik, langerman,
-        lennard_jones, leon, levy, maxmod, matyas, mccormick,
-        michalewicz, multimod, rastrigin, rastrigin2, rosenbrock,
-        rosenbrock_ext1, rosenbrock_ext2, schaffer1, schaffer2,
-        schwefel1_2, schwefel2_21, schwefel2_22, schwefel2_26,
-        schwefel3_2, sphere, sphere2, step, step2, stretched_v,
-        sum_squares, trecanni, trefethen4, watson, xor, zettl,
-        zimmerman
+# Conditional import of visualization (requires matplotlib)
+try:
+    from .visualization import (
+        plot_function_2d,
+        plot_function_3d,
+        plot_convergence,
+        plot_trajectory_2d,
+        plot_algorithm_comparison,
+        plot_benchmark_summary
     )
-}
-
-
-def get_function(name: str) -> BenchmarkFunction:
-    """
-    Retrieve a benchmark function by name (case-insensitive).
-    
-    Parameters
-    ----------
-    name : str
-        Function name (e.g., 'ackley', 'rosenbrock')
-    
-    Returns
-    -------
-    BenchmarkFunction
-        Wrapped benchmark function
-    
-    Raises
-    ------
-    KeyError
-        If function name not found
-    """
-    key = name.lower()
-    if key not in FUNCTIONS:
-        raise KeyError(f"No benchmark function named '{name}'.")
-    return FUNCTIONS[key]
-
+    __visualization_available__ = True
+except ImportError:
+    __visualization_available__ = False
 
 __all__ = [
-    # All benchmark functions
-    "ackley", "beale", "bohachevsky1", "bohachevsky2", "booth",
-    "box_betts", "branin", "branin2", "camel3", "camel6",
-    "chichinadze", "colville", "corana", "easom", "eggholder",
-    "exp2", "fraudenstein_roth", "gear", "goldstein_price", "griewank",
-    "himmelblau", "holzman1", "holzman2", "hosaki", "hyperellipsoid",
-    "katsuura", "kowalik", "langerman", "lennard_jones", "leon",
-    "levy", "maxmod", "matyas", "mccormick", "michalewicz",
-    "multimod", "rastrigin", "rastrigin2", "rosenbrock",
-    "rosenbrock_ext1", "rosenbrock_ext2", "schaffer1", "schaffer2",
-    "schwefel1_2", "schwefel2_21", "schwefel2_22", "schwefel2_26",
-    "schwefel3_2", "sphere", "sphere2", "step", "step2",
-    "stretched_v", "sum_squares", "trecanni", "trefethen4", "watson",
-    "xor", "zettl", "zimmerman",
+    # Version info
+    '__version__',
     
-    # Utility classes and functions
-    "get_function", 
-    "BenchmarkFunction",
-    "FUNCTIONS",
+    # Benchmark functions
+    'ackley', 'rastrigin', 'rastrigin2', 'griewank', 'levy', 'michalewicz', 'schwefel2_26',
+    'sphere', 'sphere2', 'rosenbrock', 'rosenbrock_ext1', 'rosenbrock_ext2', 'sum_squares',
+    'hyperellipsoid', 'schwefel1_2', 'schwefel2_21', 'schwefel2_22', 'schwefel3_2',
+    'step', 'step2', 'maxmod', 'multimod', 'katsuura',
+    'beale', 'booth', 'matyas', 'himmelblau', 'easom', 'goldstein_price',
+    'branin', 'branin2', 'camel3', 'camel6', 'bohachevsky1', 'bohachevsky2',
+    'schaffer1', 'schaffer2', 'leon', 'trecanni', 'mccormick', 'eggholder',
+    'chichinadze', 'hosaki', 'zettl', 'holzman1', 'holzman2', 'langerman',
+    'stretched_v', 'trefethen4', 'box_betts', 'colville', 'corana', 'kowalik', 'exp2', 'gear',
     
-    # Metadata exports (new in v0.1.1)
-    "BENCHMARK_SUITE",
-    "get_function_info",
-    "get_all_functions",
-    "get_bounds",
-    "get_function_list",
+    # Metadata
+    'BENCHMARK_SUITE',
+    'get_all_functions',
+    'get_function_info',
+    'get_bounds',
+    'get_function_list',
+    
+    # Utilities (NEW in v0.2.0)
+    'normalize_bounds',
+    'generate_random_point',
+    'check_bounds',
+    'scale_to_unit',
+    'scale_from_unit',
+    'clip_to_bounds',
+    'get_bounds_range',
+    'get_bounds_center',
+    'generate_grid_points',
+    'calculate_distance_to_optimum',
+    
+    # Benchmarking (NEW in v0.2.0)
+    'BenchmarkRunner',
+    'quick_benchmark',
 ]
+
+# Add visualization to __all__ if available
+if __visualization_available__:
+    __all__.extend([
+        'plot_function_2d',
+        'plot_function_3d',
+        'plot_convergence',
+        'plot_trajectory_2d',
+        'plot_algorithm_comparison',
+        'plot_benchmark_summary',
+    ])
