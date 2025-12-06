@@ -1,9 +1,10 @@
 
-## **optimization-benchmarks**
+# optimization-benchmarks
 
-[![PyPI version](https://badge.fury.io/py/optimization-benchmarks.svg)](https://pypi.org/project/optimization-benchmarks/)
-[![Python 3.8+](https://img.shields.io/badge/python-3.8+-blue.svg)](https://www.python.org/downloads/)
-[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+[![PyPI version](https://img.shields.io/pypi/v/optimization-benchmarks)](https://pypi.org/project/optimization-benchmarks/)
+[![Python](https://img.shields.io/pypi/pyversions/optimization-benchmarks)](https://pypi.org/project/optimization-benchmarks/)
+[![Downloads](https://pepy.tech/badge/optimization-benchmarks)](https://pepy.tech/project/optimization-benchmarks)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://github.com/ak-rahul/optimization-benchmarks/blob/main/LICENSE.md)
 
 A comprehensive Python package providing 50+ classical mathematical benchmark functions for testing and evaluating optimization algorithms.
 
