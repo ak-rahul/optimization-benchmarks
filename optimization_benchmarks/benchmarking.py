@@ -5,7 +5,8 @@ This module provides tools for systematically testing optimization algorithms
 across multiple benchmark functions, tracking performance metrics, and
 generating comprehensive reports.
 
-Part of optimization-benchmarks package v0.2.0
+Part of optimization-benchmarks package v0.3.0
+
 License: MIT
 """
 
@@ -16,6 +17,13 @@ import json
 from typing import Callable, Optional, List, Dict, Any, Tuple, Union
 from datetime import datetime
 from pathlib import Path
+
+# NEW: tqdm for progress bars
+try:
+    from tqdm import tqdm
+    TQDM_AVAILABLE = True
+except ImportError:
+    TQDM_AVAILABLE = False
 
 from .metadata import BENCHMARK_SUITE, get_function_info, get_all_functions
 from .utils import normalize_bounds, calculate_distance_to_optimum
@@ -41,18 +49,20 @@ class BenchmarkRunner:
         Random seed for reproducibility
     verbose : bool, default=True
         Whether to print progress information
-        
+    show_progress : bool, default=True
+        Whether to show progress bars (requires tqdm)
+    
     Attributes
     ----------
     results : list
         List of result dictionaries for each test
-        
+    
     Examples
     --------
     >>> def my_optimizer(func, bounds, max_iter=1000):
     ...     # Your optimization code
     ...     return best_x, best_cost
-    >>> 
+    >>>
     >>> runner = BenchmarkRunner(my_optimizer, algorithm_name='MyAlgo', n_runs=10)
     >>> results = runner.run_suite(functions=['sphere', 'ackley'])
     >>> runner.save_results('results.csv')
@@ -64,13 +74,15 @@ class BenchmarkRunner:
         algorithm_name: Optional[str] = None,
         n_runs: int = 1,
         seed: Optional[int] = None,
-        verbose: bool = True
+        verbose: bool = True,
+        show_progress: bool = True  # NEW parameter
     ):
         self.algorithm = algorithm
         self.algorithm_name = algorithm_name or 'UnnamedAlgorithm'
         self.n_runs = n_runs
         self.seed = seed
         self.verbose = verbose
+        self.show_progress = show_progress and TQDM_AVAILABLE  # Only if tqdm available
         self.results = []
         
         if seed is not None:
@@ -93,7 +105,7 @@ class BenchmarkRunner:
             Dimension to use (if None, uses default from metadata)
         **algorithm_kwargs
             Additional arguments passed to the algorithm
-            
+        
         Returns
         -------
         dict
@@ -134,7 +146,7 @@ class BenchmarkRunner:
             else:
                 status = 'success'
                 success = True
-            
+                
         except Exception as e:
             elapsed = time.time() - start_time
             return {
@@ -197,7 +209,7 @@ class BenchmarkRunner:
             Custom dimensions per function {function_name: dim}
         **algorithm_kwargs
             Additional arguments passed to the algorithm
-            
+        
         Returns
         -------
         list of dict
@@ -220,12 +232,32 @@ class BenchmarkRunner:
         
         all_results = []
         
-        for func_name in functions:
+        # NEW: Wrap functions iterator with tqdm if enabled
+        if self.show_progress:
+            func_iterator = tqdm(functions, desc="Benchmarking", unit="func")
+        else:
+            func_iterator = functions
+        
+        for func_name in func_iterator:
             dim = dimensions.get(func_name, None)
+            
+            # Update progress bar description
+            if self.show_progress:
+                func_iterator.set_description(f"Testing {func_name:<15}")
             
             # Multiple runs
             run_results = []
-            for run in range(self.n_runs):
+            
+            # NEW: Wrap runs with tqdm if enabled
+            if self.show_progress:
+                run_iterator = tqdm(range(self.n_runs), 
+                                  desc=f"  Runs for {func_name}", 
+                                  leave=False, 
+                                  unit="run")
+            else:
+                run_iterator = range(self.n_runs)
+            
+            for run in run_iterator:
                 result = self.run_single(func_name, dim, **algorithm_kwargs)
                 result['run'] = run + 1
                 run_results.append(result)
@@ -265,7 +297,6 @@ class BenchmarkRunner:
                           f"{agg_result['known_minimum']:12.6f} | "
                           f"{agg_result['error_mean']:12.6f} | "
                           f"{agg_result['time_mean']:6.2f}s {marker}")
-                
             else:
                 agg_result = {
                     'function': func_name,
@@ -299,7 +330,6 @@ class BenchmarkRunner:
         if successful:
             total_functions = len(results)
             n_successful = len(successful)
-            
             errors = [r['error_mean'] for r in successful]
             times = [r['time_mean'] for r in successful]
             
@@ -317,12 +347,14 @@ class BenchmarkRunner:
                   f"({converged_01/n_successful*100:.1f}%)")
             print(f"Converged (error < 0.01): {converged_001}/{n_successful} "
                   f"({converged_001/n_successful*100:.1f}%)")
+            
             print(f"\nError statistics:")
             print(f"  Mean: {np.mean(errors):.6f}")
             print(f"  Median: {np.median(errors):.6f}")
             print(f"  Std: {np.std(errors):.6f}")
             print(f"  Min: {np.min(errors):.6f}")
             print(f"  Max: {np.max(errors):.6f}")
+            
             print(f"\nTime statistics:")
             print(f"  Total: {np.sum(times):.2f}s")
             print(f"  Mean: {np.mean(times):.2f}s")
@@ -365,11 +397,9 @@ class BenchmarkRunner:
                     writer = csv.DictWriter(f, fieldnames=self.results[0].keys())
                     writer.writeheader()
                     writer.writerows(self.results)
-        
         elif format == 'json':
             with open(filepath, 'w') as f:
                 json.dump(self.results, f, indent=2)
-        
         else:
             raise ValueError(f"Unknown format: {format}. Use 'csv' or 'json'")
         
@@ -413,6 +443,7 @@ def quick_benchmark(
     algorithm: Callable,
     function_names: Optional[List[str]] = None,
     n_runs: int = 1,
+    show_progress: bool = True,  # NEW parameter
     **algorithm_kwargs
 ) -> List[Dict[str, Any]]:
     """
@@ -426,14 +457,16 @@ def quick_benchmark(
         Functions to test (if None, tests common subset)
     n_runs : int, default=1
         Number of runs per function
+    show_progress : bool, default=True
+        Show progress bars
     **algorithm_kwargs
         Additional arguments for the algorithm
-        
+    
     Returns
     -------
     list of dict
         Benchmark results
-        
+    
     Examples
     --------
     >>> def my_algo(func, bounds, max_iter=1000):
@@ -448,8 +481,12 @@ def quick_benchmark(
             'beale', 'booth', 'matyas', 'himmelblau', 'easom'
         ]
     
-    runner = BenchmarkRunner(algorithm, algorithm_name='QuickBenchmark', 
-                            n_runs=n_runs, verbose=True)
+    runner = BenchmarkRunner(
+        algorithm, 
+        algorithm_name='QuickBenchmark',
+        n_runs=n_runs, 
+        verbose=True,
+        show_progress=show_progress  # Pass through
+    )
     results = runner.run_suite(functions=function_names, **algorithm_kwargs)
-    
     return results

@@ -89,11 +89,59 @@ def main():
     plt.savefig('benchmark_summary.png', dpi=300, bbox_inches='tight')
     print("   Saved as 'benchmark_summary.png'")
     plt.close()
+
+    example_new_features_v030()
     
     print("\n" + "=" * 70)
     print("✓ All visualization examples completed!")
     print("=" * 70)
 
+def example_new_features_v030():
+    """Demonstrate new v0.3.0 visualization features."""
+    print("=" * 60)
+    print("NEW v0.3.0 Features")
+    print("=" * 60)
+    
+    # 1. Multiple color schemes
+    print("\n1. Testing different color schemes...")
+    colormaps = ['viridis', 'plasma', 'inferno', 'coolwarm']
+    
+    fig, axes = plt.subplots(2, 2, figsize=(14, 12))
+    axes = axes.flatten()
+    
+    for idx, cmap in enumerate(colormaps):
+        plt.sca(axes[idx])
+        plot_function_3d('rastrigin', cmap=cmap, resolution=30)
+        axes[idx].set_title(f'Colormap: {cmap}', fontsize=12, fontweight='bold')
+    
+    plt.tight_layout()
+    plt.show()
+    
+    # 2. Multi-format export
+    print("\n2. Exporting to multiple formats...")
+    fig = plot_function_2d('ackley')
+    
+    from optimization_benchmarks import save_plot
+    files = save_plot('ackley_multiformat', formats=['png', 'svg', 'pdf'])
+    
+    print(f"Saved {len(files)} files:")
+    for f in files:
+        print(f"  ✓ {f}")
+    
+    plt.close(fig)
+    
+    # 3. Batch plotting
+    print("\n3. Batch plotting multiple functions...")
+    from optimization_benchmarks import batch_plot_functions
+    
+    results = batch_plot_functions(
+        function_names=['sphere', 'ackley', 'rosenbrock'],
+        plot_types=['2d', '3d'],
+        output_dir='batch_plots',
+        formats=['png', 'svg']
+    )
+    
+    print(f"\nGenerated plots for {len(results)} functions")
 
 if __name__ == '__main__':
     main()

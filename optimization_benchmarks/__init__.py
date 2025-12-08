@@ -26,10 +26,9 @@ References:
 License: MIT
 """
 
-__version__ = "0.2.0"
+__version__ = "0.3.0"
 __author__ = "AK Rahul"
 __license__ = "MIT"
-
 
 # Import all benchmark functions
 from .functions import (
@@ -53,7 +52,7 @@ from .metadata import (
     get_function_list
 )
 
-# Import NEW utilities (v0.2.0)
+# Import utilities
 from .utils import (
     normalize_bounds,
     generate_random_point,
@@ -67,7 +66,7 @@ from .utils import (
     calculate_distance_to_optimum
 )
 
-# Import NEW benchmarking tools (v0.2.0)
+# Import benchmarking tools
 from .benchmarking import (
     BenchmarkRunner,
     quick_benchmark
@@ -81,7 +80,10 @@ try:
         plot_convergence,
         plot_trajectory_2d,
         plot_algorithm_comparison,
-        plot_benchmark_summary
+        plot_benchmark_summary,
+        plot_search_heatmap,  # NEW in v0.3.0
+        save_plot,  # NEW in v0.3.0
+        batch_plot_functions  # NEW in v0.3.0
     )
     __visualization_available__ = True
 except ImportError:
@@ -90,7 +92,6 @@ except ImportError:
 __all__ = [
     # Version info
     '__version__',
-    
     # Benchmark functions
     'ackley', 'rastrigin', 'rastrigin2', 'griewank', 'levy', 'michalewicz', 'schwefel2_26',
     'sphere', 'sphere2', 'rosenbrock', 'rosenbrock_ext1', 'rosenbrock_ext2', 'sum_squares',
@@ -101,15 +102,13 @@ __all__ = [
     'schaffer1', 'schaffer2', 'leon', 'trecanni', 'mccormick', 'eggholder',
     'chichinadze', 'hosaki', 'zettl', 'holzman1', 'holzman2', 'langerman',
     'stretched_v', 'trefethen4', 'box_betts', 'colville', 'corana', 'kowalik', 'exp2', 'gear',
-    
     # Metadata
     'BENCHMARK_SUITE',
     'get_all_functions',
     'get_function_info',
     'get_bounds',
     'get_function_list',
-    
-    # Utilities (NEW in v0.2.0)
+    # Utilities
     'normalize_bounds',
     'generate_random_point',
     'check_bounds',
@@ -120,8 +119,7 @@ __all__ = [
     'get_bounds_center',
     'generate_grid_points',
     'calculate_distance_to_optimum',
-    
-    # Benchmarking (NEW in v0.2.0)
+    # Benchmarking
     'BenchmarkRunner',
     'quick_benchmark',
 ]
@@ -135,4 +133,7 @@ if __visualization_available__:
         'plot_trajectory_2d',
         'plot_algorithm_comparison',
         'plot_benchmark_summary',
+        'plot_search_heatmap',  # NEW
+        'save_plot',  # NEW
+        'batch_plot_functions',  # NEW
     ])

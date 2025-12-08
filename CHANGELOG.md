@@ -1,5 +1,48 @@
 # Changelog
 
+All notable changes to this project will be documented in this file.
+
+The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
+and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
+
+## [0.3.0] - 2025-12-08
+
+### Added
+- **Progress Bars**: tqdm integration for visual progress tracking during benchmarking
+  - Added `show_progress` parameter to `BenchmarkRunner`
+  - Real-time progress display for functions and runs
+  - Customizable progress bar descriptions
+
+- **Heatmap Visualization**: New `plot_search_heatmap()` function
+  - Visualize where optimization algorithms search in the function landscape
+  - Customizable bin sizes and color schemes
+  - Overlay on function contours for better insights
+
+- **Multi-Format Export**: Export plots to multiple formats simultaneously
+  - New `save_plot()` utility function
+  - Support for PNG, SVG, PDF, EPS formats
+  - Configurable DPI for raster formats
+  - Added `formats` parameter to all plotting functions
+
+- **Enhanced Color Schemes**: Expanded colormap options
+  - Added 9 colormap choices: viridis, plasma, inferno, magma, cividis, coolwarm, jet, rainbow, turbo
+  - Better documentation for colormap usage
+
+- **Batch Plotting**: New `batch_plot_functions()` for generating multiple plots
+  - Generate all function plots at once
+  - Consistent styling across all plots
+  - Automatic file naming and organization
+
+### Changed
+- Updated `tqdm` as core dependency (>=4.65.0)
+- Enhanced progress reporting in `BenchmarkRunner`
+- Improved plot aesthetics with better default settings
+- Updated documentation with new feature examples
+
+### Fixed
+- Minor bug fixes in visualization module
+- Improved error handling in export functions
+
 ## [0.2.0] - 2025-12-06
 
 ### Added
