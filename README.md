@@ -722,7 +722,7 @@ for i in range(max_iter):
     neighbor = current + np.random.randn(len(bounds)) * 0.1
     neighbor = clip_to_bounds(neighbor, bounds)
     cost = func(neighbor)
-    
+
     # Update if better
     if cost < current_cost:
         current = neighbor
@@ -731,7 +731,7 @@ for i in range(max_iter):
             best = current.copy()
             best_cost = cost
             trajectory.append(best.copy())
-    
+
     history.append(best_cost)
 
 return best, best_cost

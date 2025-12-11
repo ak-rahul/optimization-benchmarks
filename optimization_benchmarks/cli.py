@@ -20,12 +20,7 @@ import inspect
 import json
 import sys
 
-from optimization_benchmarks import (
-    BENCHMARK_SUITE,
-    functions,
-    get_all_functions,
-    get_function_info,
-)
+from optimization_benchmarks import BENCHMARK_SUITE, functions, get_all_functions, get_function_info
 
 
 def get_available_functions():

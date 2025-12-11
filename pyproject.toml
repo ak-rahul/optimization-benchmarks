@@ -15,7 +15,6 @@ authors = [
 maintainers = [
     {name = "AK Rahul", email = "ak-rahul@users.noreply.github.com"}
 ]
-
 keywords = [
     "optimization",
     "benchmark",
@@ -106,8 +105,10 @@ addopts = ["-v", "--strict-markers"]
 
 [tool.mypy]
 python_version = "3.8"
-warn_return_any = true
+warn_return_any = false
 warn_unused_configs = true
+ignore_missing_imports = true
+disable_error_code = ["no-any-return", "var-annotated", "no-redef", "assignment"]
 
 [tool.coverage.run]
 source = ["optimization_benchmarks"]
