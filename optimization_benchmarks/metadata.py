@@ -11,6 +11,7 @@ References
 """
 
 import numpy as np
+
 from .functions import *
 
 # Complete metadata for all benchmark functions

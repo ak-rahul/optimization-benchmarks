@@ -35,8 +35,6 @@ License: MIT
 
 import numpy as np
 
-import numpy as np
-
 
 def ackley(x: np.ndarray) -> float:
     """

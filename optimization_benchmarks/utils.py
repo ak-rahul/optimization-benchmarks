@@ -8,8 +8,9 @@ Part of optimization-benchmarks package v0.2.0
 License: MIT
 """
 
+from typing import List, Optional, Tuple, Union
+
 import numpy as np
-from typing import List, Tuple, Union, Optional
 
 
 def normalize_bounds(

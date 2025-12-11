@@ -5,8 +5,9 @@ This example demonstrates the new heatmap visualization feature
 that shows where an optimization algorithm searches in the function landscape.
 """
 
-import numpy as np
 import matplotlib.pyplot as plt
+import numpy as np
+
 import optimization_benchmarks as ob
 
 

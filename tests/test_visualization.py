@@ -2,8 +2,8 @@
 Tests for visualization module.
 """
 
-import pytest
 import numpy as np
+import pytest
 
 # Check if matplotlib is available
 try:
@@ -11,13 +11,14 @@ try:
 
     matplotlib.use("Agg")  # Non-interactive backend for testing
     import matplotlib.pyplot as plt
+
     from optimization_benchmarks.visualization import (
-        plot_function_2d,
-        plot_function_3d,
-        plot_convergence,
-        plot_trajectory_2d,
         plot_algorithm_comparison,
         plot_benchmark_summary,
+        plot_convergence,
+        plot_function_2d,
+        plot_function_3d,
+        plot_trajectory_2d,
     )
 
     MATPLOTLIB_AVAILABLE = True

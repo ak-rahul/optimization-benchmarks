@@ -2,13 +2,14 @@
 Tests for v0.3.0 new features
 """
 
-import pytest
 import numpy as np
+import pytest
+
 from optimization_benchmarks import (
     BenchmarkRunner,
+    batch_plot_functions,
     plot_search_heatmap,
     save_plot,
-    batch_plot_functions,
 )
 
 
@@ -59,9 +60,11 @@ def test_heatmap_visualization():
 def test_save_plot():
     """Test multi-format export."""
     try:
-        import matplotlib.pyplot as plt
-        from optimization_benchmarks import plot_function_2d, save_plot
         import os
+
+        import matplotlib.pyplot as plt
+
+        from optimization_benchmarks import plot_function_2d, save_plot
 
         # Create a simple plot
         fig = plot_function_2d("sphere")
@@ -112,6 +115,7 @@ def test_colormap_options():
     """Test different colormap options."""
     try:
         import matplotlib.pyplot as plt
+
         from optimization_benchmarks import plot_function_3d
 
         colormaps = ["viridis", "plasma", "inferno", "coolwarm"]

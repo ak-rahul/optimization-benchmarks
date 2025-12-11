@@ -5,8 +5,9 @@ This example demonstrates all visualization functions available
 in the optimization-benchmarks package.
 """
 
-import numpy as np
 import matplotlib.pyplot as plt
+import numpy as np
+
 import optimization_benchmarks as ob
 
 

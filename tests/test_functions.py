@@ -15,7 +15,9 @@ References:
 
 import numpy as np
 import pytest
-from optimization_benchmarks import (
+
+from optimization_benchmarks import (  # Metadata imports (new in v0.1.1)
+    BENCHMARK_SUITE,
     ackley,
     beale,
     bohachevsky1,
@@ -33,15 +35,18 @@ from optimization_benchmarks import (
     eggholder,
     exp2,
     gear,
+    get_all_functions,
+    get_bounds,
+    get_function_info,
     goldstein_price,
     griewank,
     himmelblau,
-    hyperellipsoid,
-    kowalik,
     holzman1,
     holzman2,
     hosaki,
+    hyperellipsoid,
     katsuura,
+    kowalik,
     langerman,
     leon,
     levy,
@@ -71,11 +76,6 @@ from optimization_benchmarks import (
     trecanni,
     trefethen4,
     zettl,
-    # Metadata imports (new in v0.1.1)
-    BENCHMARK_SUITE,
-    get_function_info,
-    get_all_functions,
-    get_bounds,
 )
 
 

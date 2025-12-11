@@ -8,8 +8,9 @@ This example demonstrates a complete workflow including:
 4. Comparing with known optimum
 """
 
-import numpy as np
 import matplotlib.pyplot as plt
+import numpy as np
+
 import optimization_benchmarks as ob
 
 

@@ -6,6 +6,7 @@ systematically test an optimization algorithm across multiple benchmark function
 """
 
 import numpy as np
+
 import optimization_benchmarks as ob
 
 

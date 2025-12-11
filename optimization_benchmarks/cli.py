@@ -15,15 +15,16 @@ References:
 """
 
 import argparse
-import sys
-import json
 import csv
 import inspect
-from optimization_benchmarks import functions
+import json
+import sys
+
 from optimization_benchmarks import (
     BENCHMARK_SUITE,
-    get_function_info,
+    functions,
     get_all_functions,
+    get_function_info,
 )
 
 

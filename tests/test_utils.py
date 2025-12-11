@@ -2,19 +2,20 @@
 Tests for utility functions.
 """
 
-import pytest
 import numpy as np
+import pytest
+
 from optimization_benchmarks.utils import (
-    normalize_bounds,
-    generate_random_point,
-    check_bounds,
-    scale_to_unit,
-    scale_from_unit,
-    clip_to_bounds,
-    get_bounds_range,
-    get_bounds_center,
-    generate_grid_points,
     calculate_distance_to_optimum,
+    check_bounds,
+    clip_to_bounds,
+    generate_grid_points,
+    generate_random_point,
+    get_bounds_center,
+    get_bounds_range,
+    normalize_bounds,
+    scale_from_unit,
+    scale_to_unit,
 )
 
 

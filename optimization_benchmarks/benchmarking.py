@@ -10,13 +10,14 @@ Part of optimization-benchmarks package v0.3.0
 License: MIT
 """
 
-import numpy as np
-import time
 import csv
 import json
-from typing import Callable, Optional, List, Dict, Any, Tuple, Union
+import time
 from datetime import datetime
 from pathlib import Path
+from typing import Any, Callable, Dict, List, Optional, Tuple, Union
+
+import numpy as np
 
 # NEW: tqdm for progress bars
 try:
@@ -26,8 +27,8 @@ try:
 except ImportError:
     TQDM_AVAILABLE = False
 
-from .metadata import BENCHMARK_SUITE, get_function_info, get_all_functions
-from .utils import normalize_bounds, calculate_distance_to_optimum
+from .metadata import BENCHMARK_SUITE, get_all_functions, get_function_info
+from .utils import calculate_distance_to_optimum, normalize_bounds
 
 
 class BenchmarkRunner:

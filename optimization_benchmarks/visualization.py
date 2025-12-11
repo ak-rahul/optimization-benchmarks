@@ -10,9 +10,10 @@ Part of optimization-benchmarks package v0.2.0
 License: MIT
 """
 
-import numpy as np
-from typing import Optional, Tuple, Callable, List, Dict, Any, Union
 import warnings
+from typing import Any, Callable, Dict, List, Optional, Tuple, Union
+
+import numpy as np
 
 try:
     import matplotlib.pyplot as plt
@@ -28,7 +29,7 @@ except ImportError:
     )
 
 from .metadata import BENCHMARK_SUITE, get_function_info
-from .utils import normalize_bounds, generate_grid_points
+from .utils import generate_grid_points, normalize_bounds
 
 COLORMAPS = {
     "viridis": "viridis",

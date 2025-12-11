@@ -2,10 +2,11 @@
 Tests for benchmarking module.
 """
 
-import pytest
-import numpy as np
 import tempfile
 from pathlib import Path
+
+import numpy as np
+import pytest
 
 from optimization_benchmarks.benchmarking import BenchmarkRunner, quick_benchmark
 
