@@ -11,7 +11,7 @@ References:
 -----------
 [1] Adorio, E. P. (2005). MVF - Multivariate Test Functions Library in C for
     Unconstrained Global Optimization. University of the Philippines Diliman.
-    
+
 [2] Surjanovic, S. & Bingham, D. (2013). Virtual Library of Simulation Experiments:
     Test Functions and Datasets. Simon Fraser University.
     Retrieved from: https://www.sfu.ca/~ssurjano/
@@ -37,6 +37,7 @@ import numpy as np
 
 import numpy as np
 
+
 def ackley(x: np.ndarray) -> float:
     """
     Ackley function.
@@ -48,7 +49,8 @@ def ackley(x: np.ndarray) -> float:
     n = x.size
     sum_sq = np.sum(x**2)
     sum_cos = np.sum(np.cos(2 * np.pi * x))
-    return -20.0 * np.exp(-0.2 * np.sqrt(sum_sq/n)) - np.exp(sum_cos/n) + 20 + np.e
+    return -20.0 * np.exp(-0.2 * np.sqrt(sum_sq / n)) - np.exp(sum_cos / n) + 20 + np.e
+
 
 def beale(x: np.ndarray) -> float:
     """
@@ -59,10 +61,11 @@ def beale(x: np.ndarray) -> float:
     """
     x = np.asarray(x, dtype=float)
     x0, x1 = x
-    term1 = 1.5 - x0 + x0*x1
-    term2 = 2.25 - x0 + x0*x1**2
-    term3 = 2.625 - x0 + x0*x1**3
+    term1 = 1.5 - x0 + x0 * x1
+    term2 = 2.25 - x0 + x0 * x1**2
+    term3 = 2.625 - x0 + x0 * x1**3
     return term1**2 + term2**2 + term3**2
+
 
 def bohachevsky1(x: np.ndarray) -> float:
     """
@@ -73,7 +76,8 @@ def bohachevsky1(x: np.ndarray) -> float:
     """
     x = np.asarray(x, dtype=float)
     x0, x1 = x
-    return x0**2 + 2*x1**2 - 0.3*np.cos(3*np.pi*x0) - 0.4*np.cos(4*np.pi*x1) + 0.7
+    return x0**2 + 2 * x1**2 - 0.3 * np.cos(3 * np.pi * x0) - 0.4 * np.cos(4 * np.pi * x1) + 0.7
+
 
 def bohachevsky2(x: np.ndarray) -> float:
     """
@@ -84,7 +88,8 @@ def bohachevsky2(x: np.ndarray) -> float:
     """
     x = np.asarray(x, dtype=float)
     x0, x1 = x
-    return x0**2 + 2*x1**2 - 0.3*np.cos(3*np.pi*x0)*np.cos(4*np.pi*x1) + 0.3
+    return x0**2 + 2 * x1**2 - 0.3 * np.cos(3 * np.pi * x0) * np.cos(4 * np.pi * x1) + 0.3
+
 
 def booth(x: np.ndarray) -> float:
     """
@@ -95,7 +100,8 @@ def booth(x: np.ndarray) -> float:
     """
     x = np.asarray(x, dtype=float)
     x0, x1 = x
-    return (x0 + 2*x1 - 7)**2 + (2*x0 + x1 - 5)**2
+    return (x0 + 2 * x1 - 7) ** 2 + (2 * x0 + x1 - 5) ** 2
+
 
 def box_betts(x: np.ndarray) -> float:
     """
@@ -108,9 +114,14 @@ def box_betts(x: np.ndarray) -> float:
     x0, x1, x2 = x
     total = 0.0
     for i in range(1, 11):
-        g = np.exp(-0.1*i*x0) - np.exp(-0.1*i*x1) - ((np.exp(-0.1*i) - np.exp(-1.0*i)) * x2)
+        g = (
+            np.exp(-0.1 * i * x0)
+            - np.exp(-0.1 * i * x1)
+            - ((np.exp(-0.1 * i) - np.exp(-1.0 * i)) * x2)
+        )
         total += g**2
     return total
+
 
 def branin(x: np.ndarray) -> float:
     """
@@ -122,9 +133,10 @@ def branin(x: np.ndarray) -> float:
     x = np.asarray(x, dtype=float)
     x0, x1 = x
     a = 1.0
-    b = 5.1/(4*np.pi**2)
-    c = 5/np.pi
-    return (a * x1 - b * x0**2 + c * x0 - 6)**2 + 10*(1 - 1/(8*np.pi))*np.cos(x0) + 10
+    b = 5.1 / (4 * np.pi**2)
+    c = 5 / np.pi
+    return (a * x1 - b * x0**2 + c * x0 - 6) ** 2 + 10 * (1 - 1 / (8 * np.pi)) * np.cos(x0) + 10
+
 
 def branin2(x: np.ndarray) -> float:
     """
@@ -134,7 +146,10 @@ def branin2(x: np.ndarray) -> float:
     Global minimum: f(0.402357,0.287408) = 0 at x ≈ (0.402357, 0.287408):contentReference[oaicite:12]{index=12}.
     """
     x = np.asarray(x, dtype=float)
-    return (1.0 - 2.0*x[1] + np.sin(4.0*np.pi*x[1])/20.0 - x[0])**2 + (x[1] - np.sin(2.0*np.pi*x[0])/2.0)**2
+    return (1.0 - 2.0 * x[1] + np.sin(4.0 * np.pi * x[1]) / 20.0 - x[0]) ** 2 + (
+        x[1] - np.sin(2.0 * np.pi * x[0]) / 2.0
+    ) ** 2
+
 
 def camel3(x: np.ndarray) -> float:
     """
@@ -145,8 +160,9 @@ def camel3(x: np.ndarray) -> float:
     """
     x = np.asarray(x, dtype=float)
     x0 = x[0]
-    term = 2*x0**2 - 1.05*x0**4 + x0**6/6.0 + x0 * x[1]**3
+    term = 2 * x0**2 - 1.05 * x0**4 + x0**6 / 6.0 + x0 * x[1] ** 3
     return term
+
 
 def camel6(x: np.ndarray) -> float:
     """
@@ -157,7 +173,8 @@ def camel6(x: np.ndarray) -> float:
     """
     x = np.asarray(x, dtype=float)
     x0, x1 = x
-    return (4 - 2.1*x0**2 + (x0**4)/3)*x0**2 + x0*x1 + (-4 + 4*x1**2)*x1**2
+    return (4 - 2.1 * x0**2 + (x0**4) / 3) * x0**2 + x0 * x1 + (-4 + 4 * x1**2) * x1**2
+
 
 def chichinadze(x: np.ndarray) -> float:
     """
@@ -168,7 +185,15 @@ def chichinadze(x: np.ndarray) -> float:
     """
     x = np.asarray(x, dtype=float)
     x0, x1 = x
-    return x0**2 - 12*x0 + 11 + 10*np.cos((np.pi/2)*x0) + 8*np.sin(5*np.pi*x0) - np.exp(-((x1-0.5)**2)/5.0)
+    return (
+        x0**2
+        - 12 * x0
+        + 11
+        + 10 * np.cos((np.pi / 2) * x0)
+        + 8 * np.sin(5 * np.pi * x0)
+        - np.exp(-((x1 - 0.5) ** 2) / 5.0)
+    )
+
 
 def colville(x: np.ndarray) -> float:
     """
@@ -179,10 +204,15 @@ def colville(x: np.ndarray) -> float:
     """
     x = np.asarray(x, dtype=float)
     x0, x1, x2, x3 = x
-    return (100*(x0 - x2**2)**2 + (1 - x0)**2 +
-            90*(x3 - x2**2)**2 + (1 - x2)**2 +
-            10.1*((x1 - 1)**2 + (x3 - 1)**2) +
-            19.8*(x1 - 1)*(x3 - 1))
+    return (
+        100 * (x0 - x2**2) ** 2
+        + (1 - x0) ** 2
+        + 90 * (x3 - x2**2) ** 2
+        + (1 - x2) ** 2
+        + 10.1 * ((x1 - 1) ** 2 + (x3 - 1) ** 2)
+        + 19.8 * (x1 - 1) * (x3 - 1)
+    )
+
 
 def corana(x: np.ndarray) -> float:
     """
@@ -195,13 +225,14 @@ def corana(x: np.ndarray) -> float:
     d = np.array([1.0, 1000.0, 10.0, 100.0])
     total = 0.0
     for i in range(4):
-        zi = np.floor(abs(x[i]/0.2) + 0.49999) * np.sign(x[i]) * 0.2
+        zi = np.floor(abs(x[i] / 0.2) + 0.49999) * np.sign(x[i]) * 0.2
         if abs(x[i] - zi) < 0.05:
-            term = 0.15 * (zi - 0.05*np.sign(zi))**2 * d[i]
+            term = 0.15 * (zi - 0.05 * np.sign(zi)) ** 2 * d[i]
         else:
-            term = (x[i] - zi)**2 * d[i]
+            term = (x[i] - zi) ** 2 * d[i]
         total += term
     return total
+
 
 def easom(x: np.ndarray) -> float:
     """
@@ -211,7 +242,8 @@ def easom(x: np.ndarray) -> float:
     Global minimum: f(π,π) = -1 at x = (π, π):contentReference[oaicite:21]{index=21}.
     """
     x = np.asarray(x, dtype=float)
-    return -np.cos(x[0]) * np.cos(x[1]) * np.exp(-((x[0]-np.pi)**2 + (x[1]-np.pi)**2))
+    return -np.cos(x[0]) * np.cos(x[1]) * np.exp(-((x[0] - np.pi) ** 2 + (x[1] - np.pi) ** 2))
+
 
 def eggholder(x: np.ndarray) -> float:
     """
@@ -222,8 +254,11 @@ def eggholder(x: np.ndarray) -> float:
     x = np.asarray(x, dtype=float)
     total = 0.0
     for i in range(x.size - 1):
-        total += - (x[i+1] + 47) * np.sin(np.sqrt(abs(x[i+1] + x[i]/2 + 47))) - x[i] * np.sin(np.sqrt(abs(x[i] - (x[i+1] + 47))))
+        total += -(x[i + 1] + 47) * np.sin(np.sqrt(abs(x[i + 1] + x[i] / 2 + 47))) - x[i] * np.sin(
+            np.sqrt(abs(x[i] - (x[i + 1] + 47)))
+        )
     return total
+
 
 def exp2(x: np.ndarray) -> float:
     """
@@ -236,8 +271,11 @@ def exp2(x: np.ndarray) -> float:
     x0, x1 = x
     total = 0.0
     for i in range(10):
-        total += (np.exp(-i * x0 / 10) - 5*np.exp(-i * x1 / 10) - np.exp(-i/10) + 5*np.exp(-i))**2
+        total += (
+            np.exp(-i * x0 / 10) - 5 * np.exp(-i * x1 / 10) - np.exp(-i / 10) + 5 * np.exp(-i)
+        ) ** 2
     return total
+
 
 def fraudenstein_roth(x: np.ndarray) -> float:
     """
@@ -247,9 +285,10 @@ def fraudenstein_roth(x: np.ndarray) -> float:
     """
     x = np.asarray(x, dtype=float)
     x0, x1 = x
-    f1 = -13 + x0 + ((5 - x1)*x1 - 2) * x1
-    f2 = -29 + x0 + ((x1 + 1)*x1 - 14) * x1
+    f1 = -13 + x0 + ((5 - x1) * x1 - 2) * x1
+    f2 = -29 + x0 + ((x1 + 1) * x1 - 14) * x1
     return f1**2 + f2**2
+
 
 def gear(x: np.ndarray) -> float:
     """
@@ -259,8 +298,9 @@ def gear(x: np.ndarray) -> float:
     Global minimum: ≈2.7e-12 at permutations of (16, 19, 43, 49):contentReference[oaicite:23]{index=23}.
     """
     x = np.asarray(x, dtype=float)
-    t = 1.0/6.931 - np.floor(x[0])*np.floor(x[1])/(np.floor(x[2])*np.floor(x[3]))
+    t = 1.0 / 6.931 - np.floor(x[0]) * np.floor(x[1]) / (np.floor(x[2]) * np.floor(x[3]))
     return t**2
+
 
 def goldstein_price(x: np.ndarray) -> float:
     """
@@ -271,9 +311,12 @@ def goldstein_price(x: np.ndarray) -> float:
     """
     x = np.asarray(x, dtype=float)
     x0, x1 = x
-    term1 = 1 + (x0 + x1 + 1)**2 * (19 - 14*x0 + 3*x0**2 - 14*x1 + 6*x0*x1 + 3*x1**2)
-    term2 = 30 + (2*x0 - 3*x1)**2 * (18 - 32*x0 + 12*x0**2 + 48*x1 - 36*x0*x1 + 27*x1**2)
+    term1 = 1 + (x0 + x1 + 1) ** 2 * (19 - 14 * x0 + 3 * x0**2 - 14 * x1 + 6 * x0 * x1 + 3 * x1**2)
+    term2 = 30 + (2 * x0 - 3 * x1) ** 2 * (
+        18 - 32 * x0 + 12 * x0**2 + 48 * x1 - 36 * x0 * x1 + 27 * x1**2
+    )
     return term1 * term2
+
 
 def griewank(x: np.ndarray) -> float:
     """
@@ -284,8 +327,9 @@ def griewank(x: np.ndarray) -> float:
     """
     x = np.asarray(x, dtype=float)
     sum_sq = np.sum(x**2) / 4000.0
-    prod_cos = np.prod(np.cos(x / np.sqrt(np.arange(1, x.size+1))))
+    prod_cos = np.prod(np.cos(x / np.sqrt(np.arange(1, x.size + 1))))
     return sum_sq - prod_cos + 1
+
 
 def himmelblau(x: np.ndarray) -> float:
     """
@@ -296,7 +340,8 @@ def himmelblau(x: np.ndarray) -> float:
     """
     x = np.asarray(x, dtype=float)
     x0, x1 = x
-    return (x0**2 + x1 - 11)**2 + (x0 + x1**2 - 7)**2
+    return (x0**2 + x1 - 11) ** 2 + (x0 + x1**2 - 7) ** 2
+
 
 def hyperellipsoid(x: np.ndarray) -> float:
     """
@@ -307,7 +352,8 @@ def hyperellipsoid(x: np.ndarray) -> float:
     """
     x = np.asarray(x, dtype=float)
     n = x.size
-    return np.sum((np.arange(1, n+1) * x**2))
+    return np.sum((np.arange(1, n + 1) * x**2))
+
 
 def kowalik(x: np.ndarray) -> float:
     """
@@ -317,15 +363,18 @@ def kowalik(x: np.ndarray) -> float:
     Global minimum: ≈0.000307 at x ≈ (0.1928,0.1908,0.1231,0.1358):contentReference[oaicite:28]{index=28}.
     """
     x = np.asarray(x, dtype=float)
-    a = np.array([0.1957,0.1947,0.1735,0.1600,0.0844,0.0627,0.0456,0.0342,0.0323,0.0235,0.0246])
-    b = np.array([4.0,2.0,1.0,0.5,0.25,1/6,1/8,0.1,1/12,1/14,1/16])
+    a = np.array(
+        [0.1957, 0.1947, 0.1735, 0.1600, 0.0844, 0.0627, 0.0456, 0.0342, 0.0323, 0.0235, 0.0246]
+    )
+    b = np.array([4.0, 2.0, 1.0, 0.5, 0.25, 1 / 6, 1 / 8, 0.1, 1 / 12, 1 / 14, 1 / 16])
     sum_val = 0.0
     for i in range(11):
-        numerator = x[0]*(b[i]**2 + b[i]*x[1])
-        denominator = b[i]**2 + b[i]*x[2] + x[3]
-        yi = numerator/denominator
-        sum_val += (a[i] - yi)**2
+        numerator = x[0] * (b[i] ** 2 + b[i] * x[1])
+        denominator = b[i] ** 2 + b[i] * x[2] + x[3]
+        yi = numerator / denominator
+        sum_val += (a[i] - yi) ** 2
     return sum_val
+
 
 def holzman1(x: np.ndarray) -> float:
     """
@@ -338,9 +387,10 @@ def holzman1(x: np.ndarray) -> float:
     x0, x1, x2 = x
     total = 0.0
     for i in range(100):
-        ui = 25 + pow(-50.0*np.log(0.01*(i+1)), 2.0/3.0)
-        total += -0.1*(i+1) + np.exp((ui - x1)**x2 / x0)
+        ui = 25 + pow(-50.0 * np.log(0.01 * (i + 1)), 2.0 / 3.0)
+        total += -0.1 * (i + 1) + np.exp((ui - x1) ** x2 / x0)
     return total
+
 
 def holzman2(x: np.ndarray) -> float:
     """
@@ -352,6 +402,7 @@ def holzman2(x: np.ndarray) -> float:
     x = np.asarray(x, dtype=float)
     return np.sum((np.arange(x.size, dtype=float) * x**4))
 
+
 def hosaki(x: np.ndarray) -> float:
     """
     Hosaki function.
@@ -360,7 +411,12 @@ def hosaki(x: np.ndarray) -> float:
     Global minimum: ≈ -2.3458 at x = (4, 2):contentReference[oaicite:31]{index=31}:contentReference[oaicite:32]{index=32}.
     """
     x = np.asarray(x, dtype=float)
-    return (1 - 8*x[0] + 7*x[0]**2 - (7/3)*x[0]**3 + 0.25*x[0]**4) * x[1]**2 * np.exp(-x[1])
+    return (
+        (1 - 8 * x[0] + 7 * x[0] ** 2 - (7 / 3) * x[0] ** 3 + 0.25 * x[0] ** 4)
+        * x[1] ** 2
+        * np.exp(-x[1])
+    )
+
 
 def katsuura(x: np.ndarray) -> float:
     """
@@ -376,8 +432,9 @@ def katsuura(x: np.ndarray) -> float:
         sum_k = 0.0
         for k in range(1, 33):
             sum_k += abs(2**k * x[i] - np.round(2**k * x[i])) / (2**k)
-        prod *= (1 + (i+1) * sum_k)**(10.0 / (n**1.2))
+        prod *= (1 + (i + 1) * sum_k) ** (10.0 / (n**1.2))
     return prod
+
 
 def langerman(x: np.ndarray) -> float:
     """
@@ -388,19 +445,22 @@ def langerman(x: np.ndarray) -> float:
     """
     x = np.asarray(x, dtype=float)
     # Coefficients c and points A defined for m=5 in MVF.
-    afox = np.array([
-        [9.681,0.667,4.783,9.095,3.517,9.325,6.544,0.211,5.122,2.020],
-        [9.400,2.041,3.788,7.931,2.882,2.672,3.568,1.284,7.033,7.374],
-        [8.025,9.152,5.114,7.621,4.564,4.711,2.996,6.126,0.734,4.982],
-        [2.196,0.415,5.649,6.979,9.510,9.166,6.304,6.054,9.377,1.426],
-        [8.074,8.777,3.467,1.863,6.708,6.349,4.534,0.276,7.633,1.567]
-    ])
+    afox = np.array(
+        [
+            [9.681, 0.667, 4.783, 9.095, 3.517, 9.325, 6.544, 0.211, 5.122, 2.020],
+            [9.400, 2.041, 3.788, 7.931, 2.882, 2.672, 3.568, 1.284, 7.033, 7.374],
+            [8.025, 9.152, 5.114, 7.621, 4.564, 4.711, 2.996, 6.126, 0.734, 4.982],
+            [2.196, 0.415, 5.649, 6.979, 9.510, 9.166, 6.304, 6.054, 9.377, 1.426],
+            [8.074, 8.777, 3.467, 1.863, 6.708, 6.349, 4.534, 0.276, 7.633, 1.567],
+        ]
+    )
     c = np.array([0.806, 0.517, 0.100, 0.908, 0.965])
     total = 0.0
     for i in range(5):
-        dist = np.sum((x - afox[i])**2)
-        total -= c[i] * np.exp(-dist/np.pi) * np.cos(np.pi * dist)
+        dist = np.sum((x - afox[i]) ** 2)
+        total -= c[i] * np.exp(-dist / np.pi) * np.cos(np.pi * dist)
     return total
+
 
 def lennard_jones(x: np.ndarray) -> float:
     """
@@ -411,12 +471,13 @@ def lennard_jones(x: np.ndarray) -> float:
     x = np.asarray(x, dtype=float)
     N = x.size // 3
     energy = 0.0
-    for i in range(N-1):
-        for j in range(i+1, N):
-            dist2 = np.sum((x[3*i:3*i+3] - x[3*j:3*j+3])**2)
+    for i in range(N - 1):
+        for j in range(i + 1, N):
+            dist2 = np.sum((x[3 * i : 3 * i + 3] - x[3 * j : 3 * j + 3]) ** 2)
             inv6 = 1.0 / dist2**3
             energy += inv6 * (inv6 - 2.0)
     return energy
+
 
 def leon(x: np.ndarray) -> float:
     """
@@ -426,7 +487,8 @@ def leon(x: np.ndarray) -> float:
     Global minimum: f(1,1) = 0 at x = (1, 1):contentReference[oaicite:35]{index=35}.
     """
     x = np.asarray(x, dtype=float)
-    return 100.0 * (x[1] - x[0]**3)**2 + (1.0 - x[0])**2
+    return 100.0 * (x[1] - x[0] ** 3) ** 2 + (1.0 - x[0]) ** 2
+
 
 def levy(x: np.ndarray) -> float:
     """
@@ -437,13 +499,14 @@ def levy(x: np.ndarray) -> float:
     x = np.asarray(x, dtype=float)
     n = x.size
     w = 1 + (x - 1) / 4.0
-    term1 = np.sin(np.pi * w[0])**2
-    term3 = (w[-1] - 1)**2 * (1 + np.sin(2*np.pi * w[-1])**2)
+    term1 = np.sin(np.pi * w[0]) ** 2
+    term3 = (w[-1] - 1) ** 2 * (1 + np.sin(2 * np.pi * w[-1]) ** 2)
     term2 = 0.0
-    for i in range(n-1):
+    for i in range(n - 1):
         wi = w[i]
-        term2 += (wi - 1)**2 * (1 + 10*np.sin(np.pi*w[i+1])**2)
+        term2 += (wi - 1) ** 2 * (1 + 10 * np.sin(np.pi * w[i + 1]) ** 2)
     return term1 + term2 + term3
+
 
 def matyas(x: np.ndarray) -> float:
     """
@@ -453,7 +516,8 @@ def matyas(x: np.ndarray) -> float:
     Global minimum: f(0,0) = 0 at x = (0, 0):contentReference[oaicite:36]{index=36}.
     """
     x = np.asarray(x, dtype=float)
-    return 0.26*(x[0]**2 + x[1]**2) - 0.48*x[0]*x[1]
+    return 0.26 * (x[0] ** 2 + x[1] ** 2) - 0.48 * x[0] * x[1]
+
 
 def maxmod(x: np.ndarray) -> float:
     """
@@ -465,6 +529,7 @@ def maxmod(x: np.ndarray) -> float:
     x = np.asarray(x, dtype=float)
     return np.max(np.abs(x))
 
+
 def mccormick(x: np.ndarray) -> float:
     """
     McCormick function.
@@ -473,7 +538,8 @@ def mccormick(x: np.ndarray) -> float:
     Global minimum: f(-0.54719,-1.54719) ≈ -1.9133:contentReference[oaicite:38]{index=38}.
     """
     x = np.asarray(x, dtype=float)
-    return np.sin(x[0] + x[1]) + (x[0] - x[1])**2 - 1.5*x[0] + 2.5*x[1] + 1.0
+    return np.sin(x[0] + x[1]) + (x[0] - x[1]) ** 2 - 1.5 * x[0] + 2.5 * x[1] + 1.0
+
 
 def michalewicz(x: np.ndarray) -> float:
     """
@@ -482,8 +548,9 @@ def michalewicz(x: np.ndarray) -> float:
     Dimension: n.
     """
     x = np.asarray(x, dtype=float)
-    i = np.arange(1, x.size+1)
-    return -np.sum(np.sin(x) * (np.sin(i * x**2 / np.pi))**20)
+    i = np.arange(1, x.size + 1)
+    return -np.sum(np.sin(x) * (np.sin(i * x**2 / np.pi)) ** 20)
+
 
 def multimod(x: np.ndarray) -> float:
     """
@@ -495,6 +562,7 @@ def multimod(x: np.ndarray) -> float:
     x = np.asarray(x, dtype=float)
     return np.sum(np.abs(x)) * np.prod(np.abs(x))
 
+
 def rastrigin(x: np.ndarray) -> float:
     """
     Rastrigin function.
@@ -503,7 +571,8 @@ def rastrigin(x: np.ndarray) -> float:
     Global minimum: f = 0 at x = 0.
     """
     x = np.asarray(x, dtype=float)
-    return np.sum(x**2 - 10*np.cos(2*np.pi*x) + 10)
+    return np.sum(x**2 - 10 * np.cos(2 * np.pi * x) + 10)
+
 
 def rastrigin2(x: np.ndarray) -> float:
     """
@@ -513,7 +582,8 @@ def rastrigin2(x: np.ndarray) -> float:
     Global minimum: f = 0 at x = 0.
     """
     x = np.asarray(x, dtype=float)
-    return x[0]**2 + x[1]**2 - np.cos(12*x[0]) - np.cos(18*x[1])
+    return x[0] ** 2 + x[1] ** 2 - np.cos(12 * x[0]) - np.cos(18 * x[1])
+
 
 def rosenbrock(x: np.ndarray) -> float:
     """
@@ -523,7 +593,8 @@ def rosenbrock(x: np.ndarray) -> float:
     Global minimum: f = 0 at x = 1 (all xi = 1).
     """
     x = np.asarray(x, dtype=float)
-    return np.sum(100.0*(x[1:] - x[:-1]**2)**2 + (1 - x[:-1])**2)
+    return np.sum(100.0 * (x[1:] - x[:-1] ** 2) ** 2 + (1 - x[:-1]) ** 2)
+
 
 def rosenbrock_ext1(x: np.ndarray) -> float:
     """
@@ -535,8 +606,9 @@ def rosenbrock_ext1(x: np.ndarray) -> float:
     x = np.asarray(x, dtype=float)
     total = 0.0
     for i in range(0, x.size, 2):
-        total += 100.0*(x[i+1] - x[i]**2)**2 + (1 - x[i])**2
+        total += 100.0 * (x[i + 1] - x[i] ** 2) ** 2 + (1 - x[i]) ** 2
     return total
+
 
 def rosenbrock_ext2(x: np.ndarray) -> float:
     """
@@ -546,7 +618,8 @@ def rosenbrock_ext2(x: np.ndarray) -> float:
     Global minimum: f = 0 at x = 1 (all xi = 1).
     """
     x = np.asarray(x, dtype=float)
-    return np.sum(100.0*(x[1:] - x[:-1]**2)**2 + (1 - x[:-1])**2)
+    return np.sum(100.0 * (x[1:] - x[:-1] ** 2) ** 2 + (1 - x[:-1]) ** 2)
+
 
 def schaffer1(x: np.ndarray) -> float:
     """
@@ -556,8 +629,9 @@ def schaffer1(x: np.ndarray) -> float:
     Global minimum: f(0,0) = 0 at x = (0, 0):contentReference[oaicite:44]{index=44}.
     """
     x = np.asarray(x, dtype=float)
-    s = x[0]**2 + x[1]**2
-    return 0.5 + (np.sin(np.sqrt(s))**2 - 0.5) / (1 + 0.001*s)**2
+    s = x[0] ** 2 + x[1] ** 2
+    return 0.5 + (np.sin(np.sqrt(s)) ** 2 - 0.5) / (1 + 0.001 * s) ** 2
+
 
 def schaffer2(x: np.ndarray) -> float:
     """
@@ -567,8 +641,9 @@ def schaffer2(x: np.ndarray) -> float:
     Global minimum: f(0,0) = 0 at x = (0, 0):contentReference[oaicite:45]{index=45}.
     """
     x = np.asarray(x, dtype=float)
-    s = x[0]**2 + x[1]**2
-    return (s**0.25)*((50*s**0.1)+1)
+    s = x[0] ** 2 + x[1] ** 2
+    return (s**0.25) * ((50 * s**0.1) + 1)
+
 
 def schwefel1_2(x: np.ndarray) -> float:
     """
@@ -580,8 +655,9 @@ def schwefel1_2(x: np.ndarray) -> float:
     x = np.asarray(x, dtype=float)
     total = 0.0
     for i in range(x.size):
-        total += np.sum(x[:i+1])**2
+        total += np.sum(x[: i + 1]) ** 2
     return total
+
 
 def schwefel2_21(x: np.ndarray) -> float:
     """
@@ -593,6 +669,7 @@ def schwefel2_21(x: np.ndarray) -> float:
     x = np.asarray(x, dtype=float)
     return np.max(np.abs(x))
 
+
 def schwefel2_22(x: np.ndarray) -> float:
     """
     Schwefel function 2.22.
@@ -602,6 +679,7 @@ def schwefel2_22(x: np.ndarray) -> float:
     """
     x = np.asarray(x, dtype=float)
     return np.sum(np.abs(x)) + np.prod(np.abs(x))
+
 
 def schwefel2_26(x: np.ndarray) -> float:
     """
@@ -613,6 +691,7 @@ def schwefel2_26(x: np.ndarray) -> float:
     x = np.asarray(x, dtype=float)
     return -np.sum(x * np.sin(np.sqrt(np.abs(x))))
 
+
 def schwefel3_2(x: np.ndarray) -> float:
     """
     Schwefel (variant) function 3.2.
@@ -621,7 +700,8 @@ def schwefel3_2(x: np.ndarray) -> float:
     Global minimum: f = 0 at x = (1,1,...,1):contentReference[oaicite:50]{index=50}.
     """
     x = np.asarray(x, dtype=float)
-    return (x[0] - x[1])**2 + (1 - x[1])**2
+    return (x[0] - x[1]) ** 2 + (1 - x[1]) ** 2
+
 
 def sphere(x: np.ndarray) -> float:
     """
@@ -633,6 +713,7 @@ def sphere(x: np.ndarray) -> float:
     x = np.asarray(x, dtype=float)
     return np.sum(x**2)
 
+
 def sphere2(x: np.ndarray) -> float:
     """
     Sphere function (cumulative sum variant).
@@ -641,7 +722,8 @@ def sphere2(x: np.ndarray) -> float:
     Global minimum: f(0) = 0 at x = 0:contentReference[oaicite:52]{index=52}.
     """
     x = np.asarray(x, dtype=float)
-    return np.sum(np.cumsum(x)**2)
+    return np.sum(np.cumsum(x) ** 2)
+
 
 def step(x: np.ndarray) -> float:
     """
@@ -651,7 +733,8 @@ def step(x: np.ndarray) -> float:
     Global minimum: f = 0 at x_i = 0.5:contentReference[oaicite:53]{index=53}.
     """
     x = np.asarray(x, dtype=float)
-    return np.sum((np.floor(x) + 0.5)**2)
+    return np.sum((np.floor(x) + 0.5) ** 2)
+
 
 def step2(x: np.ndarray) -> float:
     """
@@ -661,7 +744,8 @@ def step2(x: np.ndarray) -> float:
     Global minimum: f = 0 at x = 0:contentReference[oaicite:54]{index=54}.
     """
     x = np.asarray(x, dtype=float)
-    return 6*x.size + np.sum(np.floor(x))
+    return 6 * x.size + np.sum(np.floor(x))
+
 
 def stretched_v(x: np.ndarray) -> float:
     """
@@ -672,9 +756,10 @@ def stretched_v(x: np.ndarray) -> float:
     x = np.asarray(x, dtype=float)
     total = 0.0
     for i in range(x.size - 1):
-        t = x[i]**2 + x[i+1]**2
-        total += (t**0.25) * (np.sin(50 * t**0.1)**2 + 1)
+        t = x[i] ** 2 + x[i + 1] ** 2
+        total += (t**0.25) * (np.sin(50 * t**0.1) ** 2 + 1)
     return total
+
 
 def sum_squares(x: np.ndarray) -> float:
     """
@@ -684,7 +769,8 @@ def sum_squares(x: np.ndarray) -> float:
     Global minimum: f = 0 at x = 0:contentReference[oaicite:55]{index=55}.
     """
     x = np.asarray(x, dtype=float)
-    return np.sum((np.arange(1, x.size+1) * x**2))
+    return np.sum((np.arange(1, x.size + 1) * x**2))
+
 
 def trecanni(x: np.ndarray) -> float:
     """
@@ -694,7 +780,8 @@ def trecanni(x: np.ndarray) -> float:
     Global minima: f(0,0) = 0 and f(-2,0) = 0:contentReference[oaicite:56]{index=56}.
     """
     x = np.asarray(x, dtype=float)
-    return x[0]**4 + 4*x[0]**3 + 4*x[0]**2 + x[1]**2
+    return x[0] ** 4 + 4 * x[0] ** 3 + 4 * x[0] ** 2 + x[1] ** 2
+
 
 def trefethen4(x: np.ndarray) -> float:
     """
@@ -704,12 +791,15 @@ def trefethen4(x: np.ndarray) -> float:
     Global minimum: ≈ -3.30686865 at x ≈ (-0.0244031, 0.2106124):contentReference[oaicite:57]{index=57}.
     """
     x = np.asarray(x, dtype=float)
-    return (np.exp(np.sin(50.0*x[0])) +
-            np.sin(60.0*np.exp(x[1])) +
-            np.sin(70.0*np.sin(x[0])) +
-            np.sin(np.sin(80.0*x[1])) -
-            np.sin(10.0*(x[0] + x[1])) +
-            0.25*(x[0]**2 + x[1]**2))
+    return (
+        np.exp(np.sin(50.0 * x[0]))
+        + np.sin(60.0 * np.exp(x[1]))
+        + np.sin(70.0 * np.sin(x[0]))
+        + np.sin(np.sin(80.0 * x[1]))
+        - np.sin(10.0 * (x[0] + x[1]))
+        + 0.25 * (x[0] ** 2 + x[1] ** 2)
+    )
+
 
 def watson(x: np.ndarray) -> float:
     """
@@ -718,16 +808,17 @@ def watson(x: np.ndarray) -> float:
     Dimension: 6.
     """
     x = np.asarray(x, dtype=float)
-    a = np.arange(0, 29)/29.0
+    a = np.arange(0, 29) / 29.0
     f = 0.0
     for i in range(1, 30):
         sum1 = 0.0
         sum2 = 0.0
         for j in range(6):
-            sum1 += (j-1) * a[j] * x[j+1]
-            sum2 += a[j] * x[j+1]
-        f += (sum1 - sum2)**2
-    return f + x[0]**2
+            sum1 += (j - 1) * a[j] * x[j + 1]
+            sum2 += a[j] * x[j + 1]
+        f += (sum1 - sum2) ** 2
+    return f + x[0] ** 2
+
 
 def xor(x: np.ndarray) -> float:
     """
@@ -736,9 +827,17 @@ def xor(x: np.ndarray) -> float:
     Dimension: 9.
     """
     x = np.asarray(x, dtype=float)
-    def sigma(z): return 1/(1+np.exp(-z))
-    num = 1/(1+np.exp(-x[6]/(1+np.exp(-x[0]-x[1]-x[4])))) - 1/(1+np.exp(-x[7]/(1+np.exp(-x[2]-x[3]-x[5])))) - x[8]
-    return (1/(1+np.exp(-num)))**2
+
+    def sigma(z):
+        return 1 / (1 + np.exp(-z))
+
+    num = (
+        1 / (1 + np.exp(-x[6] / (1 + np.exp(-x[0] - x[1] - x[4]))))
+        - 1 / (1 + np.exp(-x[7] / (1 + np.exp(-x[2] - x[3] - x[5]))))
+        - x[8]
+    )
+    return (1 / (1 + np.exp(-num))) ** 2
+
 
 def zettl(x: np.ndarray) -> float:
     """
@@ -748,7 +847,8 @@ def zettl(x: np.ndarray) -> float:
     Global minimum: f ≈ -0.00379 at x ≈ (-0.02990, 0):contentReference[oaicite:58]{index=58}.
     """
     x = np.asarray(x, dtype=float)
-    return (x[0]**2 + x[1]**2 - 2*x[0])**2 + 0.25*x[0]
+    return (x[0] ** 2 + x[1] ** 2 - 2 * x[0]) ** 2 + 0.25 * x[0]
+
 
 def zimmerman(x: np.ndarray) -> float:
     """
@@ -758,14 +858,14 @@ def zimmerman(x: np.ndarray) -> float:
     """
     x = np.asarray(x, dtype=float)
     zh1 = 9 - x[0] - x[1]
-    zh2 = (x[0] - 3)**2 + (x[1] - 2)**2 - 16
-    zh3 = x[0]*x[1] - 14
-    zp = lambda t: 100*(1 + t)
+    zh2 = (x[0] - 3) ** 2 + (x[1] - 2) ** 2 - 16
+    zh3 = x[0] * x[1] - 14
+    zp = lambda t: 100 * (1 + t)
     f_vals = [
         zh1,
-        zp(zh2)*np.sign(zh2),
-        zp(zh3)*np.sign(zh3),
-        zp(-x[0])*np.sign(x[0]),
-        zp(-x[1])*np.sign(x[1])
+        zp(zh2) * np.sign(zh2),
+        zp(zh3) * np.sign(zh3),
+        zp(-x[0]) * np.sign(x[0]),
+        zp(-x[1]) * np.sign(x[1]),
     ]
     return np.max(f_vals)

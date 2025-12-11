@@ -8,7 +8,7 @@ from optimization_benchmarks import (
     BenchmarkRunner,
     plot_search_heatmap,
     save_plot,
-    batch_plot_functions
+    batch_plot_functions,
 )
 
 
@@ -23,26 +23,18 @@ def test_progress_bars():
     """Test progress bar functionality."""
     # With progress bars
     runner = BenchmarkRunner(
-        dummy_optimizer,
-        algorithm_name='TestAlgo',
-        n_runs=2,
-        show_progress=True,
-        verbose=False
+        dummy_optimizer, algorithm_name="TestAlgo", n_runs=2, show_progress=True, verbose=False
     )
-    
-    results = runner.run_suite(functions=['sphere', 'ackley'])
+
+    results = runner.run_suite(functions=["sphere", "ackley"])
     assert len(results) == 2
-    
+
     # Without progress bars
     runner_no_progress = BenchmarkRunner(
-        dummy_optimizer,
-        algorithm_name='TestAlgo',
-        n_runs=2,
-        show_progress=False,
-        verbose=False
+        dummy_optimizer, algorithm_name="TestAlgo", n_runs=2, show_progress=False, verbose=False
     )
-    
-    results2 = runner_no_progress.run_suite(functions=['sphere', 'ackley'])
+
+    results2 = runner_no_progress.run_suite(functions=["sphere", "ackley"])
     assert len(results2) == 2
 
 
@@ -50,16 +42,16 @@ def test_heatmap_visualization():
     """Test heatmap plotting."""
     try:
         import matplotlib.pyplot as plt
-        
+
         # Generate test points
         points = np.random.uniform(-5, 5, (50, 2))
-        
+
         # Create heatmap
-        fig = plot_search_heatmap('sphere', points, bins=10)
-        
+        fig = plot_search_heatmap("sphere", points, bins=10)
+
         assert fig is not None
         plt.close(fig)
-        
+
     except ImportError:
         pytest.skip("matplotlib not available")
 
@@ -70,25 +62,24 @@ def test_save_plot():
         import matplotlib.pyplot as plt
         from optimization_benchmarks import plot_function_2d, save_plot
         import os
-        
+
         # Create a simple plot
-        fig = plot_function_2d('sphere')
-        
+        fig = plot_function_2d("sphere")
+
         # Save in multiple formats
-        save_plot(fig, 'test_plot', formats=['png'])
-        
+        save_plot(fig, "test_plot", formats=["png"])
+
         # Check file was created
-        assert os.path.exists('test_plot.png')
-        
+        assert os.path.exists("test_plot.png")
+
         # Clean up
-        if os.path.exists('test_plot.png'):
-            os.remove('test_plot.png')
-        
+        if os.path.exists("test_plot.png"):
+            os.remove("test_plot.png")
+
         plt.close(fig)
-        
+
     except ImportError:
         pytest.skip("matplotlib not installed")
-
 
 
 def test_batch_plotting():
@@ -96,23 +87,23 @@ def test_batch_plotting():
     try:
         import os
         import shutil
-        
+
         # Create batch plots
         results = batch_plot_functions(
-            function_names=['sphere', 'ackley'],
-            plot_types=['2d'],
-            output_dir='test_batch_plots',
-            formats=['png']
+            function_names=["sphere", "ackley"],
+            plot_types=["2d"],
+            output_dir="test_batch_plots",
+            formats=["png"],
         )
-        
+
         assert len(results) == 2
-        assert 'sphere' in results
-        assert 'ackley' in results
-        
+        assert "sphere" in results
+        assert "ackley" in results
+
         # Cleanup
-        if os.path.exists('test_batch_plots'):
-            shutil.rmtree('test_batch_plots')
-        
+        if os.path.exists("test_batch_plots"):
+            shutil.rmtree("test_batch_plots")
+
     except ImportError:
         pytest.skip("matplotlib not available")
 
@@ -122,17 +113,17 @@ def test_colormap_options():
     try:
         import matplotlib.pyplot as plt
         from optimization_benchmarks import plot_function_3d
-        
-        colormaps = ['viridis', 'plasma', 'inferno', 'coolwarm']
-        
+
+        colormaps = ["viridis", "plasma", "inferno", "coolwarm"]
+
         for cmap in colormaps:
-            fig = plot_function_3d('sphere', cmap=cmap, resolution=10)
+            fig = plot_function_3d("sphere", cmap=cmap, resolution=10)
             assert fig is not None
             plt.close(fig)
-        
+
     except ImportError:
         pytest.skip("matplotlib not available")
 
 
 if __name__ == "__main__":
-    pytest.main([__file__, '-v'])
+    pytest.main([__file__, "-v"])

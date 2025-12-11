@@ -26,15 +26,61 @@ __license__ = "MIT"
 import warnings
 
 from .functions import (
-    ackley, rastrigin, rastrigin2, griewank, levy, michalewicz, schwefel2_26,
-    sphere, sphere2, rosenbrock, rosenbrock_ext1, rosenbrock_ext2, sum_squares,
-    hyperellipsoid, schwefel1_2, schwefel2_21, schwefel2_22, schwefel3_2,
-    step, step2, maxmod, multimod, katsuura,
-    beale, booth, matyas, himmelblau, easom, goldstein_price,
-    branin, branin2, camel3, camel6, bohachevsky1, bohachevsky2,
-    schaffer1, schaffer2, leon, trecanni, mccormick, eggholder,
-    chichinadze, hosaki, zettl, holzman1, holzman2, langerman,
-    stretched_v, trefethen4, box_betts, colville, corana, kowalik, exp2, gear
+    ackley,
+    rastrigin,
+    rastrigin2,
+    griewank,
+    levy,
+    michalewicz,
+    schwefel2_26,
+    sphere,
+    sphere2,
+    rosenbrock,
+    rosenbrock_ext1,
+    rosenbrock_ext2,
+    sum_squares,
+    hyperellipsoid,
+    schwefel1_2,
+    schwefel2_21,
+    schwefel2_22,
+    schwefel3_2,
+    step,
+    step2,
+    maxmod,
+    multimod,
+    katsuura,
+    beale,
+    booth,
+    matyas,
+    himmelblau,
+    easom,
+    goldstein_price,
+    branin,
+    branin2,
+    camel3,
+    camel6,
+    bohachevsky1,
+    bohachevsky2,
+    schaffer1,
+    schaffer2,
+    leon,
+    trecanni,
+    mccormick,
+    eggholder,
+    chichinadze,
+    hosaki,
+    zettl,
+    holzman1,
+    holzman2,
+    langerman,
+    stretched_v,
+    trefethen4,
+    box_betts,
+    colville,
+    corana,
+    kowalik,
+    exp2,
+    gear,
 )
 
 from .metadata import (
@@ -42,7 +88,7 @@ from .metadata import (
     get_all_functions,
     get_function_info,
     get_bounds,
-    get_function_list
+    get_function_list,
 )
 
 from .utils import (
@@ -55,13 +101,10 @@ from .utils import (
     get_bounds_range,
     get_bounds_center,
     generate_grid_points,
-    calculate_distance_to_optimum
+    calculate_distance_to_optimum,
 )
 
-from .benchmarking import (
-    BenchmarkRunner,
-    quick_benchmark
-)
+from .benchmarking import BenchmarkRunner, quick_benchmark
 
 __visualization_available__ = False
 try:
@@ -75,59 +118,108 @@ try:
         plot_search_heatmap,
         save_plot,
         batch_plot_functions,
-        COLORMAPS
+        COLORMAPS,
     )
+
     __visualization_available__ = True
 except ImportError:
     warnings.warn(
         "matplotlib not installed. Install with: pip install 'optimization-benchmarks[viz]'",
         ImportWarning,
-        stacklevel=2
+        stacklevel=2,
     )
 
 __all__ = [
-    '__version__',
-    'ackley', 'rastrigin', 'rastrigin2', 'griewank', 'levy', 'michalewicz', 'schwefel2_26',
-    'sphere', 'sphere2', 'rosenbrock', 'rosenbrock_ext1', 'rosenbrock_ext2', 'sum_squares',
-    'hyperellipsoid', 'schwefel1_2', 'schwefel2_21', 'schwefel2_22', 'schwefel3_2',
-    'step', 'step2', 'maxmod', 'multimod', 'katsuura',
-    'beale', 'booth', 'matyas', 'himmelblau', 'easom', 'goldstein_price',
-    'branin', 'branin2', 'camel3', 'camel6', 'bohachevsky1', 'bohachevsky2',
-    'schaffer1', 'schaffer2', 'leon', 'trecanni', 'mccormick', 'eggholder',
-    'chichinadze', 'hosaki', 'zettl', 'holzman1', 'holzman2', 'langerman',
-    'stretched_v', 'trefethen4', 'box_betts', 'colville', 'corana', 'kowalik', 'exp2', 'gear',
-    'BENCHMARK_SUITE',
-    'get_all_functions',
-    'get_function_info',
-    'get_bounds',
-    'get_function_list',
-    'normalize_bounds',
-    'generate_random_point',
-    'check_bounds',
-    'scale_to_unit',
-    'scale_from_unit',
-    'clip_to_bounds',
-    'get_bounds_range',
-    'get_bounds_center',
-    'generate_grid_points',
-    'calculate_distance_to_optimum',
-    'BenchmarkRunner',
-    'quick_benchmark',
+    "__version__",
+    "ackley",
+    "rastrigin",
+    "rastrigin2",
+    "griewank",
+    "levy",
+    "michalewicz",
+    "schwefel2_26",
+    "sphere",
+    "sphere2",
+    "rosenbrock",
+    "rosenbrock_ext1",
+    "rosenbrock_ext2",
+    "sum_squares",
+    "hyperellipsoid",
+    "schwefel1_2",
+    "schwefel2_21",
+    "schwefel2_22",
+    "schwefel3_2",
+    "step",
+    "step2",
+    "maxmod",
+    "multimod",
+    "katsuura",
+    "beale",
+    "booth",
+    "matyas",
+    "himmelblau",
+    "easom",
+    "goldstein_price",
+    "branin",
+    "branin2",
+    "camel3",
+    "camel6",
+    "bohachevsky1",
+    "bohachevsky2",
+    "schaffer1",
+    "schaffer2",
+    "leon",
+    "trecanni",
+    "mccormick",
+    "eggholder",
+    "chichinadze",
+    "hosaki",
+    "zettl",
+    "holzman1",
+    "holzman2",
+    "langerman",
+    "stretched_v",
+    "trefethen4",
+    "box_betts",
+    "colville",
+    "corana",
+    "kowalik",
+    "exp2",
+    "gear",
+    "BENCHMARK_SUITE",
+    "get_all_functions",
+    "get_function_info",
+    "get_bounds",
+    "get_function_list",
+    "normalize_bounds",
+    "generate_random_point",
+    "check_bounds",
+    "scale_to_unit",
+    "scale_from_unit",
+    "clip_to_bounds",
+    "get_bounds_range",
+    "get_bounds_center",
+    "generate_grid_points",
+    "calculate_distance_to_optimum",
+    "BenchmarkRunner",
+    "quick_benchmark",
 ]
 
 if __visualization_available__:
-    __all__.extend([
-        'plot_function_2d',
-        'plot_function_3d',
-        'plot_convergence',
-        'plot_trajectory_2d',
-        'plot_algorithm_comparison',
-        'plot_benchmark_summary',
-        'plot_search_heatmap',
-        'save_plot',
-        'batch_plot_functions',
-        'COLORMAPS',
-    ])
+    __all__.extend(
+        [
+            "plot_function_2d",
+            "plot_function_3d",
+            "plot_convergence",
+            "plot_trajectory_2d",
+            "plot_algorithm_comparison",
+            "plot_benchmark_summary",
+            "plot_search_heatmap",
+            "save_plot",
+            "batch_plot_functions",
+            "COLORMAPS",
+        ]
+    )
 
 
 def get_version():
@@ -140,4 +232,4 @@ def list_functions():
     return get_function_list()
 
 
-__all__.extend(['get_version', 'list_functions'])
+__all__.extend(["get_version", "list_functions"])
