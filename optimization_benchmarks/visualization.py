@@ -29,6 +29,18 @@ except ImportError:
 from .metadata import BENCHMARK_SUITE, get_function_info
 from .utils import normalize_bounds, generate_grid_points
 
+COLORMAPS = {
+    'viridis': 'viridis',
+    'plasma': 'plasma',
+    'inferno': 'inferno',
+    'magma': 'magma',
+    'cividis': 'cividis',
+    'coolwarm': 'coolwarm',
+    'jet': 'jet',
+    'rainbow': 'rainbow',
+    'turbo': 'turbo'
+}
+
 
 def _check_matplotlib():
     """Check if matplotlib is available."""
@@ -642,106 +654,72 @@ def plot_benchmark_summary(
     
     return fig
 
-COLORMAPS = {
-    'viridis': 'viridis',
-    'plasma': 'plasma',
-    'inferno': 'inferno',
-    'magma': 'magma',
-    'cividis': 'cividis',
-    'coolwarm': 'coolwarm',
-    'jet': 'jet',
-    'rainbow': 'rainbow',
-    'turbo': 'turbo'
-}
+def _check_matplotlib():
+    """Check if matplotlib is available."""
+    if not MATPLOTLIB_AVAILABLE:
+        raise ImportError(
+            "matplotlib is required for visualization. "
+            "Install with: pip install 'optimization-benchmarks[viz]'"
+        )
 
 
-def save_plot(
-    filename: str, 
-    formats: List[str] = ['png'], 
-    dpi: int = 300,
-    **kwargs
-) -> List[str]:
+def save_plot(fig, filepath, formats=['png'], dpi=300):
     """
-    Save current plot in multiple formats.
+    Save plot in multiple formats.
     
     Parameters
     ----------
-    filename : str
-        Base filename (without extension)
-    formats : list, optional
-        List of formats to save ('png', 'svg', 'pdf', 'eps')
-    dpi : int, optional
-        Resolution for raster formats
-    **kwargs : dict
-        Additional arguments passed to plt.savefig()
-    
-    Returns
-    -------
-    list of str
-        List of saved file paths
-    
-    Examples
-    --------
-    >>> plot_function_2d('ackley')
-    >>> save_plot('ackley', formats=['png', 'svg', 'pdf'])
-    # Saves: ackley.png, ackley.svg, ackley.pdf
+    fig : matplotlib.figure.Figure
+        Figure to save
+    filepath : str
+        Base file path (without extension)
+    formats : list of str, default=['png']
+        File formats to save
+    dpi : int, default=300
+        DPI for raster formats
     """
-    _check_matplotlib()
+    from pathlib import Path
+    filepath = Path(filepath)
+    stem = filepath.stem
+    parent = filepath.parent
     
-    saved_files = []
     for fmt in formats:
-        output_file = f"{filename}.{fmt}"
-        
-        # Set appropriate DPI for raster formats
+        output_file = parent / f"{stem}.{fmt}"
         if fmt in ['png', 'jpg', 'jpeg']:
-            plt.savefig(output_file, format=fmt, dpi=dpi, bbox_inches='tight', **kwargs)
+            fig.savefig(output_file, format=fmt, dpi=dpi, bbox_inches='tight')
         else:
-            plt.savefig(output_file, format=fmt, bbox_inches='tight', **kwargs)
-        
-        saved_files.append(output_file)
-        print(f"✓ Saved: {output_file}")
-    
-    return saved_files
+            fig.savefig(output_file, format=fmt, bbox_inches='tight')
 
 
 def plot_search_heatmap(
     function_name: str,
     points: np.ndarray,
     bounds: Optional[List[Tuple[float, float]]] = None,
-    bins: int = 50,
-    show_optimum: bool = True,
-    show_function: bool = True,
+    bins: int = 20,
+    resolution: int = 50,
     figsize: Tuple[int, int] = (10, 8),
-    cmap_func: str = 'viridis',
-    cmap_heat: str = 'hot',
+    cmap: str = 'viridis',
     save_path: Optional[str] = None
 ) -> plt.Figure:
     """
-    Plot heatmap of search points on function landscape.
-    
-    Shows where an optimization algorithm searched in the space,
-    overlaid on the function contour plot.
+    Plot search heatmap showing where an algorithm searched.
     
     Parameters
     ----------
     function_name : str
         Name of the benchmark function
     points : ndarray
-        Array of shape (n_points, 2) with evaluated points
+        Array of shape (n_points, 2) with visited points
     bounds : list of tuples, optional
         Custom bounds
-    bins : int, default=50
-        Number of bins for heatmap
-    show_optimum : bool, default=True
-        Whether to mark the global optimum
-    show_function : bool, default=True
-        Whether to show function contours
+    bins : int, default=20
+        Number of bins for histogram
+    resolution : int, default=50
+        Resolution for contour plot
     figsize : tuple, default=(10, 8)
         Figure size
-    cmap_func : str, default='viridis'
-        Colormap for function contours
-    cmap_heat : str, default='hot'
-        Colormap for heatmap
+    cmap : str, default='viridis'
+        Colormap name
     save_path : str, optional
         Path to save figure
     
@@ -749,13 +727,6 @@ def plot_search_heatmap(
     -------
     matplotlib.figure.Figure
         The created figure
-    
-    Examples
-    --------
-    >>> # Collect points during optimization
-    >>> points = np.array([[5, 5], [3, 3], [1, 1], [0.1, 0.1], [0, 0]])
-    >>> fig = plot_search_heatmap('sphere', points)
-    >>> plt.show()
     """
     _check_matplotlib()
     
@@ -763,71 +734,52 @@ def plot_search_heatmap(
     if points.shape[1] != 2:
         raise ValueError(f"Points must be 2D, got shape {points.shape}")
     
-    # Get function info
     info = get_function_info(function_name)
     func = info['function']
     
-    # Handle bounds
     if bounds is None:
         bounds = normalize_bounds(info['bounds'], 2)
     else:
         bounds = normalize_bounds(bounds, 2)
     
+    x = np.linspace(bounds[0][0], bounds[0][1], resolution)
+    y = np.linspace(bounds[1][0], bounds[1][1], resolution)
+    X, Y = np.meshgrid(x, y)
+    
+    Z = np.zeros_like(X)
+    for i in range(resolution):
+        for j in range(resolution):
+            try:
+                Z[i, j] = func(np.array([X[i, j], Y[i, j]]))
+            except:
+                Z[i, j] = np.nan
+    
     fig, ax = plt.subplots(figsize=figsize)
     
-    # Plot function contours if requested
-    if show_function:
-        resolution = 100
-        x = np.linspace(bounds[0][0], bounds[0][1], resolution)
-        y = np.linspace(bounds[1][0], bounds[1][1], resolution)
-        X, Y = np.meshgrid(x, y)
-        
-        Z = np.zeros_like(X)
-        for i in range(resolution):
-            for j in range(resolution):
-                try:
-                    Z[i, j] = func(np.array([X[i, j], Y[i, j]]))
-                except:
-                    Z[i, j] = np.nan
-        
-        # Contour plot (background)
-        contour = ax.contourf(X, Y, Z, levels=30, cmap=cmap_func, alpha=0.3)
-        contour_lines = ax.contour(X, Y, Z, levels=15, colors='black', 
-                                   alpha=0.2, linewidths=0.5)
+    contour = ax.contour(X, Y, Z, levels=20, colors='gray', alpha=0.3, linewidths=0.5)
     
-    # Create heatmap of visited points
     heatmap, xedges, yedges = np.histogram2d(
-        points[:, 0], points[:, 1],
-        bins=bins,
+        points[:, 0], points[:, 1], bins=bins,
         range=[[bounds[0][0], bounds[0][1]], [bounds[1][0], bounds[1][1]]]
     )
     
-    # Plot heatmap
     extent = [xedges[0], xedges[-1], yedges[0], yedges[-1]]
-    im = ax.imshow(heatmap.T, extent=extent, origin='lower', 
-                   cmap=cmap_heat, alpha=0.6, aspect='auto')
+    im = ax.imshow(heatmap.T, extent=extent, origin='lower', cmap=cmap, alpha=0.7)
     
-    # Colorbar for heatmap
     cbar = plt.colorbar(im, ax=ax)
-    cbar.set_label('Search Intensity', rotation=270, labelpad=20)
+    cbar.set_label('Number of Evaluations', rotation=270, labelpad=20)
     
-    # Mark optimum
-    if show_optimum:
-        optimal_points = _parse_optimal_point(info['optimal_point'])
-        if optimal_points:
-            for i, opt in enumerate(optimal_points):
-                label = 'Global Optimum' if i == 0 else None
-                ax.plot(opt[0], opt[1], 'r*', markersize=20, label=label,
-                       markeredgecolor='white', markeredgewidth=1.5)
-            ax.legend()
+    optimal_points = info.get('optimal_point')
+    if optimal_points is not None:
+        if isinstance(optimal_points[0], (list, tuple, np.ndarray)):
+            for opt in optimal_points:
+                if len(opt) == 2:
+                    ax.plot(opt[0], opt[1], 'r*', markersize=20, 
+                           markeredgecolor='white', markeredgewidth=1.5)
+        elif len(optimal_points) == 2:
+            ax.plot(optimal_points[0], optimal_points[1], 'r*', markersize=20,
+                   markeredgecolor='white', markeredgewidth=1.5, label='Global Optimum')
     
-    # Mark start and end points
-    ax.plot(points[0, 0], points[0, 1], 'go', markersize=10,
-           label='Start', markeredgecolor='white', markeredgewidth=1.5)
-    ax.plot(points[-1, 0], points[-1, 1], 'bs', markersize=10,
-           label='End', markeredgecolor='white', markeredgewidth=1.5)
-    
-    # Labels and title
     ax.set_xlabel('x₁', fontsize=12)
     ax.set_ylabel('x₂', fontsize=12)
     ax.set_title(f'{function_name.capitalize()} Function - Search Heatmap\n'
@@ -839,7 +791,7 @@ def plot_search_heatmap(
     plt.tight_layout()
     
     if save_path:
-        plt.savefig(save_path, dpi=300, bbox_inches='tight')
+        save_plot(fig, save_path)
     
     return fig
 
@@ -859,7 +811,7 @@ def batch_plot_functions(
     function_names : list of str
         List of function names to plot
     plot_types : list of str, default=['2d', '3d']
-        Types of plots to generate ('2d', '3d', 'contour')
+        Types of plots to generate
     output_dir : str, default='plots'
         Output directory for plots
     formats : list of str, default=['png']
@@ -871,21 +823,10 @@ def batch_plot_functions(
     -------
     dict
         Dictionary mapping function names to lists of saved file paths
-    
-    Examples
-    --------
-    >>> batch_plot_functions(
-    ...     ['sphere', 'ackley', 'rastrigin'],
-    ...     plot_types=['2d', '3d'],
-    ...     output_dir='my_plots',
-    ...     formats=['png', 'svg']
-    ... )
     """
     _check_matplotlib()
-    
     from pathlib import Path
     
-    # Create output directory
     output_path = Path(output_dir)
     output_path.mkdir(parents=True, exist_ok=True)
     
@@ -901,7 +842,6 @@ def batch_plot_functions(
         func_files = []
         
         for plot_type in plot_types:
-            # Generate plot
             if plot_type == '2d':
                 fig = plot_function_2d(func_name, **plot_kwargs)
                 base_name = output_path / f"{func_name}_2d"
@@ -912,15 +852,12 @@ def batch_plot_functions(
                 print(f"Unknown plot type: {plot_type}, skipping...")
                 continue
             
-            # Save in multiple formats
             for fmt in formats:
                 output_file = f"{base_name}.{fmt}"
-                
                 if fmt in ['png', 'jpg', 'jpeg']:
                     plt.savefig(output_file, format=fmt, dpi=300, bbox_inches='tight')
                 else:
                     plt.savefig(output_file, format=fmt, bbox_inches='tight')
-                
                 func_files.append(output_file)
                 print(f"✓ Saved: {output_file}")
             

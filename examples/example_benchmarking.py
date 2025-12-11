@@ -1,123 +1,110 @@
 """
-Example: Benchmarking Utilities
+Example: Benchmarking optimization algorithms
 
-This script demonstrates how to use the benchmarking tools.
+This example demonstrates how to use the BenchmarkRunner class to
+systematically test an optimization algorithm across multiple benchmark functions.
 """
 
 import numpy as np
-from optimization_benchmarks import BenchmarkRunner, quick_benchmark
-from optimization_benchmarks.utils import normalize_bounds, generate_random_point, clip_to_bounds
+import optimization_benchmarks as ob
 
 
 def simple_random_search(func, bounds, max_iter=1000):
-    """Simple random search optimizer."""
-    bounds = normalize_bounds(bounds, len(bounds))
+    """
+    Simple random search optimizer for demonstration.
+    
+    Parameters
+    ----------
+    func : callable
+        Objective function to minimize
+    bounds : list of tuples
+        Bounds for each dimension
+    max_iter : int
+        Maximum number of iterations
+    
+    Returns
+    -------
+    best_x : ndarray
+        Best solution found
+    best_val : float
+        Best function value found
+    """
     bounds_array = np.array(bounds)
+    lower = bounds_array[:, 0]
+    upper = bounds_array[:, 1]
+    dim = len(bounds)
     
-    best_x = generate_random_point(bounds)
-    best_cost = func(best_x)
+    best_x = None
+    best_val = np.inf
     
-    for _ in range(max_iter):
-        x = generate_random_point(bounds)
-        cost = func(x)
+    for i in range(max_iter):
+        x = lower + np.random.rand(dim) * (upper - lower)
+        val = func(x)
         
-        if cost < best_cost:
-            best_cost = cost
-            best_x = x
+        if val < best_val:
+            best_val = val
+            best_x = x.copy()
     
-    return best_x, best_cost
-
-
-def simple_hill_climbing(func, bounds, max_iter=1000):
-    """Simple hill climbing optimizer."""
-    bounds = normalize_bounds(bounds, len(bounds))
-    bounds_array = np.array(bounds)
-    
-    # Start from center
-    current_x = (bounds_array[:, 0] + bounds_array[:, 1]) / 2
-    current_cost = func(current_x)
-    
-    best_x = current_x.copy()
-    best_cost = current_cost
-    
-    step_size = 0.1
-    
-    for _ in range(max_iter):
-        # Generate neighbor
-        neighbor_x = current_x + np.random.randn(len(bounds)) * step_size
-        neighbor_x = clip_to_bounds(neighbor_x, bounds)
-        
-        neighbor_cost = func(neighbor_x)
-        
-        # Accept if better
-        if neighbor_cost < current_cost:
-            current_x = neighbor_x
-            current_cost = neighbor_cost
-            
-            if current_cost < best_cost:
-                best_x = current_x.copy()
-                best_cost = current_cost
-        
-        # Adaptive step size
-        step_size *= 0.99
-    
-    return best_x, best_cost
+    return best_x, best_val
 
 
 def main():
-    print("=" * 90)
-    print("BENCHMARKING EXAMPLES")
-    print("=" * 90)
+    print("=" * 80)
+    print("BENCHMARKING EXAMPLE")
+    print("=" * 80)
     
-    # Example 1: Quick Benchmark
-    print("\n1. Quick Benchmark (Random Search)")
-    print("-" * 90)
-    
-    results = quick_benchmark(
-        simple_random_search,
-        function_names=['sphere', 'ackley', 'rastrigin'],
+    # Create benchmark runner with progress bars
+    runner = ob.BenchmarkRunner(
+        algorithm=simple_random_search,
+        algorithm_name='RandomSearch',
         n_runs=5,
-        max_iter=500
-    )
-    
-    # Example 2: Detailed Benchmark with BenchmarkRunner
-    print("\n\n2. Detailed Benchmark (Hill Climbing)")
-    print("-" * 90)
-    
-    runner = BenchmarkRunner(
-        algorithm=simple_hill_climbing,
-        algorithm_name='HillClimbing',
-        n_runs=10,
         seed=42,
-        verbose=True
+        verbose=True,
+        show_progress=True
     )
     
+    # Select functions to test
+    test_functions = [
+        'sphere',
+        'ackley',
+        'rastrigin',
+        'rosenbrock',
+        'griewank',
+        'beale',
+        'booth',
+        'matyas'
+    ]
+    
+    print(f"\nTesting on {len(test_functions)} functions with 5 runs each\n")
+    
+    # Run benchmark suite
     results = runner.run_suite(
-        functions=['sphere', 'ackley', 'rastrigin', 'rosenbrock', 'griewank'],
+        functions=test_functions,
         max_iter=1000
     )
     
     # Save results
-    runner.save_results('hill_climbing_results.csv', format='csv')
-    runner.save_results('hill_climbing_results.json', format='json')
+    runner.save_results('benchmark_results.csv', format='csv')
+    runner.save_results('benchmark_results.json', format='json')
+    
+    print("\n" + "=" * 80)
+    print("RESULTS SAVED")
+    print("=" * 80)
+    print("CSV:  benchmark_results.csv")
+    print("JSON: benchmark_results.json")
     
     # Get summary statistics
     stats = runner.get_summary_stats()
-    
-    print("\n\n3. Summary Statistics")
-    print("-" * 90)
-    print(f"Algorithm: {stats['algorithm']}")
-    print(f"Total tests: {stats['n_results']}")
-    print(f"Successful: {stats['n_successful']}")
+    print("\n" + "=" * 80)
+    print("OVERALL STATISTICS")
+    print("=" * 80)
+    print(f"Total runs: {stats['n_results']}")
+    print(f"Successful runs: {stats['n_successful']}")
     print(f"Success rate: {stats['success_rate']*100:.1f}%")
     print(f"Mean error: {stats['error_mean']:.6f}")
     print(f"Median error: {stats['error_median']:.6f}")
     print(f"Total time: {stats['time_total']:.2f}s")
-    print(f"Mean time: {stats['time_mean']:.2f}s")
-    
-    print("\n" + "=" * 90)
-    print("✓ Benchmarking examples completed!")
-    print("=" * 90)
+    print("=" * 80)
 
 
 if __name__ == '__main__':

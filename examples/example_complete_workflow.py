@@ -1,194 +1,144 @@
 """
-Example: Complete Workflow
+Example: Complete workflow from optimization to visualization
 
-This script demonstrates a complete optimization workflow combining
-all features: optimization, benchmarking, and visualization.
+This example demonstrates a complete workflow including:
+1. Running an optimization algorithm
+2. Tracking the search trajectory
+3. Visualizing the results
+4. Comparing with known optimum
 """
 
 import numpy as np
 import matplotlib.pyplot as plt
-from optimization_benchmarks import (
-    BenchmarkRunner,
-    get_function_info,
-    normalize_bounds,
-    generate_random_point,
-    clip_to_bounds,
-    plot_function_2d,
-    plot_convergence,
-    plot_trajectory_2d,
-    plot_benchmark_summary
-)
+import optimization_benchmarks as ob
 
 
-def simulated_annealing(func, bounds, max_iter=1000, temp=100, cooling=0.99, return_history=False):
+def simulated_annealing(func, bounds, max_iter=1000, initial_temp=100.0):
     """
-    Simulated Annealing optimizer with history tracking.
+    Simple Simulated Annealing implementation.
+    
+    Returns best solution, best value, and trajectory.
     """
-    bounds = normalize_bounds(bounds, len(bounds))
     bounds_array = np.array(bounds)
+    lower = bounds_array[:, 0]
+    upper = bounds_array[:, 1]
+    dim = len(bounds)
     
     # Initialize
-    current_x = generate_random_point(bounds)
-    current_cost = func(current_x)
+    current_x = lower + np.random.rand(dim) * (upper - lower)
+    current_val = func(current_x)
     
     best_x = current_x.copy()
-    best_cost = current_cost
+    best_val = current_val
     
-    # History tracking
-    history = [best_cost]
-    trajectory = [best_x.copy()]
+    trajectory = [current_x.copy()]
+    history = [current_val]
     
-    current_temp = temp
+    temp = initial_temp
     
-    for iteration in range(max_iter):
+    for i in range(max_iter):
         # Generate neighbor
-        step_size = 0.1 * (bounds_array[:, 1] - bounds_array[:, 0]) * (current_temp / temp)
-        neighbor_x = current_x + np.random.randn(len(bounds)) * step_size
-        neighbor_x = clip_to_bounds(neighbor_x, bounds)
+        step_size = (upper - lower) * 0.1 * (temp / initial_temp)
+        neighbor = current_x + np.random.randn(dim) * step_size
+        neighbor = np.clip(neighbor, lower, upper)
         
-        # Evaluate
-        neighbor_cost = func(neighbor_x)
+        neighbor_val = func(neighbor)
         
-        # Acceptance criterion
-        delta = neighbor_cost - current_cost
-        if delta < 0 or (current_temp > 1e-10 and np.random.random() < np.exp(-delta / current_temp)):
-            current_x = neighbor_x
-            current_cost = neighbor_cost
-            
-            if current_cost < best_cost:
-                best_x = current_x.copy()
-                best_cost = current_cost
-                trajectory.append(best_x.copy())
+        # Accept or reject
+        delta = neighbor_val - current_val
+        if delta < 0 or np.random.rand() < np.exp(-delta / temp):
+            current_x = neighbor
+            current_val = neighbor_val
+            trajectory.append(current_x.copy())
         
-        history.append(best_cost)
-        current_temp *= cooling
+        # Update best
+        if current_val < best_val:
+            best_val = current_val
+            best_x = current_x.copy()
+        
+        history.append(best_val)
+        
+        # Cool down
+        temp *= 0.995
     
-    if return_history:
-        return best_x, best_cost, {'history': history, 'trajectory': np.array(trajectory)}
-    else:
-        return best_x, best_cost
+    return best_x, best_val, np.array(trajectory), history
 
 
 def main():
-    print("=" * 90)
+    print("=" * 80)
     print("COMPLETE WORKFLOW EXAMPLE")
-    print("=" * 90)
+    print("=" * 80)
     
-    # Step 1: Visualize test function
-    print("\n[Step 1] Visualizing test function...")
-    fig = plot_function_2d('sphere', resolution=100, show_optimum=True)
-    plt.savefig('workflow_function.png', dpi=300, bbox_inches='tight')
-    print("   ✓ Saved 'workflow_function.png'")
-    plt.close()
+    # Select a 2D function for visualization
+    function_name = 'ackley'
+    info = ob.get_function_info(function_name)
     
-    # Step 2: Run single optimization with visualization
-    print("\n[Step 2] Running single optimization...")
-    info = get_function_info('sphere')
-    func = info['function']
-    bounds = normalize_bounds(info['bounds'], 2)
+    print(f"\nOptimizing: {function_name}")
+    print(f"Known minimum: {info['known_minimum']}")
+    print(f"Optimal point: {info['optimal_point']}")
     
-    best_x, best_cost, extras = simulated_annealing(
-        func, bounds,
-        max_iter=500,
-        temp=50,
-        cooling=0.99,
-        return_history=True
+    # Get bounds for 2D
+    bounds = ob.get_bounds(function_name, dim=2)
+    
+    # Run optimization
+    print("\nRunning Simulated Annealing...")
+    best_x, best_val, trajectory, history = simulated_annealing(
+        info['function'],
+        bounds,
+        max_iter=2000
     )
     
-    print(f"   Best cost found: {best_cost:.6f}")
-    print(f"   Best point: {best_x}")
+    print(f"\nResults:")
+    print(f"Best solution: {best_x}")
+    print(f"Best value: {best_val:.6f}")
+    print(f"Error from known minimum: {abs(best_val - info['known_minimum']):.6e}")
+    print(f"Trajectory length: {len(trajectory)} points")
     
-    # Step 3: Plot convergence
-    print("\n[Step 3] Plotting convergence...")
-    fig = plot_convergence(
-        extras['history'],
-        function_name='sphere',
-        known_minimum=0.0,
+    # Visualizations
+    print("\nGenerating visualizations...")
+    
+    # 1. Function landscape (2D)
+    print("1. 2D Function landscape...")
+    fig1 = ob.plot_function_2d(function_name, show_optimum=True)
+    plt.savefig(f'{function_name}_2d.png', dpi=300, bbox_inches='tight')
+    
+    # 2. Function landscape (3D)
+    print("2. 3D Function landscape...")
+    fig2 = ob.plot_function_3d(function_name, elevation=30, azimuth=45)
+    plt.savefig(f'{function_name}_3d.png', dpi=300, bbox_inches='tight')
+    
+    # 3. Trajectory on function
+    print("3. Optimization trajectory...")
+    fig3 = ob.plot_trajectory_2d(function_name, trajectory, bounds=bounds)
+    plt.savefig(f'{function_name}_trajectory.png', dpi=300, bbox_inches='tight')
+    
+    # 4. Convergence plot
+    print("4. Convergence plot...")
+    fig4 = ob.plot_convergence(
+        history,
+        function_name=function_name,
+        known_minimum=info['known_minimum'],
         log_scale=True
     )
-    plt.savefig('workflow_convergence.png', dpi=300, bbox_inches='tight')
-    print("   ✓ Saved 'workflow_convergence.png'")
-    plt.close()
+    plt.savefig(f'{function_name}_convergence.png', dpi=300, bbox_inches='tight')
     
-    # Step 4: Plot trajectory
-    print("\n[Step 4] Plotting optimization trajectory...")
-    fig = plot_trajectory_2d('sphere', extras['trajectory'], resolution=50)
-    plt.savefig('workflow_trajectory.png', dpi=300, bbox_inches='tight')
-    print("   ✓ Saved 'workflow_trajectory.png'")
-    plt.close()
+    # 5. Search heatmap
+    print("5. Search heatmap...")
+    fig5 = ob.plot_search_heatmap(function_name, trajectory, bins=30)
+    plt.savefig(f'{function_name}_heatmap.png', dpi=300, bbox_inches='tight')
     
-    # Step 5: Run comprehensive benchmark
-    print("\n[Step 5] Running comprehensive benchmark...")
+    print("\n" + "=" * 80)
+    print("VISUALIZATIONS SAVED")
+    print("=" * 80)
+    print(f"{function_name}_2d.png")
+    print(f"{function_name}_3d.png")
+    print(f"{function_name}_trajectory.png")
+    print(f"{function_name}_convergence.png")
+    print(f"{function_name}_heatmap.png")
+    print("=" * 80)
     
-    # Wrapper that doesn't return history (for benchmarking)
-    def sa_wrapper(f, b, **kw):
-        return simulated_annealing(f, b, return_history=False, **kw)
-    
-    runner = BenchmarkRunner(
-        algorithm=sa_wrapper,
-        algorithm_name='SimulatedAnnealing',
-        n_runs=5,
-        seed=42,
-        verbose=True
-    )
-    
-    # Test on multiple functions
-    test_functions = [
-        'sphere', 'ackley', 'rastrigin', 'rosenbrock', 'griewank',
-        'beale', 'booth', 'himmelblau', 'easom', 'goldstein_price'
-    ]
-    
-    results = runner.run_suite(
-        functions=test_functions,
-        max_iter=2000,
-        temp=100,
-        cooling=0.99
-    )
-    
-    # Step 6: Save results
-    print("\n[Step 6] Saving results...")
-    runner.save_results('workflow_results.csv', format='csv')
-    runner.save_results('workflow_results.json', format='json')
-    print("   ✓ Saved 'workflow_results.csv'")
-    print("   ✓ Saved 'workflow_results.json'")
-    
-    # Step 7: Visualize benchmark summary
-    print("\n[Step 7] Creating benchmark summary visualization...")
-    fig = plot_benchmark_summary(results)
-    plt.savefig('workflow_benchmark_summary.png', dpi=300, bbox_inches='tight')
-    print("   ✓ Saved 'workflow_benchmark_summary.png'")
-    plt.close()
-    
-    # Step 8: Display summary statistics
-    print("\n[Step 8] Summary Statistics")
-    print("-" * 90)
-    stats = runner.get_summary_stats()
-    print(f"Algorithm: {stats['algorithm']}")
-    print(f"Functions tested: {len(test_functions)}")
-    print(f"Total runs: {stats['n_results']}")
-    print(f"Successful runs: {stats['n_successful']}")
-    print(f"Success rate: {stats['success_rate']*100:.1f}%")
-    print(f"\nError Statistics:")
-    print(f"  Mean:   {stats['error_mean']:.6f}")
-    print(f"  Median: {stats['error_median']:.6f}")
-    print(f"  Min:    {stats['error_min']:.6f}")
-    print(f"  Max:    {stats['error_max']:.6f}")
-    print(f"\nTime Statistics:")
-    print(f"  Total:  {stats['time_total']:.2f}s")
-    print(f"  Mean:   {stats['time_mean']:.2f}s")
-    print(f"  Median: {stats['time_median']:.2f}s")
-    
-    print("\n" + "=" * 90)
-    print("✓ COMPLETE WORKFLOW FINISHED!")
-    print("=" * 90)
-    print("\nGenerated files:")
-    print("  - workflow_function.png")
-    print("  - workflow_convergence.png")
-    print("  - workflow_trajectory.png")
-    print("  - workflow_benchmark_summary.png")
-    print("  - workflow_results.csv")
-    print("  - workflow_results.json")
-    print("\n" + "=" * 90)
+    # Show plots
+    plt.show()
 
 
 if __name__ == '__main__':

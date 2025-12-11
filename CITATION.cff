@@ -1,0 +1,16 @@
+cff-version: 1.2.0
+message: "If you use this software, please cite it as below."
+authors:
+  - family-names: "Rahul"
+    given-names: "AK"
+title: "optimization-benchmarks: A Python Package for Optimization Algorithm Evaluation"
+version: 0.3.0
+date-released: 2025-12-11
+url: "https://github.com/ak-rahul/optimization-benchmarks"
+repository-code: "https://github.com/ak-rahul/optimization-benchmarks"
+license: MIT
+keywords:
+  - optimization
+  - benchmark
+  - test-functions
+  - python

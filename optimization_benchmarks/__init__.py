@@ -1,27 +1,20 @@
 """
-Optimization Benchmark Functions Package
+optimization-benchmarks: Comprehensive Benchmark Functions for Optimization
 
-A comprehensive collection of standard benchmark functions for evaluating
-optimization algorithms. This package provides Python implementations of
-classical test functions widely used in the optimization research community.
+A collection of 55+ standard mathematical benchmark functions for evaluating
+optimization algorithms.
 
-Version 0.1.1 adds metadata support for easy benchmarking with bounds,
-dimensions, and known minima for all functions.
-
-Mathematical formulations are based on well-established definitions from:
-- MVF C library[1]
-- Virtual Library of Simulation Experiments[2]
-- Academic optimization literature[3]
-
-References:
------------
-[1] Adorio, E. P. (2005). MVF - Multivariate Test Functions Library in C.
-    University of the Philippines Diliman.
-[2] Surjanovic, S. & Bingham, D. (2013). Virtual Library of Simulation Experiments.
-    Simon Fraser University.
-[3] Jamil, M., & Yang, X. S. (2013). A literature survey of benchmark functions
-    for global optimization problems. International Journal of Mathematical
-    Modelling and Numerical Optimisation, 4(2), 150-194.
+References
+----------
+.. [1] Adorio, E. P., & Diliman, U. (2005). MVF-multivariate test functions
+       library in C for unconstrained global optimization.
+.. [2] Surjanovic, S., & Bingham, D. (2013). Virtual Library of Simulation
+       Experiments: Test Functions and Datasets.
+       http://www.sfu.ca/~ssurjano
+.. [3] Jamil, M., & Yang, X. S. (2013). A literature survey of benchmark
+       functions for global optimization problems. International Journal of
+       Mathematical Modelling and Numerical Optimisation, 4(2), 150-194.
+       https://doi.org/10.1504/IJMMNO.2013.055204
 
 License: MIT
 """
@@ -30,7 +23,8 @@ __version__ = "0.3.0"
 __author__ = "AK Rahul"
 __license__ = "MIT"
 
-# Import all benchmark functions
+import warnings
+
 from .functions import (
     ackley, rastrigin, rastrigin2, griewank, levy, michalewicz, schwefel2_26,
     sphere, sphere2, rosenbrock, rosenbrock_ext1, rosenbrock_ext2, sum_squares,
@@ -43,7 +37,6 @@ from .functions import (
     stretched_v, trefethen4, box_betts, colville, corana, kowalik, exp2, gear
 )
 
-# Import metadata utilities
 from .metadata import (
     BENCHMARK_SUITE,
     get_all_functions,
@@ -52,7 +45,6 @@ from .metadata import (
     get_function_list
 )
 
-# Import utilities
 from .utils import (
     normalize_bounds,
     generate_random_point,
@@ -66,13 +58,12 @@ from .utils import (
     calculate_distance_to_optimum
 )
 
-# Import benchmarking tools
 from .benchmarking import (
     BenchmarkRunner,
     quick_benchmark
 )
 
-# Conditional import of visualization (requires matplotlib)
+__visualization_available__ = False
 try:
     from .visualization import (
         plot_function_2d,
@@ -81,18 +72,21 @@ try:
         plot_trajectory_2d,
         plot_algorithm_comparison,
         plot_benchmark_summary,
-        plot_search_heatmap,  # NEW in v0.3.0
-        save_plot,  # NEW in v0.3.0
-        batch_plot_functions  # NEW in v0.3.0
+        plot_search_heatmap,
+        save_plot,
+        batch_plot_functions,
+        COLORMAPS
     )
     __visualization_available__ = True
 except ImportError:
-    __visualization_available__ = False
+    warnings.warn(
+        "matplotlib not installed. Install with: pip install 'optimization-benchmarks[viz]'",
+        ImportWarning,
+        stacklevel=2
+    )
 
 __all__ = [
-    # Version info
     '__version__',
-    # Benchmark functions
     'ackley', 'rastrigin', 'rastrigin2', 'griewank', 'levy', 'michalewicz', 'schwefel2_26',
     'sphere', 'sphere2', 'rosenbrock', 'rosenbrock_ext1', 'rosenbrock_ext2', 'sum_squares',
     'hyperellipsoid', 'schwefel1_2', 'schwefel2_21', 'schwefel2_22', 'schwefel3_2',
@@ -102,13 +96,11 @@ __all__ = [
     'schaffer1', 'schaffer2', 'leon', 'trecanni', 'mccormick', 'eggholder',
     'chichinadze', 'hosaki', 'zettl', 'holzman1', 'holzman2', 'langerman',
     'stretched_v', 'trefethen4', 'box_betts', 'colville', 'corana', 'kowalik', 'exp2', 'gear',
-    # Metadata
     'BENCHMARK_SUITE',
     'get_all_functions',
     'get_function_info',
     'get_bounds',
     'get_function_list',
-    # Utilities
     'normalize_bounds',
     'generate_random_point',
     'check_bounds',
@@ -119,12 +111,10 @@ __all__ = [
     'get_bounds_center',
     'generate_grid_points',
     'calculate_distance_to_optimum',
-    # Benchmarking
     'BenchmarkRunner',
     'quick_benchmark',
 ]
 
-# Add visualization to __all__ if available
 if __visualization_available__:
     __all__.extend([
         'plot_function_2d',
@@ -133,7 +123,21 @@ if __visualization_available__:
         'plot_trajectory_2d',
         'plot_algorithm_comparison',
         'plot_benchmark_summary',
-        'plot_search_heatmap',  # NEW
-        'save_plot',  # NEW
-        'batch_plot_functions',  # NEW
+        'plot_search_heatmap',
+        'save_plot',
+        'batch_plot_functions',
+        'COLORMAPS',
     ])
+
+
+def get_version():
+    """Get package version."""
+    return __version__
+
+
+def list_functions():
+    """Get list of all available benchmark functions."""
+    return get_function_list()
+
+
+__all__.extend(['get_version', 'list_functions'])

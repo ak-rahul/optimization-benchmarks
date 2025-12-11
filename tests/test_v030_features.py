@@ -68,27 +68,27 @@ def test_save_plot():
     """Test multi-format export."""
     try:
         import matplotlib.pyplot as plt
-        from optimization_benchmarks import plot_function_2d
+        from optimization_benchmarks import plot_function_2d, save_plot
         import os
         
         # Create a simple plot
         fig = plot_function_2d('sphere')
         
         # Save in multiple formats
-        files = save_plot('test_plot', formats=['png'])
+        save_plot(fig, 'test_plot', formats=['png'])
         
-        assert len(files) == 1
+        # Check file was created
         assert os.path.exists('test_plot.png')
         
-        # Cleanup
-        for f in files:
-            if os.path.exists(f):
-                os.remove(f)
+        # Clean up
+        if os.path.exists('test_plot.png'):
+            os.remove('test_plot.png')
         
         plt.close(fig)
         
     except ImportError:
-        pytest.skip("matplotlib not available")
+        pytest.skip("matplotlib not installed")
+
 
 
 def test_batch_plotting():

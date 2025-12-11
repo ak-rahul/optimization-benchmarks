@@ -1,4 +1,3 @@
-
 # optimization-benchmarks
 
 [![PyPI version](https://img.shields.io/pypi/v/optimization-benchmarks)](https://pypi.org/project/optimization-benchmarks/)
@@ -6,17 +5,19 @@
 [![Downloads](https://pepy.tech/badge/optimization-benchmarks)](https://pepy.tech/project/optimization-benchmarks)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://github.com/ak-rahul/optimization-benchmarks/blob/main/LICENSE.md)
 
-A comprehensive Python package providing 50+ classical mathematical benchmark functions for testing and evaluating optimization algorithms.
+A comprehensive collection of 55+ standard mathematical benchmark functions for testing and evaluating optimization algorithms.
 
 ## 🎯 Features
 
-- **50+ Standard Benchmark Functions**: Including Ackley, Rastrigin, Rosenbrock, Griewank, and many more
-- **Vectorized NumPy Implementation**: Fast and efficient computation
-- **Well-Documented**: Each function includes domain constraints and global minima
+- **55+ Benchmark Functions**: Complete collection of standard test functions
+- **Rich Metadata**: Bounds, dimensions, known minima, and optimal points
+- **Visualization Tools**: 2D/3D plots, convergence tracking, heatmaps
+- **Progress Tracking**: Real-time progress bars with tqdm integration (v0.3.0)
+- **Benchmarking Utilities**: Automated testing and comparison tools
+- **Multi-Format Export**: Save plots as PNG, SVG, PDF, EPS (v0.3.0)
+- **Batch Processing**: Generate multiple plots efficiently (v0.3.0)
 - **Type Hints**: Full type annotation support
-- **Command-Line Interface**: Evaluate functions directly from the terminal
-- **Zero Dependencies**: Only requires NumPy
-- **Academic Citations**: Properly cited mathematical formulations
+- **Zero Core Dependencies**: Only NumPy required (matplotlib optional)
 
 ## 📦 Installation
 
@@ -24,27 +25,37 @@ A comprehensive Python package providing 50+ classical mathematical benchmark fu
 ```
 pip install optimization-benchmarks
 ```
+
 ### From Source
 ```
 git clone https://github.com/ak-rahul/optimization-benchmarks.git
 cd optimization-benchmarks
 pip install -e .
 ```
-----
+
+---
 
 ## 🚀 Quick Start
 ```
 import numpy as np
 from optimization_benchmarks import ackley, rastrigin, rosenbrock
-
+```
+Test Ackley function
+```
 x = np.zeros(5)
 result = ackley(x)
 print(f"Ackley(0) = {result}") # Should be close to 0
+```
 
+Test Rosenbrock function
+```
 x = np.ones(10)
 result = rosenbrock(x)
 print(f"Rosenbrock(1) = {result}") # Should be 0
+```
 
+Test Rastrigin function
+```
 x = np.random.randn(5)
 result = rastrigin(x)
 print(f"Rastrigin(x) = {result}")
@@ -78,7 +89,7 @@ print(f"{name}: f(x*) = {best_f}")
 
 ---
 
-## 🎯 Using Benchmark Metadata (New in v0.1.1)
+## 🎯 Using Benchmark Metadata (v0.1.1+)
 
 Version 0.1.1 introduces comprehensive metadata for all 55 functions, eliminating the need to manually specify bounds and known minima:
 
@@ -88,16 +99,17 @@ import numpy as np
 ```
 
 ### Get all available functions
+
 ```
 from optimization_benchmarks import get_all_functions
-print(f"Total functions: {len(get_all_functions())}")  # 55
+print(f"Total functions: {len(get_all_functions())}") # 55
 ```
 
 ### Get metadata for a specific function
 ```
 info = get_function_info('ackley')
 func = info['function']
-bounds = info['bounds'] * info['default_dim']  # 10D by default
+bounds = info['bounds'] * info['default_dim'] # 10D by default
 known_min = info['known_minimum']
 ```
 
@@ -109,39 +121,39 @@ print(f"Ackley(0) = {result:.6f}, Expected: {known_min}")
 ```
 
 ### Simple Benchmarking with Metadata
-
 ```
 from optimization_benchmarks import BENCHMARK_SUITE
 import numpy as np
 
 def simple_random_search(func, bounds, n_iter=1000):
-    """Simple random search optimizer."""
-    best_x = None
-    best_cost = float('inf')
-    
-    for _ in range(n_iter):
-        x = np.array([np.random.uniform(b, b) for b in bounds])
-        cost = func(x)
-        if cost < best_cost:
-            best_cost = cost
-            best_x = x
-    
-    return best_x, best_cost
-```
+"""Simple random search optimizer."""
+best_x = None
+best_cost = float('inf')
 
-### Benchmark on all functions - no manual bounds needed!
+for _ in range(n_iter):
+    x = np.array([np.random.uniform(b, b) for b in bounds])[1]
+    cost = func(x)
+    if cost < best_cost:
+        best_cost = cost
+        best_x = x
+
+return best_x, best_cost
+```
+Benchmark on all functions - no manual bounds needed!
 ```
 for name, meta in BENCHMARK_SUITE.items():
-    func = meta['function']
-    bounds = meta['bounds'] * meta['default_dim']
-    known_min = meta['known_minimum']
-    
-    best_x, best_cost = simple_random_search(func, bounds)
-    error = abs(best_cost - known_min)
-    
-    print(f"{name:20s} | Found: {best_cost:12.6f} | "
-          f"Expected: {known_min:12.6f} | Error: {error:10.6f}")
+func = meta['function']
+bounds = meta['bounds'] * meta['default_dim']
+known_min = meta['known_minimum']
 ```
+```
+best_x, best_cost = simple_random_search(func, bounds)
+error = abs(best_cost - known_min)
+
+print(f"{name:20s} | Found: {best_cost:12.6f} | "
+      f"Expected: {known_min:12.6f} | Error: {error:10.6f}")
+```
+
 
 ### Metadata Helper Functions
 
@@ -164,11 +176,12 @@ Each entry in `BENCHMARK_SUITE` contains:
 
 ---
 
-## 🎨 Visualization Features (New in v0.2.0)
+## 🎨 Visualization Features (v0.2.0+)
 
 ### Installation with Visualization
 
 Install with visualization support
+
 ```
 pip install optimization-benchmarks[viz]
 ```
@@ -179,10 +192,12 @@ pip install optimization-benchmarks[all]
 ```
 
 ### 2D Contour Plots
+
 ```
 from optimization_benchmarks.visualization import plot_function_2d
 import matplotlib.pyplot as plt
 ```
+
 Create 2D contour plot
 ```
 fig = plot_function_2d('ackley', show_optimum=True, resolution=100)
@@ -214,12 +229,12 @@ fig = plot_function_3d('griewank', cmap='plasma')
 plt.show()
 ```
 
+
 ### Convergence Visualization
 
 ```
 from optimization_benchmarks.visualization import plot_convergence
 ```
-
 Simple convergence plot
 ```
 history = [100, 50, 25, 10, 5, 1, 0.5, 0.1, 0.01]
@@ -269,7 +284,6 @@ plt.show()
 ```
 from optimization_benchmarks.visualization import plot_algorithm_comparison
 ```
-
 Results from multiple algorithms
 ```
 results = {
@@ -323,7 +337,105 @@ plt.show()
 
 ---
 
-## 🔬 Systematic Benchmarking (New in v0.2.0)
+## 🆕 What's New in v0.3.0
+
+### Progress Bars with tqdm
+Real-time progress tracking during benchmarking:
+```
+from optimization_benchmarks import BenchmarkRunner
+```
+```
+runner = BenchmarkRunner(
+my_optimizer,
+algorithm_name='MyOptimizer',
+n_runs=10,
+show_progress=True # 🆕 NEW in v0.3.0
+)
+
+results = runner.run_suite(functions=['sphere', 'ackley', 'rastrigin'])
+```
+Shows: Benchmarking: 33%|███▍ | 1/3 [00:05<00:10, 5.2s/function]
+
+
+### Heatmap Visualization
+Visualize where your optimization algorithm searches:
+```
+from optimization_benchmarks import plot_search_heatmap
+import numpy as np
+```
+
+Your algorithm's search points
+```
+points = np.array([,, [0.5, 1], [0.1, 0.2], ])​
+```
+
+Create heatmap showing search density
+```
+fig = plot_search_heatmap('rastrigin', points, bins=30, cmap='hot')
+plt.savefig('search_heatmap.png')
+plt.show()
+```
+
+### Multi-Format Plot Export
+Save plots in multiple formats simultaneously:
+```
+from optimization_benchmarks import plot_function_2d, save_plot
+```
+Create plot
+```
+fig = plot_function_2d('ackley')
+```
+
+Save in multiple formats at once
+```
+save_plot(fig, 'ackley_function', formats=['png', 'svg', 'pdf', 'eps'], dpi=300)
+```
+Creates: ackley_function.png, ackley_function.svg, ackley_function.pdf, ackley_function.eps
+
+
+Or directly in plot functions:
+```
+fig = plot_function_2d('sphere', formats=['png', 'svg']) # Auto-saves both formats
+```
+
+
+### Enhanced Colormaps
+Choose from 9 beautiful colormaps:
+
+```
+from optimization_benchmarks import COLORMAPS
+
+print(COLORMAPS)  # Colours are : ['viridis', 'plasma', 'inferno', 'magma', 'cividis', 'coolwarm', 'jet', 'rainbow', 'turbo']
+```
+Use any colormap in visualization functions
+```
+fig = plot_function_2d('rastrigin', cmap='plasma')
+fig = plot_function_3d('ackley', cmap='inferno')
+fig = plot_search_heatmap('sphere', points, cmap='turbo'
+```
+
+### Batch Plotting
+Generate multiple plots efficiently:
+```
+from optimization_benchmarks import batch_plot_functions
+```
+
+Plot multiple functions in one call
+```
+batch_plot_functions(
+function_names=['sphere', 'ackley', 'rastrigin', 'rosenbrock'],
+plot_types=['2d', '3d'], # Generate both 2D and 3D plots
+output_dir='plots',
+formats=['png', 'svg'], # Save in multiple formats
+resolution=100,
+cmap='viridis'
+)
+```
+
+
+---
+
+## 🔬 Systematic Benchmarking (v0.2.0+)
 
 ### Quick Benchmarking
 ```
@@ -337,7 +449,6 @@ def my_optimizer(func, bounds, max_iter=1000):
 # ... your implementation ...
 return best_x, best_cost
 ```
-
 Quick test on common functions
 ```
 results = quick_benchmark(
@@ -360,7 +471,8 @@ algorithm=my_optimizer,
 algorithm_name='MyOptimizer',
 n_runs=10, # 10 independent runs per function
 seed=42, # For reproducibility
-verbose=True # Show progress
+verbose=True, # Show progress
+show_progress=True # 🆕 Progress bars (v0.3.0)
 )
 ```
 
@@ -403,8 +515,7 @@ print(f"Total time: {stats['time_total']:.2f}s")
 ### Testing Multiple Algorithms
 ```
 from optimization_benchmarks.benchmarking import BenchmarkRunner
-```
-```
+
 algorithms = {
 'SimulatedAnnealing': simulated_annealing,
 'GeneticAlgorithm': genetic_algorithm,
@@ -416,7 +527,7 @@ all_results = {}
 
 for name, algo in algorithms.items():
 print(f"\nTesting {name}...")
-runner = BenchmarkRunner(algo, algorithm_name=name, n_runs=10)
+runner = BenchmarkRunner(algo, algorithm_name=name, n_runs=10, show_progress=True)
 results = runner.run_suite(functions=test_functions)
 all_results[name] = results
 runner.save_results(f'{name}_results.csv')
@@ -428,43 +539,41 @@ from optimization_benchmarks.visualization import plot_algorithm_comparison
 fig = plot_algorithm_comparison(all_results, metric='error')
 plt.savefig('algorithm_comparison.png')
 ```
-
 ---
 
-## 🛠️ Utility Functions (New in v0.2.0)
+## 🛠️ Utility Functions (v0.2.0+)
 
 ### Bounds Normalization
 ```
 from optimization_benchmarks.utils import normalize_bounds
 ```
+
 Replicate single bound to all dimensions
 ```
 bounds = normalize_bounds([(-5, 5)], dim=10)
 ```
+
 Result: [(-5, 5), (-5, 5), ..., (-5, 5)] # 10 times
 
 Different bounds per dimension
 ```
 bounds = normalize_bounds([(-5, 5), (-10, 10), (0, 1)], dim=3)
 ```
-
 Result: [(-5, 5), (-10, 10), (0, 1)]
 
-From simple tuple,
+From simple tuple
 ```
 bounds = normalize_bounds((-5, 5), dim=5)
 ```
-
 Result: [(-5, 5)] * 5
 
 
 ### Random Point Generation
-
 ```
 from optimization_benchmarks.utils import generate_random_point
+```
 
 bounds = [(-5, 5), (-10, 10)]
-```
 
 Uniform random
 ```
@@ -490,6 +599,7 @@ point = np.array([10, -10])
 ```
 
 Check if within bounds
+
 ```
 is_valid = check_bounds(point, bounds) # False
 ```
@@ -498,11 +608,10 @@ Clip to bounds
 ```
 clipped = clip_to_bounds(point, bounds)
 ```
-
 Result: [5, -5]
 
-### Coordinate Transformations
 
+### Coordinate Transformations
 ```
 from optimization_benchmarks.utils import scale_to_unit, scale_from_unit
 
@@ -521,6 +630,7 @@ Scale back to original bounds
 ```
 original = scale_from_unit(unit_point, bounds)
 ```
+
 
 ### Bounds Information
 ```
@@ -555,13 +665,17 @@ from optimization_benchmarks.utils import calculate_distance_to_optimum
 current_point = np.array()​
 optimal_point = np.array()
 ```
+
 Euclidean distance
 ```
 distance = calculate_distance_to_optimum(current_point, optimal_point)
+```
 
 Result: 1.4142135623730951
+
 Multiple optima (returns minimum distance)
-optimal_points = [np.array(), np.array(), np.array()]​​
+```
+optimal_points = [np.array(), np.array(), np.array()]​
 distance = calculate_distance_to_optimum(current_point, optimal_points)
 ```
 
@@ -586,15 +700,12 @@ plot_trajectory_2d,
 plot_benchmark_summary
 )
 ```
-
-1. Define your optimizer with history tracking
-
+### 1. Define your optimizer with history tracking
 ```
 def my_optimizer(func, bounds, max_iter=1000):
 bounds = normalize_bounds(bounds, len(bounds))
 ```
-
-# Initialize
+Initialize
 ```
 current = generate_random_point(bounds)
 current_cost = func(current)
@@ -604,8 +715,7 @@ best_cost = current_cost
 history = [best_cost]
 trajectory = [best.copy()]
 ```
-
-# Optimization loop
+ Optimization loop
 ```
 for i in range(max_iter):
     # Generate neighbor
@@ -627,20 +737,21 @@ for i in range(max_iter):
 return best, best_cost
 ```
 
-2. Visualize a test function
+### 2. Visualize a test function
 ```
 plot_function_2d('ackley', show_optimum=True)
 plt.savefig('test_function.png')
 plt.close()
 ```
 
-3. Run benchmark suite
+### 3. Run benchmark suite
 ```
 runner = BenchmarkRunner(
 my_optimizer,
 algorithm_name='MyOptimizer',
 n_runs=10,
-seed=42
+seed=42,
+show_progress=True # v0.3.0 feature
 )
 
 results = runner.run_suite(
@@ -649,7 +760,7 @@ max_iter=5000
 )
 ```
 
-4. Save and visualize results
+### 4. Save and visualize results
 ```
 runner.save_results('my_results.csv')
 plot_benchmark_summary(results)
@@ -657,7 +768,7 @@ plt.savefig('benchmark_summary.png')
 plt.show()
 ```
 
-5. Print statistics
+### 5. Print statistics
 ```
 stats = runner.get_summary_stats()
 print(f"\nResults:")
@@ -700,12 +811,6 @@ With visualization
 ```
 pip install optimization-benchmarks[viz]
 ```
-
-Development
-```
-pip install optimization-benchmarks[dev]
-```
-
 Everything
 ```
 pip install optimization-benchmarks[all]
@@ -715,6 +820,7 @@ pip install optimization-benchmarks[all]
 ### Requirements
 - **Core**: Python 3.8+, NumPy ≥1.20.0
 - **Visualization**: matplotlib ≥3.3.0 (optional)
+- **Progress**: tqdm ≥4.65.0 (v0.3.0+)
 - **Development**: pytest, pytest-cov, black, flake8, mypy, isort (optional)
 
 ---
@@ -733,19 +839,19 @@ optbench --list
 optbench --info ackley
 ```
 
+
 ### Evaluate a function
 ```
 optbench --function rastrigin --values 0 0 0 0 0
 ```
 
 ### Batch evaluation from CSV
-
 ```
 optbench --function sphere --input points.csv --output results.json
 ```
 
----
 
+---
 
 ## 🔬 Function Properties
 
@@ -755,6 +861,35 @@ Each function includes:
 - **Global Minimum**: Known optimal value and location
 - **Mathematical Formula**: Documented in docstrings
 
+---
+
+## 📚 Academic Citations
+
+This package implements benchmark functions based on these authoritative sources:
+
+### Primary References
+
+1. **Jamil, M., & Yang, X. S. (2013).** "A literature survey of benchmark functions for global optimization problems." *International Journal of Mathematical Modelling and Numerical Optimisation*, 4(2), 150-194. DOI: [10.1504/IJMMNO.2013.055204](https://doi.org/10.1504/IJMMNO.2013.055204)
+
+2. **Surjanovic, S., & Bingham, D. (2013).** "Virtual Library of Simulation Experiments: Test Functions and Datasets." Simon Fraser University. URL: http://www.sfu.ca/~ssurjano
+
+3. **Adorio, E. P., & Diliman, U. (2005).** "MVF-Multivariate Test Functions Library in C for Unconstrained Global Optimization." University of the Philippines.
+
+### How to Cite This Package
+
+If you use this package in your research, please cite:
+
+```
+@software{optimization_benchmarks,
+author = {AK Rahul},
+title = {optimization-benchmarks: A Python Package for Optimization Algorithm Evaluation},
+year = {2025},
+url = {https://github.com/ak-rahul/optimization-benchmarks},
+version = {0.3.0}
+}
+```
+
+---
 
 ## 🎓 Academic Use
 
@@ -765,24 +900,7 @@ This package is perfect for:
 - **Teaching**: Demonstrate optimization concepts
 - **Thesis Projects**: Comprehensive evaluation suite
 
-### Citing This Package
-
-If you use this package in academic work, please cite:
-```
-@software{optimization_benchmarks,
-author = {AK Rahul},
-title = {optimization-benchmarks: Benchmark Functions for Optimization Algorithms},
-year = {2025},
-publisher = {PyPI},
-url = {https://github.com/ak-rahul/optimization-benchmarks}
-}
-```
-
-### Mathematical Formulations Based On
-
-[1] Adorio, E. P. (2005). MVF - Multivariate Test Functions Library in C.  
-[2] Surjanovic, S. & Bingham, D. (2013). Virtual Library of Simulation Experiments.  
-[3] Jamil, M., & Yang, X. S. (2013). A literature survey of benchmark functions for global optimization problems.
+---
 
 ## 🤝 Contributing
 
@@ -790,16 +908,20 @@ Contributions are welcome! Please see [CONTRIBUTING.md](CONTRIBUTING.md) for gui
 
 ### Quick Contribution Guide
 
-    1. Fork the repository
-    2. Create your feature branch (`git checkout -b feature/new-function`)
-    3. Add your function to `functions.py`
-    4. Add tests to `tests/test_functions.py`
-    5. Run tests: `pytest`
-    6. Submit a pull request
+1. Fork the repository
+2. Create your feature branch (`git checkout -b feature/new-function`)
+3. Add your function to `functions.py`
+4. Add tests to `tests/test_functions.py`
+5. Run tests: `pytest`
+6. Submit a pull request
+
+---
 
 ## 📄 License
 
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+This project is licensed under the MIT License - see the [LICENSE](LICENSE.md) file for details.
+
+---
 
 ## 🙏 Acknowledgments
 
@@ -807,11 +929,14 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 - Function definitions from Virtual Library of Simulation Experiments
 - Inspired by the optimization research community
 
+---
+
 ## 📞 Support
 
 - **Issues**: [GitHub Issues](https://github.com/ak-rahul/optimization-benchmarks/issues)
 - **Discussions**: [GitHub Discussions](https://github.com/ak-rahul/optimization-benchmarks/discussions)
 
+---
 
 ## 🔗 Related Projects
 
