@@ -10,11 +10,12 @@ readme = "README.md"
 requires-python = ">=3.8"
 license = {text = "MIT"}
 authors = [
-    {name = "AK Rahul", email = "your-email@example.com"}
+    {name = "AK Rahul", email = "ak-rahul@users.noreply.github.com"}
 ]
 maintainers = [
-    {name = "AK Rahul", email = "your-email@example.com"}
+    {name = "AK Rahul", email = "ak-rahul@users.noreply.github.com"}
 ]
+
 keywords = [
     "optimization",
     "benchmark",
