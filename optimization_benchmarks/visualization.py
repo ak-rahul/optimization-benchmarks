@@ -820,7 +820,7 @@ def plot_search_heatmap(
         range=[[bounds[0][0], bounds[0][1]], [bounds[1][0], bounds[1][1]]],
     )
 
-    extent = [xedges[0], xedges[-1], yedges[0], yedges[-1]]
+    extent = (xedges[0], xedges[-1], yedges[0], yedges[-1])
     im = ax.imshow(heatmap.T, extent=extent, origin="lower", cmap=cmap, alpha=0.7)
 
     cbar = plt.colorbar(im, ax=ax)

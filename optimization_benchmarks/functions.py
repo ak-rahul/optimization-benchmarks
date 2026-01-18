@@ -558,7 +558,7 @@ def multimod(x: np.ndarray) -> float:
     Global minimum: f = 0 at x = 0:contentReference[oaicite:39]{index=39}.
     """
     x = np.asarray(x, dtype=float)
-    return np.sum(np.abs(x)) * np.prod(np.abs(x))
+    return float(np.sum(np.abs(x)) * np.prod(np.abs(x)))
 
 
 def rastrigin(x: np.ndarray) -> float:
@@ -676,7 +676,7 @@ def schwefel2_22(x: np.ndarray) -> float:
     Global minimum: f = 0 at x = 0:contentReference[oaicite:48]{index=48}.
     """
     x = np.asarray(x, dtype=float)
-    return np.sum(np.abs(x)) + np.prod(np.abs(x))
+    return float(np.sum(np.abs(x)) + np.prod(np.abs(x)))
 
 
 def schwefel2_26(x: np.ndarray) -> float:

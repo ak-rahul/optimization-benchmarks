@@ -167,7 +167,7 @@ def check_bounds(
     lower = bounds[:, 0]
     upper = bounds[:, 1]
 
-    return np.all((point >= lower - tolerance) & (point <= upper + tolerance))
+    return bool(np.all((point >= lower - tolerance) & (point <= upper + tolerance)))
 
 
 def scale_to_unit(point: np.ndarray, bounds: List[Tuple[float, float]]) -> np.ndarray:
@@ -303,7 +303,9 @@ def get_bounds_center(bounds: List[Tuple[float, float]]) -> np.ndarray:
     return (bounds[:, 0] + bounds[:, 1]) / 2
 
 
-def generate_grid_points(bounds: List[Tuple[float, float]], points_per_dim: int = 10) -> np.ndarray:
+def generate_grid_points(
+    bounds: List[Tuple[float, float]], points_per_dim: int = 10
+) -> np.ndarray:
     """
     Generate a grid of points within bounds.
 
@@ -329,7 +331,9 @@ def generate_grid_points(bounds: List[Tuple[float, float]], points_per_dim: int 
     dim = len(bounds)
 
     # Create 1D grids for each dimension
-    grids_1d = [np.linspace(bounds[i, 0], bounds[i, 1], points_per_dim) for i in range(dim)]
+    grids_1d = [
+        np.linspace(bounds[i, 0], bounds[i, 1], points_per_dim) for i in range(dim)
+    ]
 
     # Create meshgrid
     meshes = np.meshgrid(*grids_1d, indexing="ij")
@@ -366,8 +370,12 @@ def calculate_distance_to_optimum(
     point = np.asarray(point)
 
     if isinstance(optimal_point, (list, tuple)):
-        distances = [np.linalg.norm(point - np.asarray(opt)) for opt in optimal_point]
+        # Handle list of optima
+        distances = [
+            float(np.linalg.norm(point - np.asarray(opt))) for opt in optimal_point
+        ]
         return min(distances)
     else:
+        # Handle single optimum
         optimal_point = np.asarray(optimal_point)
-        return np.linalg.norm(point - optimal_point)
+        return float(np.linalg.norm(point - optimal_point))
