@@ -1,16 +1,19 @@
-import pytest
-import numpy as np
 import time
+from typing import Callable
+
+import numpy as np
+import pytest
+from scipy.spatial.transform import Rotation
+
 from optimization_benchmarks import (
     BenchmarkRunner,
     NoisyFunction,
-    ShiftedFunction,
     RotatedFunction,
-    sphere,
+    ShiftedFunction,
     ackley,
     rastrigin,
+    sphere,
 )
-from scipy.spatial.transform import Rotation
 
 
 def test_noisy_function():

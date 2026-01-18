@@ -24,6 +24,8 @@ known_min = info['known_minimum']
 
 ### Metadata Helper Functions
 
+### Metadata Helper Functions
+
 | Function | Description |
 |----------|-------------|
 | `BENCHMARK_SUITE` | Dictionary with all 55 functions and metadata |
@@ -31,8 +33,6 @@ known_min = info['known_minimum']
 | `get_function_info(name)` | Returns metadata for specific function |
 | `get_bounds(name, dim=None)` | Returns bounds for given dimension |
 | `get_function_list()` | Returns formatted string with all functions |
-
-# ... (Keep existing content)
 
 ## 🔄 Function Wrappers (v0.4.0)
 
@@ -79,7 +79,23 @@ rotated_rastrigin = RotatedFunction(rastrigin, matrix=matrix)
 The `BenchmarkRunner` class allows for rigorous testing of optimization algorithms.
 
 ### Quick Benchmarking
-# ... (Keep existing Quick Benchmarking)
+
+For a rapid check of your algorithm:
+
+```python
+from optimization_benchmarks.benchmarking import quick_benchmark
+
+def my_optimizer(func, bounds, max_iter=1000):
+   # ... your implementation ...
+   return best_x, best_cost
+
+results = quick_benchmark(
+    my_optimizer,
+    function_names=['sphere', 'ackley', 'rastrigin'],
+    n_runs=5,
+    max_iter=1000
+)
+```
 
 ### Detailed Benchmarking
 
