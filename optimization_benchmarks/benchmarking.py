@@ -77,7 +77,8 @@ class BenchmarkRunner:
         n_runs: int = 1,
         seed: Optional[int] = None,
         verbose: bool = True,
-        show_progress: bool = True,  # NEW parameter
+        show_progress: bool = True,
+        n_jobs: int = 1,  # NEW parameter
     ):
         self.algorithm = algorithm
         self.algorithm_name = algorithm_name or "UnnamedAlgorithm"
@@ -85,6 +86,7 @@ class BenchmarkRunner:
         self.seed = seed
         self.verbose = verbose
         self.show_progress = show_progress and TQDM_AVAILABLE  # Only if tqdm available
+        self.n_jobs = n_jobs
         self.results = []
 
         if seed is not None:
@@ -247,20 +249,33 @@ class BenchmarkRunner:
                 func_iterator.set_description(f"Testing {func_name:<15}")
 
             # Multiple runs
-            run_results = []
 
-            # NEW: Wrap runs with tqdm if enabled
-            if self.show_progress:
-                run_iterator = tqdm(
-                    range(self.n_runs), desc=f"  Runs for {func_name}", leave=False, unit="run"
-                )
+            # PARALLEL OR SERIAL EXECUTION
+            if self.n_jobs != 1 and self.n_runs > 1:
+                # Parallel execution using joblib
+                try:
+                    from joblib import Parallel, delayed
+
+                    # Disable internal tqdm for parallel runs to avoid mess
+                    parallel_runs = Parallel(n_jobs=self.n_jobs)(
+                        delayed(self.run_single)(func_name, dim, **algorithm_kwargs)
+                        for _ in range(self.n_runs)
+                    )
+
+                    # Add run numbers post-hoc
+                    run_results = []
+                    for i, result in enumerate(parallel_runs):
+                        result["run"] = i + 1
+                        run_results.append(result)
+
+                except ImportError:
+                    if self.verbose:
+                        print("Warning: joblib not installed. Falling back to serial execution.")
+                    # Fallback to serial
+                    run_results = self._run_serial(func_name, dim, **algorithm_kwargs)
             else:
-                run_iterator = range(self.n_runs)
-
-            for run in run_iterator:
-                result = self.run_single(func_name, dim, **algorithm_kwargs)
-                result["run"] = run + 1
-                run_results.append(result)
+                # Serial execution
+                run_results = self._run_serial(func_name, dim, **algorithm_kwargs)
 
             # Aggregate stats across runs
             successful_runs = [r for r in run_results if r["success"]]
@@ -322,6 +337,23 @@ class BenchmarkRunner:
             self.print_summary(all_results)
 
         return all_results
+
+    def _run_serial(self, func_name, dim, **algorithm_kwargs):
+        """Helper for serial execution of runs."""
+        run_results = []
+
+        # NEW: Wrap runs with tqdm if enabled
+        if self.show_progress and self.verbose:
+            # Only show inner bar if not creating a mess (simplified logic)
+            run_iterator = range(self.n_runs)
+        else:
+            run_iterator = range(self.n_runs)
+
+        for run in run_iterator:
+            result = self.run_single(func_name, dim, **algorithm_kwargs)
+            result["run"] = run + 1
+            run_results.append(result)
+        return run_results
 
     def print_summary(self, results: List[Dict[str, Any]]):
         """Print summary statistics."""

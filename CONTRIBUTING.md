@@ -45,6 +45,23 @@ Add it to `__init__.py` exports and write tests in `tests/test_functions.py`.
 
 ## Testing
 
+We use `pytest` for testing. To run the tests:
+
+1. Install development dependencies:
+   ```bash
+   pip install -e ".[dev]"
+   ```
+
+2. Run all tests:
+   ```bash
+   pytest
+   ```
+
+3. Run with coverage report:
+   ```bash
+   pytest --cov=optimization_benchmarks
+   ```
+
 ## Code Style
 
 - Run `black optimization_benchmarks/` before committing

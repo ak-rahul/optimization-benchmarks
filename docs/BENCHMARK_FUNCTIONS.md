@@ -1,0 +1,1435 @@
+# Benchmark Functions Reference
+
+This document provides a detailed reference for all benchmark functions available in the package.
+
+## Summary
+
+Total functions: 55
+
+| Function | Dimensions | Domain | Global Minimum |
+|----------|------------|--------|----------------|
+| [ackley](#ackley) | 10D | [-30, 30]^n | 0 |
+| [beale](#beale) | 2D | [-4.5, 4.5]^n | 0 |
+| [bohachevsky1](#bohachevsky1) | 2D | [-50, 50]^n | 0 |
+| [bohachevsky2](#bohachevsky2) | 2D | [-50, 50]^n | 0 |
+| [booth](#booth) | 2D | [-10, 10]^n | 0 |
+| [box_betts](#box_betts) | 3D | Varies | 0 |
+| [branin](#branin) | 2D | Varies | 0.397887 |
+| [branin2](#branin2) | 2D | [-10, 10]^n | 0 |
+| [camel3](#camel3) | 2D | [-5, 5]^n | 0 |
+| [camel6](#camel6) | 2D | [-5, 5]^n | -1.03163 |
+| [chichinadze](#chichinadze) | 2D | Varies | -43.3159 |
+| [colville](#colville) | 4D | [-10, 10]^n | 0 |
+| [corana](#corana) | 4D | [-100, 100]^n | 0 |
+| [easom](#easom) | 2D | [-100, 100]^n | -1 |
+| [eggholder](#eggholder) | 2D | [-512, 512]^n | -959.641 |
+| [exp2](#exp2) | 2D | [0, 20]^n | 0 |
+| [gear](#gear) | 4D | [12, 60]^n | 2.7e-12 |
+| [goldstein_price](#goldstein_price) | 2D | [-2, 2]^n | 3 |
+| [griewank](#griewank) | 10D | [-600, 600]^n | 0 |
+| [himmelblau](#himmelblau) | 2D | [-6, 6]^n | 0 |
+| [holzman1](#holzman1) | 3D | Varies | 0 |
+| [holzman2](#holzman2) | 3D | [-10, 10]^n | 0 |
+| [hosaki](#hosaki) | 2D | Varies | -2.3458 |
+| [hyperellipsoid](#hyperellipsoid) | 10D | [-10, 10]^n | 0 |
+| [katsuura](#katsuura) | 10D | [-1000, 1000]^n | 1 |
+| [kowalik](#kowalik) | 4D | [-5, 5]^n | 0.000307486 |
+| [langerman](#langerman) | 3D | [0, 10]^n | -1.4 |
+| [leon](#leon) | 2D | [-10, 10]^n | 0 |
+| [levy](#levy) | 10D | [-10, 10]^n | 0 |
+| [matyas](#matyas) | 2D | [-10, 10]^n | 0 |
+| [maxmod](#maxmod) | 10D | [-10, 10]^n | 0 |
+| [mccormick](#mccormick) | 2D | Varies | -1.9133 |
+| [michalewicz](#michalewicz) | 10D | [0, 3.141592653589793]^n | -9.66 |
+| [multimod](#multimod) | 10D | [-10, 10]^n | 0 |
+| [rastrigin](#rastrigin) | 10D | [-5.12, 5.12]^n | 0 |
+| [rastrigin2](#rastrigin2) | 2D | [-5.12, 5.12]^n | 0 |
+| [rosenbrock](#rosenbrock) | 10D | [-10, 10]^n | 0 |
+| [rosenbrock_ext1](#rosenbrock_ext1) | 10D | [-10, 10]^n | 0 |
+| [rosenbrock_ext2](#rosenbrock_ext2) | 10D | [-10, 10]^n | 0 |
+| [schaffer1](#schaffer1) | 2D | [-100, 100]^n | 0 |
+| [schaffer2](#schaffer2) | 2D | [-100, 100]^n | 0 |
+| [schwefel1_2](#schwefel1_2) | 10D | [-100, 100]^n | 0 |
+| [schwefel2_21](#schwefel2_21) | 10D | [-100, 100]^n | 0 |
+| [schwefel2_22](#schwefel2_22) | 10D | [-10, 10]^n | 0 |
+| [schwefel2_26](#schwefel2_26) | 10D | [-500, 500]^n | -4189.83 |
+| [schwefel3_2](#schwefel3_2) | 10D | [-10, 10]^n | 0 |
+| [sphere](#sphere) | 10D | [-100, 100]^n | 0 |
+| [sphere2](#sphere2) | 10D | [-100, 100]^n | 0 |
+| [step](#step) | 10D | [-100, 100]^n | 0 |
+| [step2](#step2) | 5D | [-5.12, 5.12]^n | 30 |
+| [stretched_v](#stretched_v) | 3D | [-10, 10]^n | 0 |
+| [sum_squares](#sum_squares) | 10D | [-10, 10]^n | 0 |
+| [trecanni](#trecanni) | 2D | [-5, 5]^n | 0 |
+| [trefethen4](#trefethen4) | 2D | Varies | -3.30687 |
+| [zettl](#zettl) | 2D | [-10, 10]^n | -0.003791 |
+
+## Detailed Descriptions
+
+### ackley
+
+**Default Dimension:** 10
+**Known Minimum:** 0.0
+**Optimal Point:** `x = [0.0]`
+
+#### Description
+Ackley function.
+Domain: |x_i| ≤ 30.
+Dimension: n (arbitrary).
+Global minimum: f(0) = 0 at x = 0:contentReference[oaicite:0]{index=0}:contentReference[oaicite:1]{index=1}.
+
+#### Code Example
+```python
+from optimization_benchmarks import ackley
+import numpy as np
+
+# Run ackley
+x = np.zeros(10)
+result = ackley(x)
+print(f'result: {result}')
+```
+
+---
+
+### beale
+
+**Default Dimension:** 2
+**Known Minimum:** 0.0
+**Optimal Point:** `x = [3.0, 0.5]`
+
+#### Description
+Beale function.
+Domain: -4.5 ≤ x_i ≤ 4.5.
+Dimension: 2.
+Global minimum: f(3,0.5) = 0 at x = (3, 0.5):contentReference[oaicite:2]{index=2}:contentReference[oaicite:3]{index=3}.
+
+#### Code Example
+```python
+from optimization_benchmarks import beale
+import numpy as np
+
+# Run beale
+x = np.zeros(2)
+result = beale(x)
+print(f'result: {result}')
+```
+
+---
+
+### bohachevsky1
+
+**Default Dimension:** 2
+**Known Minimum:** 0.0
+**Optimal Point:** `x = [0.0, 0.0]`
+
+#### Description
+Bohachevsky function #1.
+Domain: |x_i| ≤ 50.
+Dimension: 2.
+Global minimum: f(0,0) = 0 at x = (0, 0):contentReference[oaicite:4]{index=4}:contentReference[oaicite:5]{index=5}.
+
+#### Code Example
+```python
+from optimization_benchmarks import bohachevsky1
+import numpy as np
+
+# Run bohachevsky1
+x = np.zeros(2)
+result = bohachevsky1(x)
+print(f'result: {result}')
+```
+
+---
+
+### bohachevsky2
+
+**Default Dimension:** 2
+**Known Minimum:** 0.0
+**Optimal Point:** `x = [0.0, 0.0]`
+
+#### Description
+Bohachevsky function #2.
+Domain: |x_i| ≤ 50.
+Dimension: 2.
+Global minimum: f(0,0) = 0 at x = (0, 0):contentReference[oaicite:6]{index=6}.
+
+#### Code Example
+```python
+from optimization_benchmarks import bohachevsky2
+import numpy as np
+
+# Run bohachevsky2
+x = np.zeros(2)
+result = bohachevsky2(x)
+print(f'result: {result}')
+```
+
+---
+
+### booth
+
+**Default Dimension:** 2
+**Known Minimum:** 0.0
+**Optimal Point:** `x = [1.0, 3.0]`
+
+#### Description
+Booth function.
+Domain: -10 ≤ x_i ≤ 10.
+Dimension: 2.
+Global minimum: f(1,3) = 0 at x = (1, 3):contentReference[oaicite:7]{index=7}.
+
+#### Code Example
+```python
+from optimization_benchmarks import booth
+import numpy as np
+
+# Run booth
+x = np.zeros(2)
+result = booth(x)
+print(f'result: {result}')
+```
+
+---
+
+### box_betts
+
+**Default Dimension:** 3
+**Known Minimum:** 0.0
+**Optimal Point:** `x = [1.0, 10.0, 1.0]`
+
+#### Description
+Box-Betts exponential quadratic sum function.
+Domain: x0 ∈ [0.9,1.2], x1 ∈ [9,11.2], x2 ∈ [0.9,1.2].
+Dimension: 3.
+Global minimum: f(1,10,1) = 0 at x = (1, 10, 1):contentReference[oaicite:8]{index=8}:contentReference[oaicite:9]{index=9}.
+
+#### Code Example
+```python
+from optimization_benchmarks import box_betts
+import numpy as np
+
+# Run box_betts
+x = np.zeros(3)
+result = box_betts(x)
+print(f'result: {result}')
+```
+
+---
+
+### branin
+
+**Default Dimension:** 2
+**Known Minimum:** 0.397887
+**Optimal Point:** `x = [(-3.141592653589793, 12.275), (3.141592653589793, 2.275), (9.425, 2.425)]`
+
+#### Description
+Branin function.
+Domain: x0 ∈ [-5, 10], x1 ∈ [0, 15].
+Dimension: 2.
+Global minima: f ≈ 0.3979 at x ≈ (-3.142,12.275), (3.142,2.275), (9.425,2.425):contentReference[oaicite:10]{index=10}:contentReference[oaicite:11]{index=11}.
+
+#### Code Example
+```python
+from optimization_benchmarks import branin
+import numpy as np
+
+# Run branin
+x = np.zeros(2)
+result = branin(x)
+print(f'result: {result}')
+```
+
+---
+
+### branin2
+
+**Default Dimension:** 2
+**Known Minimum:** 0.0
+**Optimal Point:** `x = [0.402357, 0.287408]`
+
+#### Description
+Modified Branin (Test function 2).
+Domain: |x_i| ≤ 10.
+Dimension: 2.
+Global minimum: f(0.402357,0.287408) = 0 at x ≈ (0.402357, 0.287408):contentReference[oaicite:12]{index=12}.
+
+#### Code Example
+```python
+from optimization_benchmarks import branin2
+import numpy as np
+
+# Run branin2
+x = np.zeros(2)
+result = branin2(x)
+print(f'result: {result}')
+```
+
+---
+
+### camel3
+
+**Default Dimension:** 2
+**Known Minimum:** 0.0
+**Optimal Point:** `x = [0.0, 0.0]`
+
+#### Description
+Three-hump camel function.
+Domain: |x_i| ≤ 5.
+Dimension: 2.
+Global minimum: f(0,0) = 0 at x = (0, 0):contentReference[oaicite:13]{index=13}:contentReference[oaicite:14]{index=14}.
+
+#### Code Example
+```python
+from optimization_benchmarks import camel3
+import numpy as np
+
+# Run camel3
+x = np.zeros(2)
+result = camel3(x)
+print(f'result: {result}')
+```
+
+---
+
+### camel6
+
+**Default Dimension:** 2
+**Known Minimum:** -1.0316285
+**Optimal Point:** `x = [(0.08983, -0.7126), (-0.08983, 0.7126)]`
+
+#### Description
+Six-hump camel function.
+Domain: |x_i| < 5.
+Dimension: 2.
+Global minimum: f ≈ -1.0316 at x ≈ (0.08983,-0.7126) and (-0.08983,0.7126):contentReference[oaicite:15]{index=15}:contentReference[oaicite:16]{index=16}.
+
+#### Code Example
+```python
+from optimization_benchmarks import camel6
+import numpy as np
+
+# Run camel6
+x = np.zeros(2)
+result = camel6(x)
+print(f'result: {result}')
+```
+
+---
+
+### chichinadze
+
+**Default Dimension:** 2
+**Known Minimum:** -43.3159
+**Optimal Point:** `x = [5.90133, 0.5]`
+
+#### Description
+Chichinadze function.
+Domain: x0 ∈ [-30, 30], x1 ∈ [-10, 10].
+Dimension: 2.
+Global minimum: f ≈ -43.3159 at x ≈ (5.90133, 0.5):contentReference[oaicite:17]{index=17}:contentReference[oaicite:18]{index=18}.
+
+#### Code Example
+```python
+from optimization_benchmarks import chichinadze
+import numpy as np
+
+# Run chichinadze
+x = np.zeros(2)
+result = chichinadze(x)
+print(f'result: {result}')
+```
+
+---
+
+### colville
+
+**Default Dimension:** 4
+**Known Minimum:** 0.0
+**Optimal Point:** `x = [1.0]`
+
+#### Description
+Colville function.
+Domain: -10 ≤ x_i ≤ 10.
+Dimension: 4.
+Global minimum: f(1,1,1,1) = 0 at x = (1, 1, 1, 1):contentReference[oaicite:19]{index=19}.
+
+#### Code Example
+```python
+from optimization_benchmarks import colville
+import numpy as np
+
+# Run colville
+x = np.zeros(4)
+result = colville(x)
+print(f'result: {result}')
+```
+
+---
+
+### corana
+
+**Default Dimension:** 4
+**Known Minimum:** 0.0
+**Optimal Point:** `x = [0.0]`
+
+#### Description
+Corana function.
+Domain: |x_i| ≤ 100.
+Dimension: 4.
+Global minimum: f = 0 at x = (0,0,0,0):contentReference[oaicite:20]{index=20}.
+
+#### Code Example
+```python
+from optimization_benchmarks import corana
+import numpy as np
+
+# Run corana
+x = np.zeros(4)
+result = corana(x)
+print(f'result: {result}')
+```
+
+---
+
+### easom
+
+**Default Dimension:** 2
+**Known Minimum:** -1.0
+**Optimal Point:** `x = [3.141592653589793, 3.141592653589793]`
+
+#### Description
+Easom function.
+Domain: |x_i| ≤ 100.
+Dimension: 2.
+Global minimum: f(π,π) = -1 at x = (π, π):contentReference[oaicite:21]{index=21}.
+
+#### Code Example
+```python
+from optimization_benchmarks import easom
+import numpy as np
+
+# Run easom
+x = np.zeros(2)
+result = easom(x)
+print(f'result: {result}')
+```
+
+---
+
+### eggholder
+
+**Default Dimension:** 2
+**Known Minimum:** -959.6407
+**Optimal Point:** `x = [512, 404.2319]`
+
+#### Description
+Egg holder function.
+Domain: |x_i| < 512.
+Dimension: n (usually 2).
+
+#### Code Example
+```python
+from optimization_benchmarks import eggholder
+import numpy as np
+
+# Run eggholder
+x = np.zeros(2)
+result = eggholder(x)
+print(f'result: {result}')
+```
+
+---
+
+### exp2
+
+**Default Dimension:** 2
+**Known Minimum:** 0.0
+**Optimal Point:** `x = [1.0, 10.0]`
+
+#### Description
+Exp2 function.
+Domain: 0 ≤ x_i ≤ 20.
+Dimension: 2.
+Global minimum: f(1,10) = 0 at x = (1, 10):contentReference[oaicite:22]{index=22}.
+
+#### Code Example
+```python
+from optimization_benchmarks import exp2
+import numpy as np
+
+# Run exp2
+x = np.zeros(2)
+result = exp2(x)
+print(f'result: {result}')
+```
+
+---
+
+### gear
+
+**Default Dimension:** 4
+**Known Minimum:** 2.7e-12
+**Optimal Point:** `x = [16, 19, 43, 49]`
+
+#### Description
+Gear train function.
+Domain: 12 ≤ x0,x1,x2,x3 ≤ 60.
+Dimension: 4.
+Global minimum: ≈2.7e-12 at permutations of (16, 19, 43, 49):contentReference[oaicite:23]{index=23}.
+
+#### Code Example
+```python
+from optimization_benchmarks import gear
+import numpy as np
+
+# Run gear
+x = np.zeros(4)
+result = gear(x)
+print(f'result: {result}')
+```
+
+---
+
+### goldstein_price
+
+**Default Dimension:** 2
+**Known Minimum:** 3.0
+**Optimal Point:** `x = [0.0, -1.0]`
+
+#### Description
+Goldstein-Price function.
+Domain: |x_i| ≤ 2.
+Dimension: 2.
+Global minimum: f(0,-1) = 3 at x = (0, -1):contentReference[oaicite:24]{index=24}.
+
+#### Code Example
+```python
+from optimization_benchmarks import goldstein_price
+import numpy as np
+
+# Run goldstein_price
+x = np.zeros(2)
+result = goldstein_price(x)
+print(f'result: {result}')
+```
+
+---
+
+### griewank
+
+**Default Dimension:** 10
+**Known Minimum:** 0.0
+**Optimal Point:** `x = [0.0]`
+
+#### Description
+Griewank function.
+Domain: |x_i| ≤ 600.
+Dimension: n.
+Global minimum: f(0) = 0 at x = 0:contentReference[oaicite:25]{index=25}.
+
+#### Code Example
+```python
+from optimization_benchmarks import griewank
+import numpy as np
+
+# Run griewank
+x = np.zeros(10)
+result = griewank(x)
+print(f'result: {result}')
+```
+
+---
+
+### himmelblau
+
+**Default Dimension:** 2
+**Known Minimum:** 0.0
+**Optimal Point:** `x = [3.0, 2.0]`
+
+#### Description
+Himmelblau function.
+Domain: -6 ≤ x_i ≤ 6.
+Dimension: 2.
+Global minimum: f(3,2) = 0 at x = (3, 2):contentReference[oaicite:26]{index=26}.
+
+#### Code Example
+```python
+from optimization_benchmarks import himmelblau
+import numpy as np
+
+# Run himmelblau
+x = np.zeros(2)
+result = himmelblau(x)
+print(f'result: {result}')
+```
+
+---
+
+### holzman1
+
+**Default Dimension:** 3
+**Known Minimum:** 0.0
+**Optimal Point:** `x = [50, 25, 1.5]`
+
+#### Description
+Holzman function #1.
+Domain: 0.1 ≤ x0 ≤ 100, 0 ≤ x1 ≤ 25.6, 0 ≤ x2 ≤ 5.
+Dimension: 3.
+Global minimum: f(50,25,1.5) = 0 at x = (50, 25, 1.5):contentReference[oaicite:29]{index=29}.
+
+#### Code Example
+```python
+from optimization_benchmarks import holzman1
+import numpy as np
+
+# Run holzman1
+x = np.zeros(3)
+result = holzman1(x)
+print(f'result: {result}')
+```
+
+---
+
+### holzman2
+
+**Default Dimension:** 3
+**Known Minimum:** 0.0
+**Optimal Point:** `x = [0.0]`
+
+#### Description
+Holzman function #2.
+Domain: |x_i| ≤ 10.
+Dimension: n.
+Global minimum: f(0) = 0 at x = 0:contentReference[oaicite:30]{index=30}.
+
+#### Code Example
+```python
+from optimization_benchmarks import holzman2
+import numpy as np
+
+# Run holzman2
+x = np.zeros(3)
+result = holzman2(x)
+print(f'result: {result}')
+```
+
+---
+
+### hosaki
+
+**Default Dimension:** 2
+**Known Minimum:** -2.3458
+**Optimal Point:** `x = [4.0, 2.0]`
+
+#### Description
+Hosaki function.
+Domain: x0 ≥ 0, x1 ≥ 0 (often in [0,5]×[0,6]).
+Dimension: 2.
+Global minimum: ≈ -2.3458 at x = (4, 2):contentReference[oaicite:31]{index=31}:contentReference[oaicite:32]{index=32}.
+
+#### Code Example
+```python
+from optimization_benchmarks import hosaki
+import numpy as np
+
+# Run hosaki
+x = np.zeros(2)
+result = hosaki(x)
+print(f'result: {result}')
+```
+
+---
+
+### hyperellipsoid
+
+**Default Dimension:** 10
+**Known Minimum:** 0.0
+**Optimal Point:** `x = [0.0]`
+
+#### Description
+Hyperellipsoid (Weighted sphere) function.
+Domain: |x_i| ≤ 10 (often).
+Dimension: n.
+Global minimum: f(0) = 0 at x = 0:contentReference[oaicite:27]{index=27}.
+
+#### Code Example
+```python
+from optimization_benchmarks import hyperellipsoid
+import numpy as np
+
+# Run hyperellipsoid
+x = np.zeros(10)
+result = hyperellipsoid(x)
+print(f'result: {result}')
+```
+
+---
+
+### katsuura
+
+**Default Dimension:** 10
+**Known Minimum:** 1.0
+**Optimal Point:** `x = [0.0]`
+
+#### Description
+Katsuura function.
+Domain: |x_i| ≤ 1000.
+Dimension: n.
+Global minimum: f(0) = 1 at x = 0:contentReference[oaicite:33]{index=33}.
+
+#### Code Example
+```python
+from optimization_benchmarks import katsuura
+import numpy as np
+
+# Run katsuura
+x = np.zeros(10)
+result = katsuura(x)
+print(f'result: {result}')
+```
+
+---
+
+### kowalik
+
+**Default Dimension:** 4
+**Known Minimum:** 0.0003074861
+**Optimal Point:** `x = [0.192833, 0.190836, 0.123117, 0.135766]`
+
+#### Description
+Kowalik function.
+Domain: |x_i| < 5.
+Dimension: 4.
+Global minimum: ≈0.000307 at x ≈ (0.1928,0.1908,0.1231,0.1358):contentReference[oaicite:28]{index=28}.
+
+#### Code Example
+```python
+from optimization_benchmarks import kowalik
+import numpy as np
+
+# Run kowalik
+x = np.zeros(4)
+result = kowalik(x)
+print(f'result: {result}')
+```
+
+---
+
+### langerman
+
+**Default Dimension:** 3
+**Known Minimum:** -1.4
+
+#### Description
+Langerman function.
+Domain: 0 ≤ x_i ≤ 10.
+Dimension: n.
+Global minimum: f ≈ -1.4:contentReference[oaicite:34]{index=34}.
+
+#### Code Example
+```python
+from optimization_benchmarks import langerman
+import numpy as np
+
+# Run langerman
+x = np.zeros(3)
+result = langerman(x)
+print(f'result: {result}')
+```
+
+---
+
+### leon
+
+**Default Dimension:** 2
+**Known Minimum:** 0.0
+**Optimal Point:** `x = [1.0, 1.0]`
+
+#### Description
+Leon function.
+Domain: |x_i| ≤ 10.
+Dimension: 2.
+Global minimum: f(1,1) = 0 at x = (1, 1):contentReference[oaicite:35]{index=35}.
+
+#### Code Example
+```python
+from optimization_benchmarks import leon
+import numpy as np
+
+# Run leon
+x = np.zeros(2)
+result = leon(x)
+print(f'result: {result}')
+```
+
+---
+
+### levy
+
+**Default Dimension:** 10
+**Known Minimum:** 0.0
+**Optimal Point:** `x = [1.0]`
+
+#### Description
+Levy function (n-dimensional).
+Domain: |x_i| ≤ 10.
+Dimension: n.
+
+#### Code Example
+```python
+from optimization_benchmarks import levy
+import numpy as np
+
+# Run levy
+x = np.zeros(10)
+result = levy(x)
+print(f'result: {result}')
+```
+
+---
+
+### matyas
+
+**Default Dimension:** 2
+**Known Minimum:** 0.0
+**Optimal Point:** `x = [0.0, 0.0]`
+
+#### Description
+Matyas function.
+Domain: |x_i| ≤ 10.
+Dimension: 2.
+Global minimum: f(0,0) = 0 at x = (0, 0):contentReference[oaicite:36]{index=36}.
+
+#### Code Example
+```python
+from optimization_benchmarks import matyas
+import numpy as np
+
+# Run matyas
+x = np.zeros(2)
+result = matyas(x)
+print(f'result: {result}')
+```
+
+---
+
+### maxmod
+
+**Default Dimension:** 10
+**Known Minimum:** 0.0
+**Optimal Point:** `x = [0.0]`
+
+#### Description
+Maxmod function.
+Domain: |x_i| ≤ 10.
+Dimension: n.
+Global minimum: f = 0 at x = 0:contentReference[oaicite:37]{index=37}.
+
+#### Code Example
+```python
+from optimization_benchmarks import maxmod
+import numpy as np
+
+# Run maxmod
+x = np.zeros(10)
+result = maxmod(x)
+print(f'result: {result}')
+```
+
+---
+
+### mccormick
+
+**Default Dimension:** 2
+**Known Minimum:** -1.9133
+**Optimal Point:** `x = [-0.54719, -1.54719]`
+
+#### Description
+McCormick function.
+Domain: -1.5 ≤ x0 ≤ 4, -3 ≤ x1 ≤ 4.
+Dimension: 2.
+Global minimum: f(-0.54719,-1.54719) ≈ -1.9133:contentReference[oaicite:38]{index=38}.
+
+#### Code Example
+```python
+from optimization_benchmarks import mccormick
+import numpy as np
+
+# Run mccormick
+x = np.zeros(2)
+result = mccormick(x)
+print(f'result: {result}')
+```
+
+---
+
+### michalewicz
+
+**Default Dimension:** 10
+**Known Minimum:** -9.66
+
+#### Description
+Michalewicz function.
+Domain: 0 ≤ x_i ≤ π.
+Dimension: n.
+
+#### Code Example
+```python
+from optimization_benchmarks import michalewicz
+import numpy as np
+
+# Run michalewicz
+x = np.zeros(10)
+result = michalewicz(x)
+print(f'result: {result}')
+```
+
+---
+
+### multimod
+
+**Default Dimension:** 10
+**Known Minimum:** 0.0
+**Optimal Point:** `x = [0.0]`
+
+#### Description
+Multimodal function.
+Domain: |x_i| ≤ 10.
+Dimension: n.
+Global minimum: f = 0 at x = 0:contentReference[oaicite:39]{index=39}.
+
+#### Code Example
+```python
+from optimization_benchmarks import multimod
+import numpy as np
+
+# Run multimod
+x = np.zeros(10)
+result = multimod(x)
+print(f'result: {result}')
+```
+
+---
+
+### rastrigin
+
+**Default Dimension:** 10
+**Known Minimum:** 0.0
+**Optimal Point:** `x = [0.0]`
+
+#### Description
+Rastrigin function.
+Domain: |x_i| ≤ 5.12.
+Dimension: n.
+Global minimum: f = 0 at x = 0.
+
+#### Code Example
+```python
+from optimization_benchmarks import rastrigin
+import numpy as np
+
+# Run rastrigin
+x = np.zeros(10)
+result = rastrigin(x)
+print(f'result: {result}')
+```
+
+---
+
+### rastrigin2
+
+**Default Dimension:** 2
+**Known Minimum:** 0.0
+**Optimal Point:** `x = [0.0, 0.0]`
+
+#### Description
+A variant of the Rastrigin function (2D).
+Domain: |x_i| ≤ 5.12.
+Dimension: 2.
+Global minimum: f = 0 at x = 0.
+
+#### Code Example
+```python
+from optimization_benchmarks import rastrigin2
+import numpy as np
+
+# Run rastrigin2
+x = np.zeros(2)
+result = rastrigin2(x)
+print(f'result: {result}')
+```
+
+---
+
+### rosenbrock
+
+**Default Dimension:** 10
+**Known Minimum:** 0.0
+**Optimal Point:** `x = [1.0]`
+
+#### Description
+Rosenbrock function (classic).
+Domain: |x_i| ≤ 10.
+Dimension: n.
+Global minimum: f = 0 at x = 1 (all xi = 1).
+
+#### Code Example
+```python
+from optimization_benchmarks import rosenbrock
+import numpy as np
+
+# Run rosenbrock
+x = np.zeros(10)
+result = rosenbrock(x)
+print(f'result: {result}')
+```
+
+---
+
+### rosenbrock_ext1
+
+**Default Dimension:** 10
+**Known Minimum:** 0.0
+**Optimal Point:** `x = [1.0]`
+
+#### Description
+Extended Rosenbrock function #1.
+Domain: |x_i| ≤ 10.
+Dimension: n (n even).
+Global minimum: f = 0 at x = 1 (all xi = 1).
+
+#### Code Example
+```python
+from optimization_benchmarks import rosenbrock_ext1
+import numpy as np
+
+# Run rosenbrock_ext1
+x = np.zeros(10)
+result = rosenbrock_ext1(x)
+print(f'result: {result}')
+```
+
+---
+
+### rosenbrock_ext2
+
+**Default Dimension:** 10
+**Known Minimum:** 0.0
+**Optimal Point:** `x = [1.0]`
+
+#### Description
+Extended Rosenbrock function #2.
+Domain: |x_i| ≤ 10.
+Dimension: n.
+Global minimum: f = 0 at x = 1 (all xi = 1).
+
+#### Code Example
+```python
+from optimization_benchmarks import rosenbrock_ext2
+import numpy as np
+
+# Run rosenbrock_ext2
+x = np.zeros(10)
+result = rosenbrock_ext2(x)
+print(f'result: {result}')
+```
+
+---
+
+### schaffer1
+
+**Default Dimension:** 2
+**Known Minimum:** 0.0
+**Optimal Point:** `x = [0.0, 0.0]`
+
+#### Description
+Schaffer function #1.
+Domain: |x_i| ≤ 100.
+Dimension: 2.
+Global minimum: f(0,0) = 0 at x = (0, 0):contentReference[oaicite:44]{index=44}.
+
+#### Code Example
+```python
+from optimization_benchmarks import schaffer1
+import numpy as np
+
+# Run schaffer1
+x = np.zeros(2)
+result = schaffer1(x)
+print(f'result: {result}')
+```
+
+---
+
+### schaffer2
+
+**Default Dimension:** 2
+**Known Minimum:** 0.0
+**Optimal Point:** `x = [0.0, 0.0]`
+
+#### Description
+Schaffer function #2.
+Domain: |x_i| ≤ 100.
+Dimension: 2.
+Global minimum: f(0,0) = 0 at x = (0, 0):contentReference[oaicite:45]{index=45}.
+
+#### Code Example
+```python
+from optimization_benchmarks import schaffer2
+import numpy as np
+
+# Run schaffer2
+x = np.zeros(2)
+result = schaffer2(x)
+print(f'result: {result}')
+```
+
+---
+
+### schwefel1_2
+
+**Default Dimension:** 10
+**Known Minimum:** 0.0
+**Optimal Point:** `x = [0.0]`
+
+#### Description
+Schwefel function 1.2.
+Domain: |x_i| < 10.
+Dimension: n.
+Global minimum: f = 0 at x = 0:contentReference[oaicite:46]{index=46}.
+
+#### Code Example
+```python
+from optimization_benchmarks import schwefel1_2
+import numpy as np
+
+# Run schwefel1_2
+x = np.zeros(10)
+result = schwefel1_2(x)
+print(f'result: {result}')
+```
+
+---
+
+### schwefel2_21
+
+**Default Dimension:** 10
+**Known Minimum:** 0.0
+**Optimal Point:** `x = [0.0]`
+
+#### Description
+Schwefel function 2.21.
+Domain: |x_i| < 10.
+Dimension: n.
+Global minimum: f = 0 at x = 0:contentReference[oaicite:47]{index=47}.
+
+#### Code Example
+```python
+from optimization_benchmarks import schwefel2_21
+import numpy as np
+
+# Run schwefel2_21
+x = np.zeros(10)
+result = schwefel2_21(x)
+print(f'result: {result}')
+```
+
+---
+
+### schwefel2_22
+
+**Default Dimension:** 10
+**Known Minimum:** 0.0
+**Optimal Point:** `x = [0.0]`
+
+#### Description
+Schwefel function 2.22.
+Domain: |x_i| < 10.
+Dimension: n.
+Global minimum: f = 0 at x = 0:contentReference[oaicite:48]{index=48}.
+
+#### Code Example
+```python
+from optimization_benchmarks import schwefel2_22
+import numpy as np
+
+# Run schwefel2_22
+x = np.zeros(10)
+result = schwefel2_22(x)
+print(f'result: {result}')
+```
+
+---
+
+### schwefel2_26
+
+**Default Dimension:** 10
+**Known Minimum:** -4189.829
+**Optimal Point:** `x = [420.9687]`
+
+#### Description
+Schwefel function 2.26.
+Domain: |x_i| < 500.
+Dimension: n.
+Global minimum: ≈ -12569.5 at x ≈ 420.9687 (for n=3):contentReference[oaicite:49]{index=49}.
+
+#### Code Example
+```python
+from optimization_benchmarks import schwefel2_26
+import numpy as np
+
+# Run schwefel2_26
+x = np.zeros(10)
+result = schwefel2_26(x)
+print(f'result: {result}')
+```
+
+---
+
+### schwefel3_2
+
+**Default Dimension:** 10
+**Known Minimum:** 0.0
+**Optimal Point:** `x = [1.0]`
+
+#### Description
+Schwefel (variant) function 3.2.
+Domain: |x_i| < 10.
+Dimension: n.
+Global minimum: f = 0 at x = (1,1,...,1):contentReference[oaicite:50]{index=50}.
+
+#### Code Example
+```python
+from optimization_benchmarks import schwefel3_2
+import numpy as np
+
+# Run schwefel3_2
+x = np.zeros(10)
+result = schwefel3_2(x)
+print(f'result: {result}')
+```
+
+---
+
+### sphere
+
+**Default Dimension:** 10
+**Known Minimum:** 0.0
+**Optimal Point:** `x = [0.0]`
+
+#### Description
+Sphere (Harmonic) function.
+Domain: |x_i| ≤ 100.
+Dimension: n.
+Global minimum: f(0) = 0 at x = 0:contentReference[oaicite:51]{index=51}.
+
+#### Code Example
+```python
+from optimization_benchmarks import sphere
+import numpy as np
+
+# Run sphere
+x = np.zeros(10)
+result = sphere(x)
+print(f'result: {result}')
+```
+
+---
+
+### sphere2
+
+**Default Dimension:** 10
+**Known Minimum:** 0.0
+**Optimal Point:** `x = [0.0]`
+
+#### Description
+Sphere function (cumulative sum variant).
+Domain: |x_i| ≤ 100.
+Dimension: n.
+Global minimum: f(0) = 0 at x = 0:contentReference[oaicite:52]{index=52}.
+
+#### Code Example
+```python
+from optimization_benchmarks import sphere2
+import numpy as np
+
+# Run sphere2
+x = np.zeros(10)
+result = sphere2(x)
+print(f'result: {result}')
+```
+
+---
+
+### step
+
+**Default Dimension:** 10
+**Known Minimum:** 0.0
+**Optimal Point:** `x = [0.5]`
+
+#### Description
+Step function.
+Domain: |x_i| ≤ 100.
+Dimension: n.
+Global minimum: f = 0 at x_i = 0.5:contentReference[oaicite:53]{index=53}.
+
+#### Code Example
+```python
+from optimization_benchmarks import step
+import numpy as np
+
+# Run step
+x = np.zeros(10)
+result = step(x)
+print(f'result: {result}')
+```
+
+---
+
+### step2
+
+**Default Dimension:** 5
+**Known Minimum:** 30.0
+**Optimal Point:** `x = [0.0]`
+
+#### Description
+Step function #2.
+Domain: |x_i| ≤ 5.12.
+Dimension: n.
+Global minimum: f = 0 at x = 0:contentReference[oaicite:54]{index=54}.
+
+#### Code Example
+```python
+from optimization_benchmarks import step2
+import numpy as np
+
+# Run step2
+x = np.zeros(5)
+result = step2(x)
+print(f'result: {result}')
+```
+
+---
+
+### stretched_v
+
+**Default Dimension:** 3
+**Known Minimum:** 0.0
+
+#### Description
+Stretched V function.
+Domain: |x_i| ≤ 10.
+Dimension: n.
+
+#### Code Example
+```python
+from optimization_benchmarks import stretched_v
+import numpy as np
+
+# Run stretched_v
+x = np.zeros(3)
+result = stretched_v(x)
+print(f'result: {result}')
+```
+
+---
+
+### sum_squares
+
+**Default Dimension:** 10
+**Known Minimum:** 0.0
+**Optimal Point:** `x = [0.0]`
+
+#### Description
+Sum of Squares function.
+Domain: -10 ≤ x_i ≤ 10.
+Dimension: n.
+Global minimum: f = 0 at x = 0:contentReference[oaicite:55]{index=55}.
+
+#### Code Example
+```python
+from optimization_benchmarks import sum_squares
+import numpy as np
+
+# Run sum_squares
+x = np.zeros(10)
+result = sum_squares(x)
+print(f'result: {result}')
+```
+
+---
+
+### trecanni
+
+**Default Dimension:** 2
+**Known Minimum:** 0.0
+**Optimal Point:** `x = [(0.0, 0.0), (-2.0, 0.0)]`
+
+#### Description
+Trecanni function.
+Domain: -5 ≤ x_i ≤ 5.
+Dimension: 2.
+Global minima: f(0,0) = 0 and f(-2,0) = 0:contentReference[oaicite:56]{index=56}.
+
+#### Code Example
+```python
+from optimization_benchmarks import trecanni
+import numpy as np
+
+# Run trecanni
+x = np.zeros(2)
+result = trecanni(x)
+print(f'result: {result}')
+```
+
+---
+
+### trefethen4
+
+**Default Dimension:** 2
+**Known Minimum:** -3.30686865
+**Optimal Point:** `x = [-0.0244031, 0.2106124]`
+
+#### Description
+Trefethen function #4.
+Domain: x0 ∈ (-6.5,6.5), x1 ∈ (-4.5,4.5).
+Dimension: 2.
+Global minimum: ≈ -3.30686865 at x ≈ (-0.0244031, 0.2106124):contentReference[oaicite:57]{index=57}.
+
+#### Code Example
+```python
+from optimization_benchmarks import trefethen4
+import numpy as np
+
+# Run trefethen4
+x = np.zeros(2)
+result = trefethen4(x)
+print(f'result: {result}')
+```
+
+---
+
+### zettl
+
+**Default Dimension:** 2
+**Known Minimum:** -0.003791
+**Optimal Point:** `x = [-0.0299, 0.0]`
+
+#### Description
+Zettl function.
+Domain: |x_i| ≤ 10.
+Dimension: 2.
+Global minimum: f ≈ -0.00379 at x ≈ (-0.02990, 0):contentReference[oaicite:58]{index=58}.
+
+#### Code Example
+```python
+from optimization_benchmarks import zettl
+import numpy as np
+
+# Run zettl
+x = np.zeros(2)
+result = zettl(x)
+print(f'result: {result}')
+```
+
+---

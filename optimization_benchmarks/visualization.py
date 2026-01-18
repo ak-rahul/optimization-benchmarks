@@ -941,3 +941,119 @@ def batch_plot_functions(
     print(f"✓ Generated {sum(len(f) for f in saved_files.values())} plots total")
 
     return saved_files
+
+
+def animate_trajectory_2d(
+    function_name: str,
+    trajectory: np.ndarray,
+    bounds: Optional[List[Tuple[float, float]]] = None,
+    resolution: int = 50,
+    figsize: Tuple[int, int] = (10, 8),
+    cmap: str = "viridis",
+    save_path: Optional[str] = None,
+    fps: int = 10,
+    interval: int = 200,
+):
+    """
+    Create an animated GIF of the optimization trajectory.
+
+    Parameters
+    ----------
+    function_name : str
+        Name of the benchmark function
+    trajectory : ndarray
+        Array of shape (n_points, 2) with optimization trajectory
+    bounds : list of tuples, optional
+        Custom bounds
+    resolution : int, default=50
+        Resolution for contour plot
+    figsize : tuple, default=(10, 8)
+        Figure size
+    cmap : str, default='viridis'
+        Colormap name
+    save_path : str, optional
+        Path to save animation (should end in .gif or .mp4)
+    fps : int, default=10
+        Frames per second
+    interval : int, default=200
+        Delay between frames in milliseconds
+
+    Returns
+    -------
+    matplotlib.animation.FuncAnimation
+        The animation object
+    """
+    _check_matplotlib()
+
+    from matplotlib.animation import FuncAnimation, PillowWriter
+
+    trajectory = np.asarray(trajectory)
+    if trajectory.shape[1] != 2:
+        raise ValueError(f"Trajectory must be 2D, got shape {trajectory.shape}")
+
+    # Initialize plot with base contour
+    fig = plot_function_2d(
+        function_name, bounds, resolution, show_optimum=True, figsize=figsize, cmap=cmap
+    )
+    ax = fig.axes[0]
+    ax.set_title(
+        f"{function_name.capitalize()} Function - Optimization Animation",
+        fontsize=14,
+        fontweight="bold",
+    )
+
+    # Initialize empty trajectory line and point
+    (line,) = ax.plot([], [], "wo-", linewidth=2, markersize=4, alpha=0.7)
+    (point,) = ax.plot([], [], "ro", markersize=10, markeredgecolor="white", markeredgewidth=1.5)
+
+    # Initialize text for iteration count
+    iter_text = ax.text(
+        0.02,
+        0.95,
+        "",
+        transform=ax.transAxes,
+        fontsize=12,
+        fontweight="bold",
+        bbox=dict(facecolor="white", alpha=0.7),
+    )
+
+    def init():
+        line.set_data([], [])
+        point.set_data([], [])
+        iter_text.set_text("")
+        return line, point, iter_text
+
+    def update(frame):
+        # Update path up to current frame
+        current_path = trajectory[: frame + 1]
+        line.set_data(current_path[:, 0], current_path[:, 1])
+
+        # Update current point
+        point.set_data([trajectory[frame, 0]], [trajectory[frame, 1]])
+
+        # Update iteration count
+        iter_text.set_text(f"Iteration: {frame}")
+
+        return line, point, iter_text
+
+    # Create animation
+    anim = FuncAnimation(
+        fig, update, frames=len(trajectory), init_func=init, blit=True, interval=interval
+    )
+
+    if save_path:
+        if save_path.lower().endswith(".gif"):
+            writer = PillowWriter(fps=fps)
+            anim.save(save_path, writer=writer)
+        elif save_path.lower().endswith(".mp4"):
+            # Requires ffmpeg
+            try:
+                anim.save(save_path, fps=fps, extra_args=["-vcodec", "libx264"])
+            except Exception as e:
+                print(f"Failed to save MP4 (check ffmpeg installation): {e}")
+        else:
+            print(f"Warning: Unknown animation format for {save_path}. Saving as GIF.")
+            writer = PillowWriter(fps=fps)
+            anim.save(str(save_path) + ".gif", writer=writer)
+
+    return anim

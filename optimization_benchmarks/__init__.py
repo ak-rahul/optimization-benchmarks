@@ -19,7 +19,7 @@ References
 License: MIT
 """
 
-__version__ = "0.3.0"
+__version__ = "0.4.0"
 __author__ = "AK Rahul"
 __license__ = "MIT"
 
@@ -102,11 +102,13 @@ from .utils import (
     scale_from_unit,
     scale_to_unit,
 )
+from .wrappers import BenchmarkWrapper, NoisyFunction, RotatedFunction, ShiftedFunction
 
 __visualization_available__ = False
 try:
     from .visualization import (
         COLORMAPS,
+        animate_trajectory_2d,
         batch_plot_functions,
         plot_algorithm_comparison,
         plot_benchmark_summary,
@@ -200,6 +202,10 @@ __all__ = [
     "calculate_distance_to_optimum",
     "BenchmarkRunner",
     "quick_benchmark",
+    "BenchmarkWrapper",
+    "NoisyFunction",
+    "ShiftedFunction",
+    "RotatedFunction",
 ]
 
 if __visualization_available__:
@@ -214,6 +220,7 @@ if __visualization_available__:
             "plot_search_heatmap",
             "save_plot",
             "batch_plot_functions",
+            "animate_trajectory_2d",
             "COLORMAPS",
         ]
     )

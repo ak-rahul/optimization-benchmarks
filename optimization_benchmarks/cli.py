@@ -1,10 +1,13 @@
 """
 Command-line interface for optimization-benchmarks package.
 
-Provides utilities to evaluate benchmark functions from the command line,
-supporting single evaluations, batch processing from CSV files, function
-introspection, and metadata queries.
+Layer for optimization-benchmarks package.
 
+Provides utilities to evaluate benchmark functions from the command line,
+supporting single evaluations, batch processing from CSV files (with parallel support),
+function introspection, and metadata queries.
+
+Version 0.4.0 adds parallel batch processing via --jobs.
 Version 0.1.1 adds metadata support for bounds, dimensions, and known minima.
 
 Part of the optimization-benchmarks package[1].
@@ -138,10 +141,11 @@ def evaluate_function(func_name, values):
     return {"input": x, "result": result}
 
 
-def evaluate_function_batch(func_name, input_file):
+def evaluate_function_batch(func_name, input_file, n_jobs=1):
     """
     Evaluate the given function on a batch of input vectors from a CSV file.
     Returns a list of dictionaries with inputs and results.
+    Support parallel execution via n_jobs.
     """
     results = []
 
@@ -152,6 +156,7 @@ def evaluate_function_batch(func_name, input_file):
     func = getattr(functions, func_name)
 
     try:
+        inputs = []
         with open(input_file, "r", newline="") as csvfile:
             reader = csv.reader(csvfile)
             for row_num, row in enumerate(reader, start=1):
@@ -160,12 +165,32 @@ def evaluate_function_batch(func_name, input_file):
 
                 try:
                     x = [float(v) for v in row]
+                    inputs.append(x)
                 except ValueError as e:
                     print(f"Error: Invalid number in CSV at line {row_num}: {e}", file=sys.stderr)
                     sys.exit(1)
 
-                result = func(x)
-                results.append({"input": x, "result": result})
+        if not inputs:
+            return []
+
+        # Parallel execution
+        if n_jobs > 1:
+            try:
+                from joblib import Parallel, delayed
+
+                outputs = Parallel(n_jobs=n_jobs)(delayed(func)(x) for x in inputs)
+                results = [{"input": x, "result": y} for x, y in zip(inputs, outputs)]
+            except ImportError:
+                print(
+                    "Warning: joblib not installed. Falling back to serial execution.",
+                    file=sys.stderr,
+                )
+                outputs = [func(x) for x in inputs]
+                results = [{"input": x, "result": y} for x, y in zip(inputs, outputs)]
+        else:
+            # Serial execution
+            outputs = [func(x) for x in inputs]
+            results = [{"input": x, "result": y} for x, y in zip(inputs, outputs)]
 
     except FileNotFoundError:
         print(f"Error: Input file '{input_file}' not found.", file=sys.stderr)
@@ -219,6 +244,13 @@ def main():
     )
     parser.add_argument(
         "--output", metavar="FILE", help="Output file to write results in JSON format"
+    )
+    parser.add_argument(
+        "--jobs",
+        metavar="N",
+        type=int,
+        default=1,
+        help="Number of parallel jobs for batch processing",
     )
 
     args = parser.parse_args()
@@ -278,7 +310,8 @@ def main():
 
     # Batch evaluation
     elif args.input:
-        results = evaluate_function_batch(func_name, args.input)
+        n_jobs = args.jobs if args.jobs else 1
+        results = evaluate_function_batch(func_name, args.input, n_jobs=n_jobs)
         output_data["results"] = results
 
     # Output results
