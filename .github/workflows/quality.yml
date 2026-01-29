@@ -30,3 +30,8 @@ jobs:
 
     - name: Type check (mypy)
       run: mypy optimization_benchmarks
+
+    - name: Run tests
+      run: |
+        pytest --cov=optimization_benchmarks --cov-report=xml
+

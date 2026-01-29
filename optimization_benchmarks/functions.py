@@ -35,13 +35,76 @@ License: MIT
 
 import numpy as np
 
+__all__ = [
+    "ackley",
+    "beale",
+    "bohachevsky1",
+    "bohachevsky2",
+    "booth",
+    "box_betts",
+    "branin",
+    "branin2",
+    "camel3",
+    "camel6",
+    "chichinadze",
+    "colville",
+    "corana",
+    "easom",
+    "eggholder",
+    "exp2",
+    "fraudenstein_roth",
+    "gear",
+    "goldstein_price",
+    "griewank",
+    "himmelblau",
+    "holzman1",
+    "holzman2",
+    "hosaki",
+    "hyperellipsoid",
+    "katsuura",
+    "kowalik",
+    "langerman",
+    "lennard_jones",
+    "leon",
+    "levy",
+    "matyas",
+    "maxmod",
+    "mccormick",
+    "michalewicz",
+    "multimod",
+    "rastrigin",
+    "rastrigin2",
+    "rosenbrock",
+    "rosenbrock_ext1",
+    "rosenbrock_ext2",
+    "schaffer1",
+    "schaffer2",
+    "schwefel1_2",
+    "schwefel2_21",
+    "schwefel2_22",
+    "schwefel2_26",
+    "schwefel3_2",
+    "sphere",
+    "sphere2",
+    "step",
+    "step2",
+    "stretched_v",
+    "sum_squares",
+    "trecanni",
+    "trefethen4",
+    "watson",
+    "xor",
+    "zettl",
+    "zimmerman",
+]
+
 
 def ackley(x: np.ndarray) -> float:
     """
     Ackley function.
     Domain: |x_i| ≤ 30.
     Dimension: n (arbitrary).
-    Global minimum: f(0) = 0 at x = 0:contentReference[oaicite:0]{index=0}:contentReference[oaicite:1]{index=1}.
+    Global minimum: f(0) = 0 at x = 0.
     """
     x = np.asarray(x, dtype=float)
     n = x.size
@@ -55,7 +118,7 @@ def beale(x: np.ndarray) -> float:
     Beale function.
     Domain: -4.5 ≤ x_i ≤ 4.5.
     Dimension: 2.
-    Global minimum: f(3,0.5) = 0 at x = (3, 0.5):contentReference[oaicite:2]{index=2}:contentReference[oaicite:3]{index=3}.
+    Global minimum: f(3,0.5) = 0 at x = (3, 0.5).
     """
     x = np.asarray(x, dtype=float)
     x0, x1 = x
@@ -70,7 +133,7 @@ def bohachevsky1(x: np.ndarray) -> float:
     Bohachevsky function #1.
     Domain: |x_i| ≤ 50.
     Dimension: 2.
-    Global minimum: f(0,0) = 0 at x = (0, 0):contentReference[oaicite:4]{index=4}:contentReference[oaicite:5]{index=5}.
+    Global minimum: f(0,0) = 0 at x = (0, 0).
     """
     x = np.asarray(x, dtype=float)
     x0, x1 = x
@@ -82,7 +145,7 @@ def bohachevsky2(x: np.ndarray) -> float:
     Bohachevsky function #2.
     Domain: |x_i| ≤ 50.
     Dimension: 2.
-    Global minimum: f(0,0) = 0 at x = (0, 0):contentReference[oaicite:6]{index=6}.
+    Global minimum: f(0,0) = 0 at x = (0, 0).
     """
     x = np.asarray(x, dtype=float)
     x0, x1 = x
@@ -94,7 +157,7 @@ def booth(x: np.ndarray) -> float:
     Booth function.
     Domain: -10 ≤ x_i ≤ 10.
     Dimension: 2.
-    Global minimum: f(1,3) = 0 at x = (1, 3):contentReference[oaicite:7]{index=7}.
+    Global minimum: f(1,3) = 0 at x = (1, 3).
     """
     x = np.asarray(x, dtype=float)
     x0, x1 = x
@@ -106,7 +169,7 @@ def box_betts(x: np.ndarray) -> float:
     Box-Betts exponential quadratic sum function.
     Domain: x0 ∈ [0.9,1.2], x1 ∈ [9,11.2], x2 ∈ [0.9,1.2].
     Dimension: 3.
-    Global minimum: f(1,10,1) = 0 at x = (1, 10, 1):contentReference[oaicite:8]{index=8}:contentReference[oaicite:9]{index=9}.
+    Global minimum: f(1,10,1) = 0 at x = (1, 10, 1).
     """
     x = np.asarray(x, dtype=float)
     x0, x1, x2 = x
@@ -126,7 +189,7 @@ def branin(x: np.ndarray) -> float:
     Branin function.
     Domain: x0 ∈ [-5, 10], x1 ∈ [0, 15].
     Dimension: 2.
-    Global minima: f ≈ 0.3979 at x ≈ (-3.142,12.275), (3.142,2.275), (9.425,2.425):contentReference[oaicite:10]{index=10}:contentReference[oaicite:11]{index=11}.
+    Global minima: f ≈ 0.3979 at x ≈ (-3.142,12.275), (3.142,2.275), (9.425,2.425).
     """
     x = np.asarray(x, dtype=float)
     x0, x1 = x
@@ -141,7 +204,7 @@ def branin2(x: np.ndarray) -> float:
     Modified Branin (Test function 2).
     Domain: |x_i| ≤ 10.
     Dimension: 2.
-    Global minimum: f(0.402357,0.287408) = 0 at x ≈ (0.402357, 0.287408):contentReference[oaicite:12]{index=12}.
+    Global minimum: f(0.402357,0.287408) = 0 at x ≈ (0.402357, 0.287408).
     """
     x = np.asarray(x, dtype=float)
     return (1.0 - 2.0 * x[1] + np.sin(4.0 * np.pi * x[1]) / 20.0 - x[0]) ** 2 + (
@@ -154,7 +217,7 @@ def camel3(x: np.ndarray) -> float:
     Three-hump camel function.
     Domain: |x_i| ≤ 5.
     Dimension: 2.
-    Global minimum: f(0,0) = 0 at x = (0, 0):contentReference[oaicite:13]{index=13}:contentReference[oaicite:14]{index=14}.
+    Global minimum: f(0,0) = 0 at x = (0, 0).
     """
     x = np.asarray(x, dtype=float)
     x0 = x[0]
@@ -167,7 +230,7 @@ def camel6(x: np.ndarray) -> float:
     Six-hump camel function.
     Domain: |x_i| < 5.
     Dimension: 2.
-    Global minimum: f ≈ -1.0316 at x ≈ (0.08983,-0.7126) and (-0.08983,0.7126):contentReference[oaicite:15]{index=15}:contentReference[oaicite:16]{index=16}.
+    Global minimum: f ≈ -1.0316 at x ≈ (0.08983,-0.7126) and (-0.08983,0.7126).
     """
     x = np.asarray(x, dtype=float)
     x0, x1 = x
@@ -179,7 +242,7 @@ def chichinadze(x: np.ndarray) -> float:
     Chichinadze function.
     Domain: x0 ∈ [-30, 30], x1 ∈ [-10, 10].
     Dimension: 2.
-    Global minimum: f ≈ -43.3159 at x ≈ (5.90133, 0.5):contentReference[oaicite:17]{index=17}:contentReference[oaicite:18]{index=18}.
+    Global minimum: f ≈ -43.3159 at x ≈ (5.90133, 0.5).
     """
     x = np.asarray(x, dtype=float)
     x0, x1 = x
@@ -198,7 +261,7 @@ def colville(x: np.ndarray) -> float:
     Colville function.
     Domain: -10 ≤ x_i ≤ 10.
     Dimension: 4.
-    Global minimum: f(1,1,1,1) = 0 at x = (1, 1, 1, 1):contentReference[oaicite:19]{index=19}.
+    Global minimum: f(1,1,1,1) = 0 at x = (1, 1, 1, 1).
     """
     x = np.asarray(x, dtype=float)
     x0, x1, x2, x3 = x
@@ -217,7 +280,7 @@ def corana(x: np.ndarray) -> float:
     Corana function.
     Domain: |x_i| ≤ 100.
     Dimension: 4.
-    Global minimum: f = 0 at x = (0,0,0,0):contentReference[oaicite:20]{index=20}.
+    Global minimum: f = 0 at x = (0,0,0,0).
     """
     x = np.asarray(x, dtype=float)
     d = np.array([1.0, 1000.0, 10.0, 100.0])
@@ -237,7 +300,7 @@ def easom(x: np.ndarray) -> float:
     Easom function.
     Domain: |x_i| ≤ 100.
     Dimension: 2.
-    Global minimum: f(π,π) = -1 at x = (π, π):contentReference[oaicite:21]{index=21}.
+    Global minimum: f(π,π) = -1 at x = (π, π).
     """
     x = np.asarray(x, dtype=float)
     return -np.cos(x[0]) * np.cos(x[1]) * np.exp(-((x[0] - np.pi) ** 2 + (x[1] - np.pi) ** 2))
@@ -263,7 +326,7 @@ def exp2(x: np.ndarray) -> float:
     Exp2 function.
     Domain: 0 ≤ x_i ≤ 20.
     Dimension: 2.
-    Global minimum: f(1,10) = 0 at x = (1, 10):contentReference[oaicite:22]{index=22}.
+    Global minimum: f(1,10) = 0 at x = (1, 10).
     """
     x = np.asarray(x, dtype=float)
     x0, x1 = x
@@ -293,7 +356,7 @@ def gear(x: np.ndarray) -> float:
     Gear train function.
     Domain: 12 ≤ x0,x1,x2,x3 ≤ 60.
     Dimension: 4.
-    Global minimum: ≈2.7e-12 at permutations of (16, 19, 43, 49):contentReference[oaicite:23]{index=23}.
+    Global minimum: ≈2.7e-12 at permutations of (16, 19, 43, 49).
     """
     x = np.asarray(x, dtype=float)
     t = 1.0 / 6.931 - np.floor(x[0]) * np.floor(x[1]) / (np.floor(x[2]) * np.floor(x[3]))
@@ -305,7 +368,7 @@ def goldstein_price(x: np.ndarray) -> float:
     Goldstein-Price function.
     Domain: |x_i| ≤ 2.
     Dimension: 2.
-    Global minimum: f(0,-1) = 3 at x = (0, -1):contentReference[oaicite:24]{index=24}.
+    Global minimum: f(0,-1) = 3 at x = (0, -1).
     """
     x = np.asarray(x, dtype=float)
     x0, x1 = x
@@ -321,7 +384,7 @@ def griewank(x: np.ndarray) -> float:
     Griewank function.
     Domain: |x_i| ≤ 600.
     Dimension: n.
-    Global minimum: f(0) = 0 at x = 0:contentReference[oaicite:25]{index=25}.
+    Global minimum: f(0) = 0 at x = 0.
     """
     x = np.asarray(x, dtype=float)
     sum_sq = np.sum(x**2) / 4000.0
@@ -334,7 +397,7 @@ def himmelblau(x: np.ndarray) -> float:
     Himmelblau function.
     Domain: -6 ≤ x_i ≤ 6.
     Dimension: 2.
-    Global minimum: f(3,2) = 0 at x = (3, 2):contentReference[oaicite:26]{index=26}.
+    Global minimum: f(3,2) = 0 at x = (3, 2).
     """
     x = np.asarray(x, dtype=float)
     x0, x1 = x
@@ -346,7 +409,7 @@ def hyperellipsoid(x: np.ndarray) -> float:
     Hyperellipsoid (Weighted sphere) function.
     Domain: |x_i| ≤ 10 (often).
     Dimension: n.
-    Global minimum: f(0) = 0 at x = 0:contentReference[oaicite:27]{index=27}.
+    Global minimum: f(0) = 0 at x = 0.
     """
     x = np.asarray(x, dtype=float)
     n = x.size
@@ -358,7 +421,7 @@ def kowalik(x: np.ndarray) -> float:
     Kowalik function.
     Domain: |x_i| < 5.
     Dimension: 4.
-    Global minimum: ≈0.000307 at x ≈ (0.1928,0.1908,0.1231,0.1358):contentReference[oaicite:28]{index=28}.
+    Global minimum: ≈0.000307 at x ≈ (0.1928,0.1908,0.1231,0.1358).
     """
     x = np.asarray(x, dtype=float)
     a = np.array(
@@ -379,7 +442,7 @@ def holzman1(x: np.ndarray) -> float:
     Holzman function #1.
     Domain: 0.1 ≤ x0 ≤ 100, 0 ≤ x1 ≤ 25.6, 0 ≤ x2 ≤ 5.
     Dimension: 3.
-    Global minimum: f(50,25,1.5) = 0 at x = (50, 25, 1.5):contentReference[oaicite:29]{index=29}.
+    Global minimum: f(50,25,1.5) = 0 at x = (50, 25, 1.5).
     """
     x = np.asarray(x, dtype=float)
     x0, x1, x2 = x
@@ -395,7 +458,7 @@ def holzman2(x: np.ndarray) -> float:
     Holzman function #2.
     Domain: |x_i| ≤ 10.
     Dimension: n.
-    Global minimum: f(0) = 0 at x = 0:contentReference[oaicite:30]{index=30}.
+    Global minimum: f(0) = 0 at x = 0.
     """
     x = np.asarray(x, dtype=float)
     return np.sum((np.arange(x.size, dtype=float) * x**4))
@@ -406,7 +469,7 @@ def hosaki(x: np.ndarray) -> float:
     Hosaki function.
     Domain: x0 ≥ 0, x1 ≥ 0 (often in [0,5]×[0,6]).
     Dimension: 2.
-    Global minimum: ≈ -2.3458 at x = (4, 2):contentReference[oaicite:31]{index=31}:contentReference[oaicite:32]{index=32}.
+    Global minimum: ≈ -2.3458 at x = (4, 2).
     """
     x = np.asarray(x, dtype=float)
     return (
@@ -421,7 +484,7 @@ def katsuura(x: np.ndarray) -> float:
     Katsuura function.
     Domain: |x_i| ≤ 1000.
     Dimension: n.
-    Global minimum: f(0) = 1 at x = 0:contentReference[oaicite:33]{index=33}.
+    Global minimum: f(0) = 1 at x = 0.
     """
     x = np.asarray(x, dtype=float)
     n = x.size
@@ -439,7 +502,7 @@ def langerman(x: np.ndarray) -> float:
     Langerman function.
     Domain: 0 ≤ x_i ≤ 10.
     Dimension: n.
-    Global minimum: f ≈ -1.4:contentReference[oaicite:34]{index=34}.
+    Global minimum: f ≈ -1.4.
     """
     x = np.asarray(x, dtype=float)
     # Coefficients c and points A defined for m=5 in MVF.
@@ -482,7 +545,7 @@ def leon(x: np.ndarray) -> float:
     Leon function.
     Domain: |x_i| ≤ 10.
     Dimension: 2.
-    Global minimum: f(1,1) = 0 at x = (1, 1):contentReference[oaicite:35]{index=35}.
+    Global minimum: f(1,1) = 0 at x = (1, 1).
     """
     x = np.asarray(x, dtype=float)
     return 100.0 * (x[1] - x[0] ** 3) ** 2 + (1.0 - x[0]) ** 2
@@ -511,7 +574,7 @@ def matyas(x: np.ndarray) -> float:
     Matyas function.
     Domain: |x_i| ≤ 10.
     Dimension: 2.
-    Global minimum: f(0,0) = 0 at x = (0, 0):contentReference[oaicite:36]{index=36}.
+    Global minimum: f(0,0) = 0 at x = (0, 0).
     """
     x = np.asarray(x, dtype=float)
     return 0.26 * (x[0] ** 2 + x[1] ** 2) - 0.48 * x[0] * x[1]
@@ -522,7 +585,7 @@ def maxmod(x: np.ndarray) -> float:
     Maxmod function.
     Domain: |x_i| ≤ 10.
     Dimension: n.
-    Global minimum: f = 0 at x = 0:contentReference[oaicite:37]{index=37}.
+    Global minimum: f = 0 at x = 0.
     """
     x = np.asarray(x, dtype=float)
     return np.max(np.abs(x))
@@ -533,7 +596,7 @@ def mccormick(x: np.ndarray) -> float:
     McCormick function.
     Domain: -1.5 ≤ x0 ≤ 4, -3 ≤ x1 ≤ 4.
     Dimension: 2.
-    Global minimum: f(-0.54719,-1.54719) ≈ -1.9133:contentReference[oaicite:38]{index=38}.
+    Global minimum: f(-0.54719,-1.54719) ≈ -1.9133.
     """
     x = np.asarray(x, dtype=float)
     return np.sin(x[0] + x[1]) + (x[0] - x[1]) ** 2 - 1.5 * x[0] + 2.5 * x[1] + 1.0
@@ -555,7 +618,7 @@ def multimod(x: np.ndarray) -> float:
     Multimodal function.
     Domain: |x_i| ≤ 10.
     Dimension: n.
-    Global minimum: f = 0 at x = 0:contentReference[oaicite:39]{index=39}.
+    Global minimum: f = 0 at x = 0.
     """
     x = np.asarray(x, dtype=float)
     return float(np.sum(np.abs(x)) * np.prod(np.abs(x)))
@@ -624,7 +687,7 @@ def schaffer1(x: np.ndarray) -> float:
     Schaffer function #1.
     Domain: |x_i| ≤ 100.
     Dimension: 2.
-    Global minimum: f(0,0) = 0 at x = (0, 0):contentReference[oaicite:44]{index=44}.
+    Global minimum: f(0,0) = 0 at x = (0, 0).
     """
     x = np.asarray(x, dtype=float)
     s = x[0] ** 2 + x[1] ** 2
@@ -636,7 +699,7 @@ def schaffer2(x: np.ndarray) -> float:
     Schaffer function #2.
     Domain: |x_i| ≤ 100.
     Dimension: 2.
-    Global minimum: f(0,0) = 0 at x = (0, 0):contentReference[oaicite:45]{index=45}.
+    Global minimum: f(0,0) = 0 at x = (0, 0).
     """
     x = np.asarray(x, dtype=float)
     s = x[0] ** 2 + x[1] ** 2
@@ -648,7 +711,7 @@ def schwefel1_2(x: np.ndarray) -> float:
     Schwefel function 1.2.
     Domain: |x_i| < 10.
     Dimension: n.
-    Global minimum: f = 0 at x = 0:contentReference[oaicite:46]{index=46}.
+    Global minimum: f = 0 at x = 0.
     """
     x = np.asarray(x, dtype=float)
     total = 0.0
@@ -662,7 +725,7 @@ def schwefel2_21(x: np.ndarray) -> float:
     Schwefel function 2.21.
     Domain: |x_i| < 10.
     Dimension: n.
-    Global minimum: f = 0 at x = 0:contentReference[oaicite:47]{index=47}.
+    Global minimum: f = 0 at x = 0.
     """
     x = np.asarray(x, dtype=float)
     return np.max(np.abs(x))
@@ -673,7 +736,7 @@ def schwefel2_22(x: np.ndarray) -> float:
     Schwefel function 2.22.
     Domain: |x_i| < 10.
     Dimension: n.
-    Global minimum: f = 0 at x = 0:contentReference[oaicite:48]{index=48}.
+    Global minimum: f = 0 at x = 0.
     """
     x = np.asarray(x, dtype=float)
     return float(np.sum(np.abs(x)) + np.prod(np.abs(x)))
@@ -684,7 +747,7 @@ def schwefel2_26(x: np.ndarray) -> float:
     Schwefel function 2.26.
     Domain: |x_i| < 500.
     Dimension: n.
-    Global minimum: ≈ -12569.5 at x ≈ 420.9687 (for n=3):contentReference[oaicite:49]{index=49}.
+    Global minimum: ≈ -12569.5 at x ≈ 420.9687 (for n=3).
     """
     x = np.asarray(x, dtype=float)
     return -np.sum(x * np.sin(np.sqrt(np.abs(x))))
@@ -695,7 +758,7 @@ def schwefel3_2(x: np.ndarray) -> float:
     Schwefel (variant) function 3.2.
     Domain: |x_i| < 10.
     Dimension: n.
-    Global minimum: f = 0 at x = (1,1,...,1):contentReference[oaicite:50]{index=50}.
+    Global minimum: f = 0 at x = (1,1,...,1).
     """
     x = np.asarray(x, dtype=float)
     return (x[0] - x[1]) ** 2 + (1 - x[1]) ** 2
@@ -706,7 +769,7 @@ def sphere(x: np.ndarray) -> float:
     Sphere (Harmonic) function.
     Domain: |x_i| ≤ 100.
     Dimension: n.
-    Global minimum: f(0) = 0 at x = 0:contentReference[oaicite:51]{index=51}.
+    Global minimum: f(0) = 0 at x = 0.
     """
     x = np.asarray(x, dtype=float)
     return np.sum(x**2)
@@ -717,7 +780,7 @@ def sphere2(x: np.ndarray) -> float:
     Sphere function (cumulative sum variant).
     Domain: |x_i| ≤ 100.
     Dimension: n.
-    Global minimum: f(0) = 0 at x = 0:contentReference[oaicite:52]{index=52}.
+    Global minimum: f(0) = 0 at x = 0.
     """
     x = np.asarray(x, dtype=float)
     return np.sum(np.cumsum(x) ** 2)
@@ -728,7 +791,7 @@ def step(x: np.ndarray) -> float:
     Step function.
     Domain: |x_i| ≤ 100.
     Dimension: n.
-    Global minimum: f = 0 at x_i = 0.5:contentReference[oaicite:53]{index=53}.
+    Global minimum: f = 0 at x_i = 0.5.
     """
     x = np.asarray(x, dtype=float)
     return np.sum((np.floor(x) + 0.5) ** 2)
@@ -739,7 +802,7 @@ def step2(x: np.ndarray) -> float:
     Step function #2.
     Domain: |x_i| ≤ 5.12.
     Dimension: n.
-    Global minimum: f = 0 at x = 0:contentReference[oaicite:54]{index=54}.
+    Global minimum: f = 0 at x = 0.
     """
     x = np.asarray(x, dtype=float)
     return 6 * x.size + np.sum(np.floor(x))
@@ -764,7 +827,7 @@ def sum_squares(x: np.ndarray) -> float:
     Sum of Squares function.
     Domain: -10 ≤ x_i ≤ 10.
     Dimension: n.
-    Global minimum: f = 0 at x = 0:contentReference[oaicite:55]{index=55}.
+    Global minimum: f = 0 at x = 0.
     """
     x = np.asarray(x, dtype=float)
     return np.sum((np.arange(1, x.size + 1) * x**2))
@@ -775,7 +838,7 @@ def trecanni(x: np.ndarray) -> float:
     Trecanni function.
     Domain: -5 ≤ x_i ≤ 5.
     Dimension: 2.
-    Global minima: f(0,0) = 0 and f(-2,0) = 0:contentReference[oaicite:56]{index=56}.
+    Global minima: f(0,0) = 0 and f(-2,0) = 0.
     """
     x = np.asarray(x, dtype=float)
     return x[0] ** 4 + 4 * x[0] ** 3 + 4 * x[0] ** 2 + x[1] ** 2
@@ -786,7 +849,7 @@ def trefethen4(x: np.ndarray) -> float:
     Trefethen function #4.
     Domain: x0 ∈ (-6.5,6.5), x1 ∈ (-4.5,4.5).
     Dimension: 2.
-    Global minimum: ≈ -3.30686865 at x ≈ (-0.0244031, 0.2106124):contentReference[oaicite:57]{index=57}.
+    Global minimum: ≈ -3.30686865 at x ≈ (-0.0244031, 0.2106124).
     """
     x = np.asarray(x, dtype=float)
     return (
@@ -842,7 +905,7 @@ def zettl(x: np.ndarray) -> float:
     Zettl function.
     Domain: |x_i| ≤ 10.
     Dimension: 2.
-    Global minimum: f ≈ -0.00379 at x ≈ (-0.02990, 0):contentReference[oaicite:58]{index=58}.
+    Global minimum: f ≈ -0.00379 at x ≈ (-0.02990, 0).
     """
     x = np.asarray(x, dtype=float)
     return (x[0] ** 2 + x[1] ** 2 - 2 * x[0]) ** 2 + 0.25 * x[0]

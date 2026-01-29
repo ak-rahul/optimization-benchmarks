@@ -4,6 +4,8 @@
 [![Python](https://img.shields.io/pypi/pyversions/optimization-benchmarks)](https://pypi.org/project/optimization-benchmarks/)
 [![Downloads](https://pepy.tech/badge/optimization-benchmarks)](https://pepy.tech/project/optimization-benchmarks)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://github.com/ak-rahul/optimization-benchmarks/blob/main/LICENSE.md)
+[![Build Status](https://github.com/ak-rahul/optimization-benchmarks/actions/workflows/quality.yml/badge.svg)](https://github.com/ak-rahul/optimization-benchmarks/actions/workflows/quality.yml)
+[![Code style: black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/psf/black)
 
 A comprehensive collection of 55+ standard mathematical benchmark functions for testing and evaluating optimization algorithms.
 

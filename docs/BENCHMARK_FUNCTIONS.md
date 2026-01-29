@@ -76,7 +76,7 @@ Total functions: 55
 Ackley function.
 Domain: |x_i| ≤ 30.
 Dimension: n (arbitrary).
-Global minimum: f(0) = 0 at x = 0:contentReference[oaicite:0]{index=0}:contentReference[oaicite:1]{index=1}.
+Global minimum: f(0) = 0 at x = 0.
 
 #### Code Example
 ```python
@@ -101,7 +101,7 @@ print(f'result: {result}')
 Beale function.
 Domain: -4.5 ≤ x_i ≤ 4.5.
 Dimension: 2.
-Global minimum: f(3,0.5) = 0 at x = (3, 0.5):contentReference[oaicite:2]{index=2}:contentReference[oaicite:3]{index=3}.
+Global minimum: f(3,0.5) = 0 at x = (3, 0.5).
 
 #### Code Example
 ```python
@@ -126,7 +126,7 @@ print(f'result: {result}')
 Bohachevsky function #1.
 Domain: |x_i| ≤ 50.
 Dimension: 2.
-Global minimum: f(0,0) = 0 at x = (0, 0):contentReference[oaicite:4]{index=4}:contentReference[oaicite:5]{index=5}.
+Global minimum: f(0,0) = 0 at x = (0, 0).
 
 #### Code Example
 ```python
@@ -151,7 +151,7 @@ print(f'result: {result}')
 Bohachevsky function #2.
 Domain: |x_i| ≤ 50.
 Dimension: 2.
-Global minimum: f(0,0) = 0 at x = (0, 0):contentReference[oaicite:6]{index=6}.
+Global minimum: f(0,0) = 0 at x = (0, 0).
 
 #### Code Example
 ```python
@@ -176,7 +176,7 @@ print(f'result: {result}')
 Booth function.
 Domain: -10 ≤ x_i ≤ 10.
 Dimension: 2.
-Global minimum: f(1,3) = 0 at x = (1, 3):contentReference[oaicite:7]{index=7}.
+Global minimum: f(1,3) = 0 at x = (1, 3).
 
 #### Code Example
 ```python
@@ -201,7 +201,7 @@ print(f'result: {result}')
 Box-Betts exponential quadratic sum function.
 Domain: x0 ∈ [0.9,1.2], x1 ∈ [9,11.2], x2 ∈ [0.9,1.2].
 Dimension: 3.
-Global minimum: f(1,10,1) = 0 at x = (1, 10, 1):contentReference[oaicite:8]{index=8}:contentReference[oaicite:9]{index=9}.
+Global minimum: f(1,10,1) = 0 at x = (1, 10, 1).
 
 #### Code Example
 ```python
@@ -226,7 +226,7 @@ print(f'result: {result}')
 Branin function.
 Domain: x0 ∈ [-5, 10], x1 ∈ [0, 15].
 Dimension: 2.
-Global minima: f ≈ 0.3979 at x ≈ (-3.142,12.275), (3.142,2.275), (9.425,2.425):contentReference[oaicite:10]{index=10}:contentReference[oaicite:11]{index=11}.
+Global minima: f ≈ 0.3979 at x ≈ (-3.142,12.275), (3.142,2.275), (9.425,2.425).
 
 #### Code Example
 ```python
@@ -251,7 +251,7 @@ print(f'result: {result}')
 Modified Branin (Test function 2).
 Domain: |x_i| ≤ 10.
 Dimension: 2.
-Global minimum: f(0.402357,0.287408) = 0 at x ≈ (0.402357, 0.287408):contentReference[oaicite:12]{index=12}.
+Global minimum: f(0.402357,0.287408) = 0 at x ≈ (0.402357, 0.287408).
 
 #### Code Example
 ```python
@@ -276,7 +276,7 @@ print(f'result: {result}')
 Three-hump camel function.
 Domain: |x_i| ≤ 5.
 Dimension: 2.
-Global minimum: f(0,0) = 0 at x = (0, 0):contentReference[oaicite:13]{index=13}:contentReference[oaicite:14]{index=14}.
+Global minimum: f(0,0) = 0 at x = (0, 0).
 
 #### Code Example
 ```python
@@ -301,7 +301,7 @@ print(f'result: {result}')
 Six-hump camel function.
 Domain: |x_i| < 5.
 Dimension: 2.
-Global minimum: f ≈ -1.0316 at x ≈ (0.08983,-0.7126) and (-0.08983,0.7126):contentReference[oaicite:15]{index=15}:contentReference[oaicite:16]{index=16}.
+Global minimum: f ≈ -1.0316 at x ≈ (0.08983,-0.7126) and (-0.08983,0.7126).
 
 #### Code Example
 ```python
@@ -326,7 +326,7 @@ print(f'result: {result}')
 Chichinadze function.
 Domain: x0 ∈ [-30, 30], x1 ∈ [-10, 10].
 Dimension: 2.
-Global minimum: f ≈ -43.3159 at x ≈ (5.90133, 0.5):contentReference[oaicite:17]{index=17}:contentReference[oaicite:18]{index=18}.
+Global minimum: f ≈ -43.3159 at x ≈ (5.90133, 0.5).
 
 #### Code Example
 ```python
@@ -351,7 +351,7 @@ print(f'result: {result}')
 Colville function.
 Domain: -10 ≤ x_i ≤ 10.
 Dimension: 4.
-Global minimum: f(1,1,1,1) = 0 at x = (1, 1, 1, 1):contentReference[oaicite:19]{index=19}.
+Global minimum: f(1,1,1,1) = 0 at x = (1, 1, 1, 1).
 
 #### Code Example
 ```python
@@ -376,7 +376,7 @@ print(f'result: {result}')
 Corana function.
 Domain: |x_i| ≤ 100.
 Dimension: 4.
-Global minimum: f = 0 at x = (0,0,0,0):contentReference[oaicite:20]{index=20}.
+Global minimum: f = 0 at x = (0,0,0,0).
 
 #### Code Example
 ```python
@@ -401,7 +401,7 @@ print(f'result: {result}')
 Easom function.
 Domain: |x_i| ≤ 100.
 Dimension: 2.
-Global minimum: f(π,π) = -1 at x = (π, π):contentReference[oaicite:21]{index=21}.
+Global minimum: f(π,π) = -1 at x = (π, π).
 
 #### Code Example
 ```python
@@ -450,7 +450,7 @@ print(f'result: {result}')
 Exp2 function.
 Domain: 0 ≤ x_i ≤ 20.
 Dimension: 2.
-Global minimum: f(1,10) = 0 at x = (1, 10):contentReference[oaicite:22]{index=22}.
+Global minimum: f(1,10) = 0 at x = (1, 10).
 
 #### Code Example
 ```python
@@ -475,7 +475,7 @@ print(f'result: {result}')
 Gear train function.
 Domain: 12 ≤ x0,x1,x2,x3 ≤ 60.
 Dimension: 4.
-Global minimum: ≈2.7e-12 at permutations of (16, 19, 43, 49):contentReference[oaicite:23]{index=23}.
+Global minimum: ≈2.7e-12 at permutations of (16, 19, 43, 49).
 
 #### Code Example
 ```python
@@ -500,7 +500,7 @@ print(f'result: {result}')
 Goldstein-Price function.
 Domain: |x_i| ≤ 2.
 Dimension: 2.
-Global minimum: f(0,-1) = 3 at x = (0, -1):contentReference[oaicite:24]{index=24}.
+Global minimum: f(0,-1) = 3 at x = (0, -1).
 
 #### Code Example
 ```python
@@ -525,7 +525,7 @@ print(f'result: {result}')
 Griewank function.
 Domain: |x_i| ≤ 600.
 Dimension: n.
-Global minimum: f(0) = 0 at x = 0:contentReference[oaicite:25]{index=25}.
+Global minimum: f(0) = 0 at x = 0.
 
 #### Code Example
 ```python
@@ -550,7 +550,7 @@ print(f'result: {result}')
 Himmelblau function.
 Domain: -6 ≤ x_i ≤ 6.
 Dimension: 2.
-Global minimum: f(3,2) = 0 at x = (3, 2):contentReference[oaicite:26]{index=26}.
+Global minimum: f(3,2) = 0 at x = (3, 2).
 
 #### Code Example
 ```python
@@ -575,7 +575,7 @@ print(f'result: {result}')
 Holzman function #1.
 Domain: 0.1 ≤ x0 ≤ 100, 0 ≤ x1 ≤ 25.6, 0 ≤ x2 ≤ 5.
 Dimension: 3.
-Global minimum: f(50,25,1.5) = 0 at x = (50, 25, 1.5):contentReference[oaicite:29]{index=29}.
+Global minimum: f(50,25,1.5) = 0 at x = (50, 25, 1.5).
 
 #### Code Example
 ```python
@@ -600,7 +600,7 @@ print(f'result: {result}')
 Holzman function #2.
 Domain: |x_i| ≤ 10.
 Dimension: n.
-Global minimum: f(0) = 0 at x = 0:contentReference[oaicite:30]{index=30}.
+Global minimum: f(0) = 0 at x = 0.
 
 #### Code Example
 ```python
@@ -625,7 +625,7 @@ print(f'result: {result}')
 Hosaki function.
 Domain: x0 ≥ 0, x1 ≥ 0 (often in [0,5]×[0,6]).
 Dimension: 2.
-Global minimum: ≈ -2.3458 at x = (4, 2):contentReference[oaicite:31]{index=31}:contentReference[oaicite:32]{index=32}.
+Global minimum: ≈ -2.3458 at x = (4, 2).
 
 #### Code Example
 ```python
@@ -650,7 +650,7 @@ print(f'result: {result}')
 Hyperellipsoid (Weighted sphere) function.
 Domain: |x_i| ≤ 10 (often).
 Dimension: n.
-Global minimum: f(0) = 0 at x = 0:contentReference[oaicite:27]{index=27}.
+Global minimum: f(0) = 0 at x = 0.
 
 #### Code Example
 ```python
@@ -675,7 +675,7 @@ print(f'result: {result}')
 Katsuura function.
 Domain: |x_i| ≤ 1000.
 Dimension: n.
-Global minimum: f(0) = 1 at x = 0:contentReference[oaicite:33]{index=33}.
+Global minimum: f(0) = 1 at x = 0.
 
 #### Code Example
 ```python
@@ -700,7 +700,7 @@ print(f'result: {result}')
 Kowalik function.
 Domain: |x_i| < 5.
 Dimension: 4.
-Global minimum: ≈0.000307 at x ≈ (0.1928,0.1908,0.1231,0.1358):contentReference[oaicite:28]{index=28}.
+Global minimum: ≈0.000307 at x ≈ (0.1928,0.1908,0.1231,0.1358).
 
 #### Code Example
 ```python
@@ -724,7 +724,7 @@ print(f'result: {result}')
 Langerman function.
 Domain: 0 ≤ x_i ≤ 10.
 Dimension: n.
-Global minimum: f ≈ -1.4:contentReference[oaicite:34]{index=34}.
+Global minimum: f ≈ -1.4.
 
 #### Code Example
 ```python
@@ -749,7 +749,7 @@ print(f'result: {result}')
 Leon function.
 Domain: |x_i| ≤ 10.
 Dimension: 2.
-Global minimum: f(1,1) = 0 at x = (1, 1):contentReference[oaicite:35]{index=35}.
+Global minimum: f(1,1) = 0 at x = (1, 1).
 
 #### Code Example
 ```python
@@ -798,7 +798,7 @@ print(f'result: {result}')
 Matyas function.
 Domain: |x_i| ≤ 10.
 Dimension: 2.
-Global minimum: f(0,0) = 0 at x = (0, 0):contentReference[oaicite:36]{index=36}.
+Global minimum: f(0,0) = 0 at x = (0, 0).
 
 #### Code Example
 ```python
@@ -823,7 +823,7 @@ print(f'result: {result}')
 Maxmod function.
 Domain: |x_i| ≤ 10.
 Dimension: n.
-Global minimum: f = 0 at x = 0:contentReference[oaicite:37]{index=37}.
+Global minimum: f = 0 at x = 0.
 
 #### Code Example
 ```python
@@ -848,7 +848,7 @@ print(f'result: {result}')
 McCormick function.
 Domain: -1.5 ≤ x0 ≤ 4, -3 ≤ x1 ≤ 4.
 Dimension: 2.
-Global minimum: f(-0.54719,-1.54719) ≈ -1.9133:contentReference[oaicite:38]{index=38}.
+Global minimum: f(-0.54719,-1.54719) ≈ -1.9133.
 
 #### Code Example
 ```python
@@ -896,7 +896,7 @@ print(f'result: {result}')
 Multimodal function.
 Domain: |x_i| ≤ 10.
 Dimension: n.
-Global minimum: f = 0 at x = 0:contentReference[oaicite:39]{index=39}.
+Global minimum: f = 0 at x = 0.
 
 #### Code Example
 ```python
@@ -1046,7 +1046,7 @@ print(f'result: {result}')
 Schaffer function #1.
 Domain: |x_i| ≤ 100.
 Dimension: 2.
-Global minimum: f(0,0) = 0 at x = (0, 0):contentReference[oaicite:44]{index=44}.
+Global minimum: f(0,0) = 0 at x = (0, 0).
 
 #### Code Example
 ```python
@@ -1071,7 +1071,7 @@ print(f'result: {result}')
 Schaffer function #2.
 Domain: |x_i| ≤ 100.
 Dimension: 2.
-Global minimum: f(0,0) = 0 at x = (0, 0):contentReference[oaicite:45]{index=45}.
+Global minimum: f(0,0) = 0 at x = (0, 0).
 
 #### Code Example
 ```python
@@ -1096,7 +1096,7 @@ print(f'result: {result}')
 Schwefel function 1.2.
 Domain: |x_i| < 10.
 Dimension: n.
-Global minimum: f = 0 at x = 0:contentReference[oaicite:46]{index=46}.
+Global minimum: f = 0 at x = 0.
 
 #### Code Example
 ```python
@@ -1121,7 +1121,7 @@ print(f'result: {result}')
 Schwefel function 2.21.
 Domain: |x_i| < 10.
 Dimension: n.
-Global minimum: f = 0 at x = 0:contentReference[oaicite:47]{index=47}.
+Global minimum: f = 0 at x = 0.
 
 #### Code Example
 ```python
@@ -1146,7 +1146,7 @@ print(f'result: {result}')
 Schwefel function 2.22.
 Domain: |x_i| < 10.
 Dimension: n.
-Global minimum: f = 0 at x = 0:contentReference[oaicite:48]{index=48}.
+Global minimum: f = 0 at x = 0.
 
 #### Code Example
 ```python
@@ -1171,7 +1171,7 @@ print(f'result: {result}')
 Schwefel function 2.26.
 Domain: |x_i| < 500.
 Dimension: n.
-Global minimum: ≈ -12569.5 at x ≈ 420.9687 (for n=3):contentReference[oaicite:49]{index=49}.
+Global minimum: ≈ -12569.5 at x ≈ 420.9687 (for n=3).
 
 #### Code Example
 ```python
@@ -1196,7 +1196,7 @@ print(f'result: {result}')
 Schwefel (variant) function 3.2.
 Domain: |x_i| < 10.
 Dimension: n.
-Global minimum: f = 0 at x = (1,1,...,1):contentReference[oaicite:50]{index=50}.
+Global minimum: f = 0 at x = (1,1,...,1).
 
 #### Code Example
 ```python
@@ -1221,7 +1221,7 @@ print(f'result: {result}')
 Sphere (Harmonic) function.
 Domain: |x_i| ≤ 100.
 Dimension: n.
-Global minimum: f(0) = 0 at x = 0:contentReference[oaicite:51]{index=51}.
+Global minimum: f(0) = 0 at x = 0.
 
 #### Code Example
 ```python
@@ -1246,7 +1246,7 @@ print(f'result: {result}')
 Sphere function (cumulative sum variant).
 Domain: |x_i| ≤ 100.
 Dimension: n.
-Global minimum: f(0) = 0 at x = 0:contentReference[oaicite:52]{index=52}.
+Global minimum: f(0) = 0 at x = 0.
 
 #### Code Example
 ```python
@@ -1271,7 +1271,7 @@ print(f'result: {result}')
 Step function.
 Domain: |x_i| ≤ 100.
 Dimension: n.
-Global minimum: f = 0 at x_i = 0.5:contentReference[oaicite:53]{index=53}.
+Global minimum: f = 0 at x_i = 0.5.
 
 #### Code Example
 ```python
@@ -1296,7 +1296,7 @@ print(f'result: {result}')
 Step function #2.
 Domain: |x_i| ≤ 5.12.
 Dimension: n.
-Global minimum: f = 0 at x = 0:contentReference[oaicite:54]{index=54}.
+Global minimum: f = 0 at x = 0.
 
 #### Code Example
 ```python
@@ -1344,7 +1344,7 @@ print(f'result: {result}')
 Sum of Squares function.
 Domain: -10 ≤ x_i ≤ 10.
 Dimension: n.
-Global minimum: f = 0 at x = 0:contentReference[oaicite:55]{index=55}.
+Global minimum: f = 0 at x = 0.
 
 #### Code Example
 ```python
@@ -1369,7 +1369,7 @@ print(f'result: {result}')
 Trecanni function.
 Domain: -5 ≤ x_i ≤ 5.
 Dimension: 2.
-Global minima: f(0,0) = 0 and f(-2,0) = 0:contentReference[oaicite:56]{index=56}.
+Global minima: f(0,0) = 0 and f(-2,0) = 0.
 
 #### Code Example
 ```python
@@ -1394,7 +1394,7 @@ print(f'result: {result}')
 Trefethen function #4.
 Domain: x0 ∈ (-6.5,6.5), x1 ∈ (-4.5,4.5).
 Dimension: 2.
-Global minimum: ≈ -3.30686865 at x ≈ (-0.0244031, 0.2106124):contentReference[oaicite:57]{index=57}.
+Global minimum: ≈ -3.30686865 at x ≈ (-0.0244031, 0.2106124).
 
 #### Code Example
 ```python
@@ -1419,7 +1419,7 @@ print(f'result: {result}')
 Zettl function.
 Domain: |x_i| ≤ 10.
 Dimension: 2.
-Global minimum: f ≈ -0.00379 at x ≈ (-0.02990, 0):contentReference[oaicite:58]{index=58}.
+Global minimum: f ≈ -0.00379 at x ≈ (-0.02990, 0).
 
 #### Code Example
 ```python

@@ -10,12 +10,14 @@ References
     Unconstrained Global Optimization. University of the Philippines Diliman.
 """
 
+from typing import Any, Dict, List, Optional, Tuple
+
 import numpy as np
 
 from .functions import *
 
 # Complete metadata for all benchmark functions
-BENCHMARK_SUITE = {
+BENCHMARK_SUITE: Dict[str, Any] = {
     # High-dimensional multimodal functions
     "ackley": {
         "function": ackley,
