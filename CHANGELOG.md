@@ -5,6 +5,29 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.4.0] - 2026-01-29
+
+### Added
+- **New Function Wrappers**: Added `BenchmarkWrapper`, `NoisyFunction`, `ShiftedFunction`, and `RotatedFunction` for advanced testing scenarios.
+- **Parallel Benchmarking**: Added `n_jobs` parameter to `BenchmarkRunner` and CLI (`--jobs`) for parallel execution.
+- **Visualization**: New `animate_trajectory_2d` function for optimizing visualization.
+- **Typing & strictness**: Added type hints to `metadata.py`, explicit `__all__` exports in `functions.py`.
+- **CI/CD**: Added PyPI publishing workflow, coverage reporting, and badges to README.
+- **Progress Tracking**: Enhanced CLI with parallel batch evaluation support.
+
+### Changed
+- **Documentation Overhaul**: 
+    - Major updates to `USER_GUIDE.md`.
+    - Expanded `API_REFERENCE.md`.
+    - Created `BENCHMARK_FUNCTIONS.md`.
+    - Updated `CONTRIBUTING.md`.
+- **Dependencies**: Removed Python 3.8 support (min version 3.9). Unified dev dependencies.
+
+### Fixed
+- **Reproducibility**: Fixed bug in `NoisyFunction` RNG handling.
+- **Code Quality**: Cleaned up AI-generated artifacts, resolved all Mypy errors, and applied Black/Isort formatting globally.
+- **Bug Fixes**: Fixed missing strict exports in `__init__.py` and missing `scipy` dependency for rotated functions.
+
 ## [0.3.0] - 2025-12-11
 
 ### Added
