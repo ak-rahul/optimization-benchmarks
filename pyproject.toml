@@ -29,7 +29,7 @@ keywords = [
     "benchmarking",
 ]
 classifiers = [
-    "Development Status :: 4 - Beta",
+    "Development Status :: 5 - Production/Stable",
     "Intended Audience :: Science/Research",
     "Intended Audience :: Developers",
     "License :: OSI Approved :: MIT License",
@@ -47,14 +47,17 @@ classifiers = [
 ]
 dependencies = [
     "numpy>=1.20.0",
-    "tqdm>=4.65.0",
-    "joblib>=1.2.0",
-    "scipy>=1.7.0",
 ]
 
 [project.optional-dependencies]
 viz = [
     "matplotlib>=3.3.0",
+]
+parallel = [
+    "joblib>=1.2.0",
+]
+progress = [
+    "tqdm>=4.65.0",
 ]
 dev = [
     "pytest>=7.0.0",
@@ -65,6 +68,8 @@ dev = [
     "isort>=5.12.0",
     "matplotlib>=3.3.0",
     "tqdm>=4.65.0",
+    "joblib>=1.2.0",
+    "scipy>=1.7.0",
 ]
 docs = [
     "sphinx>=5.0.0",
@@ -73,6 +78,8 @@ docs = [
 all = [
     "matplotlib>=3.3.0",
     "tqdm>=4.65.0",
+    "joblib>=1.2.0",
+    "scipy>=1.7.0",
 ]
 
 [project.urls]

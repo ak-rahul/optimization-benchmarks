@@ -3,7 +3,6 @@ from typing import Callable
 
 import numpy as np
 import pytest
-from scipy.spatial.transform import Rotation
 
 from optimization_benchmarks import (
     BenchmarkRunner,

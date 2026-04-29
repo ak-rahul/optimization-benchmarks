@@ -35,6 +35,13 @@ License: MIT
 
 import numpy as np
 
+def _check_dim(x: "np.ndarray", expected: int, name: str) -> None:
+    """Raise a clear ValueError if *x* does not have *expected* elements."""
+    if x.size != expected:
+        raise ValueError(
+            f"{name} requires exactly {expected}-dimensional input, got {x.size}D."
+        )
+
 __all__ = [
     "ackley",
     "beale",
@@ -53,6 +60,7 @@ __all__ = [
     "eggholder",
     "exp2",
     "fraudenstein_roth",
+    "freudenstein_roth",
     "gear",
     "goldstein_price",
     "griewank",
@@ -121,6 +129,7 @@ def beale(x: np.ndarray) -> float:
     Global minimum: f(3,0.5) = 0 at x = (3, 0.5).
     """
     x = np.asarray(x, dtype=float)
+    _check_dim(x, 2, "beale")
     x0, x1 = x
     term1 = 1.5 - x0 + x0 * x1
     term2 = 2.25 - x0 + x0 * x1**2
@@ -136,6 +145,7 @@ def bohachevsky1(x: np.ndarray) -> float:
     Global minimum: f(0,0) = 0 at x = (0, 0).
     """
     x = np.asarray(x, dtype=float)
+    _check_dim(x, 2, "bohachevsky1")
     x0, x1 = x
     return x0**2 + 2 * x1**2 - 0.3 * np.cos(3 * np.pi * x0) - 0.4 * np.cos(4 * np.pi * x1) + 0.7
 
@@ -148,6 +158,7 @@ def bohachevsky2(x: np.ndarray) -> float:
     Global minimum: f(0,0) = 0 at x = (0, 0).
     """
     x = np.asarray(x, dtype=float)
+    _check_dim(x, 2, "bohachevsky2")
     x0, x1 = x
     return x0**2 + 2 * x1**2 - 0.3 * np.cos(3 * np.pi * x0) * np.cos(4 * np.pi * x1) + 0.3
 
@@ -160,6 +171,7 @@ def booth(x: np.ndarray) -> float:
     Global minimum: f(1,3) = 0 at x = (1, 3).
     """
     x = np.asarray(x, dtype=float)
+    _check_dim(x, 2, "booth")
     x0, x1 = x
     return (x0 + 2 * x1 - 7) ** 2 + (2 * x0 + x1 - 5) ** 2
 
@@ -172,6 +184,7 @@ def box_betts(x: np.ndarray) -> float:
     Global minimum: f(1,10,1) = 0 at x = (1, 10, 1).
     """
     x = np.asarray(x, dtype=float)
+    _check_dim(x, 3, "box_betts")
     x0, x1, x2 = x
     total = 0.0
     for i in range(1, 11):
@@ -192,6 +205,7 @@ def branin(x: np.ndarray) -> float:
     Global minima: f ≈ 0.3979 at x ≈ (-3.142,12.275), (3.142,2.275), (9.425,2.425).
     """
     x = np.asarray(x, dtype=float)
+    _check_dim(x, 2, "branin")
     x0, x1 = x
     a = 1.0
     b = 5.1 / (4 * np.pi**2)
@@ -221,7 +235,8 @@ def camel3(x: np.ndarray) -> float:
     """
     x = np.asarray(x, dtype=float)
     x0 = x[0]
-    term = 2 * x0**2 - 1.05 * x0**4 + x0**6 / 6.0 + x0 * x[1] ** 3
+    _check_dim(x, 2, "camel3")
+    term = 2 * x0**2 - 1.05 * x0**4 + x0**6 / 6.0 + x0 * x[1] + x[1] ** 2
     return term
 
 
@@ -233,6 +248,7 @@ def camel6(x: np.ndarray) -> float:
     Global minimum: f ≈ -1.0316 at x ≈ (0.08983,-0.7126) and (-0.08983,0.7126).
     """
     x = np.asarray(x, dtype=float)
+    _check_dim(x, 2, "camel6")
     x0, x1 = x
     return (4 - 2.1 * x0**2 + (x0**4) / 3) * x0**2 + x0 * x1 + (-4 + 4 * x1**2) * x1**2
 
@@ -245,6 +261,7 @@ def chichinadze(x: np.ndarray) -> float:
     Global minimum: f ≈ -43.3159 at x ≈ (5.90133, 0.5).
     """
     x = np.asarray(x, dtype=float)
+    _check_dim(x, 2, "chichinadze")
     x0, x1 = x
     return (
         x0**2
@@ -264,6 +281,7 @@ def colville(x: np.ndarray) -> float:
     Global minimum: f(1,1,1,1) = 0 at x = (1, 1, 1, 1).
     """
     x = np.asarray(x, dtype=float)
+    _check_dim(x, 4, "colville")
     x0, x1, x2, x3 = x
     return (
         100 * (x0 - x2**2) ** 2
@@ -303,6 +321,7 @@ def easom(x: np.ndarray) -> float:
     Global minimum: f(π,π) = -1 at x = (π, π).
     """
     x = np.asarray(x, dtype=float)
+    _check_dim(x, 2, "easom")
     return -np.cos(x[0]) * np.cos(x[1]) * np.exp(-((x[0] - np.pi) ** 2 + (x[1] - np.pi) ** 2))
 
 
@@ -359,6 +378,7 @@ def gear(x: np.ndarray) -> float:
     Global minimum: ≈2.7e-12 at permutations of (16, 19, 43, 49).
     """
     x = np.asarray(x, dtype=float)
+    _check_dim(x, 4, "gear")
     t = 1.0 / 6.931 - np.floor(x[0]) * np.floor(x[1]) / (np.floor(x[2]) * np.floor(x[3]))
     return t**2
 
@@ -371,6 +391,7 @@ def goldstein_price(x: np.ndarray) -> float:
     Global minimum: f(0,-1) = 3 at x = (0, -1).
     """
     x = np.asarray(x, dtype=float)
+    _check_dim(x, 2, "goldstein_price")
     x0, x1 = x
     term1 = 1 + (x0 + x1 + 1) ** 2 * (19 - 14 * x0 + 3 * x0**2 - 14 * x1 + 6 * x0 * x1 + 3 * x1**2)
     term2 = 30 + (2 * x0 - 3 * x1) ** 2 * (
@@ -400,6 +421,7 @@ def himmelblau(x: np.ndarray) -> float:
     Global minimum: f(3,2) = 0 at x = (3, 2).
     """
     x = np.asarray(x, dtype=float)
+    _check_dim(x, 2, "himmelblau")
     x0, x1 = x
     return (x0**2 + x1 - 11) ** 2 + (x0 + x1**2 - 7) ** 2
 
@@ -424,6 +446,7 @@ def kowalik(x: np.ndarray) -> float:
     Global minimum: ≈0.000307 at x ≈ (0.1928,0.1908,0.1231,0.1358).
     """
     x = np.asarray(x, dtype=float)
+    _check_dim(x, 4, "kowalik")
     a = np.array(
         [0.1957, 0.1947, 0.1735, 0.1600, 0.0844, 0.0627, 0.0456, 0.0342, 0.0323, 0.0235, 0.0246]
     )
@@ -449,7 +472,8 @@ def holzman1(x: np.ndarray) -> float:
     total = 0.0
     for i in range(100):
         ui = 25 + pow(-50.0 * np.log(0.01 * (i + 1)), 2.0 / 3.0)
-        total += -0.1 * (i + 1) + np.exp((ui - x1) ** x2 / x0)
+        exponent = min(float((ui - x1) ** x2 / x0), 700.0)  # overflow guard
+        total += -0.1 * (i + 1) + np.exp(exponent)
     return total
 
 
@@ -461,7 +485,7 @@ def holzman2(x: np.ndarray) -> float:
     Global minimum: f(0) = 0 at x = 0.
     """
     x = np.asarray(x, dtype=float)
-    return np.sum((np.arange(x.size, dtype=float) * x**4))
+    return np.sum((np.arange(1, x.size + 1, dtype=float) * x**4))
 
 
 def hosaki(x: np.ndarray) -> float:
@@ -472,6 +496,7 @@ def hosaki(x: np.ndarray) -> float:
     Global minimum: ≈ -2.3458 at x = (4, 2).
     """
     x = np.asarray(x, dtype=float)
+    _check_dim(x, 2, "hosaki")
     return (
         (1 - 8 * x[0] + 7 * x[0] ** 2 - (7 / 3) * x[0] ** 3 + 0.25 * x[0] ** 4)
         * x[1] ** 2
@@ -548,6 +573,7 @@ def leon(x: np.ndarray) -> float:
     Global minimum: f(1,1) = 0 at x = (1, 1).
     """
     x = np.asarray(x, dtype=float)
+    _check_dim(x, 2, "leon")
     return 100.0 * (x[1] - x[0] ** 3) ** 2 + (1.0 - x[0]) ** 2
 
 
@@ -577,6 +603,7 @@ def matyas(x: np.ndarray) -> float:
     Global minimum: f(0,0) = 0 at x = (0, 0).
     """
     x = np.asarray(x, dtype=float)
+    _check_dim(x, 2, "matyas")
     return 0.26 * (x[0] ** 2 + x[1] ** 2) - 0.48 * x[0] * x[1]
 
 
@@ -599,6 +626,7 @@ def mccormick(x: np.ndarray) -> float:
     Global minimum: f(-0.54719,-1.54719) ≈ -1.9133.
     """
     x = np.asarray(x, dtype=float)
+    _check_dim(x, 2, "mccormick")
     return np.sin(x[0] + x[1]) + (x[0] - x[1]) ** 2 - 1.5 * x[0] + 2.5 * x[1] + 1.0
 
 
@@ -643,6 +671,7 @@ def rastrigin2(x: np.ndarray) -> float:
     Global minimum: f = 0 at x = 0.
     """
     x = np.asarray(x, dtype=float)
+    _check_dim(x, 2, "rastrigin2")
     return x[0] ** 2 + x[1] ** 2 - np.cos(12 * x[0]) - np.cos(18 * x[1])
 
 
@@ -673,13 +702,18 @@ def rosenbrock_ext1(x: np.ndarray) -> float:
 
 def rosenbrock_ext2(x: np.ndarray) -> float:
     """
-    Extended Rosenbrock function #2.
+    Extended Rosenbrock function #2 (circular / wrap-around variant).
     Domain: |x_i| ≤ 10.
     Dimension: n.
     Global minimum: f = 0 at x = 1 (all xi = 1).
+
+    Differs from ``rosenbrock`` by adding a wrap-around term that connects
+    the last variable back to the first, forming a cyclic chain.
     """
     x = np.asarray(x, dtype=float)
-    return np.sum(100.0 * (x[1:] - x[:-1] ** 2) ** 2 + (1 - x[:-1]) ** 2)
+    chain = np.sum(100.0 * (x[1:] - x[:-1] ** 2) ** 2 + (1 - x[:-1]) ** 2)
+    wrap = 100.0 * (x[0] - x[-1] ** 2) ** 2 + (1 - x[-1]) ** 2
+    return chain + wrap
 
 
 def schaffer1(x: np.ndarray) -> float:
@@ -690,6 +724,7 @@ def schaffer1(x: np.ndarray) -> float:
     Global minimum: f(0,0) = 0 at x = (0, 0).
     """
     x = np.asarray(x, dtype=float)
+    _check_dim(x, 2, "schaffer1")
     s = x[0] ** 2 + x[1] ** 2
     return 0.5 + (np.sin(np.sqrt(s)) ** 2 - 0.5) / (1 + 0.001 * s) ** 2
 
@@ -702,6 +737,7 @@ def schaffer2(x: np.ndarray) -> float:
     Global minimum: f(0,0) = 0 at x = (0, 0).
     """
     x = np.asarray(x, dtype=float)
+    _check_dim(x, 2, "schaffer2")
     s = x[0] ** 2 + x[1] ** 2
     return (s**0.25) * ((50 * s**0.1) + 1)
 
@@ -802,7 +838,7 @@ def step2(x: np.ndarray) -> float:
     Step function #2.
     Domain: |x_i| ≤ 5.12.
     Dimension: n.
-    Global minimum: f = 0 at x = 0.
+    Global minimum: f = 6·n at x = 0 (e.g. f = 30 for n = 5).
     """
     x = np.asarray(x, dtype=float)
     return 6 * x.size + np.sum(np.floor(x))
@@ -841,6 +877,7 @@ def trecanni(x: np.ndarray) -> float:
     Global minima: f(0,0) = 0 and f(-2,0) = 0.
     """
     x = np.asarray(x, dtype=float)
+    _check_dim(x, 2, "trecanni")
     return x[0] ** 4 + 4 * x[0] ** 3 + 4 * x[0] ** 2 + x[1] ** 2
 
 
@@ -852,6 +889,7 @@ def trefethen4(x: np.ndarray) -> float:
     Global minimum: ≈ -3.30686865 at x ≈ (-0.0244031, 0.2106124).
     """
     x = np.asarray(x, dtype=float)
+    _check_dim(x, 2, "trefethen4")
     return (
         np.exp(np.sin(50.0 * x[0]))
         + np.sin(60.0 * np.exp(x[1]))
@@ -867,37 +905,50 @@ def watson(x: np.ndarray) -> float:
     Watson function.
     Domain: |x_i| ≤ 10.
     Dimension: 6.
+    Global minimum: ≈ 0.002288 at x ≈ (-0.0158, 1.012, -0.2329, 1.260, -1.514, 0.993).
+
+    Reference: Moré, Garbow & Hillstrom (1981), ACM TOMS 7(1), function 20.
     """
     x = np.asarray(x, dtype=float)
-    a = np.arange(0, 29) / 29.0
+    _check_dim(x, 6, "watson")
     f = 0.0
-    for i in range(1, 30):
-        sum1 = 0.0
-        sum2 = 0.0
-        for j in range(6):
-            sum1 += (j - 1) * a[j] * x[j + 1]
-            sum2 += a[j] * x[j + 1]
-        f += (sum1 - sum2) ** 2
-    return f + x[0] ** 2
+    for i in range(29):
+        a = i / 29.0
+        sum1 = sum(j * (a ** (j - 1)) * x[j] for j in range(1, 6))
+        sum2 = sum(a**j * x[j] for j in range(6))
+        f += (sum1 - sum2**2 - 1.0) ** 2
+    f += x[0] ** 2
+    return f
 
 
 def xor(x: np.ndarray) -> float:
     """
-    Xor function.
-    Domain: (No specific domain given).
+    XOR neural-network benchmark function.
+    Domain: x_i ∈ [-1, 1] (weights and biases of a 2-2-1 MLP).
     Dimension: 9.
+    Global minimum: f = 0 at weights that correctly solve XOR.
+
+    Parameters encode a 2-input, 2-hidden-unit, 1-output network:
+      x[0],x[1]: input→hidden1 weights; x[2],x[3]: input→hidden2 weights;
+      x[4]: hidden1 bias; x[5]: hidden2 bias;
+      x[6],x[7]: hidden→output weights; x[8]: output bias.
+
+    Reference: Adorio, E. P. (2005). MVF, function XOR.
     """
     x = np.asarray(x, dtype=float)
+    _check_dim(x, 9, "xor")
 
-    def sigma(z):
-        return 1 / (1 + np.exp(-z))
+    def sigma(z: float) -> float:
+        return 1.0 / (1.0 + np.exp(-z))
 
-    num = (
-        1 / (1 + np.exp(-x[6] / (1 + np.exp(-x[0] - x[1] - x[4]))))
-        - 1 / (1 + np.exp(-x[7] / (1 + np.exp(-x[2] - x[3] - x[5]))))
-        - x[8]
-    )
-    return (1 / (1 + np.exp(-num))) ** 2
+    patterns = [(0.0, 0.0, 0.0), (0.0, 1.0, 1.0), (1.0, 0.0, 1.0), (1.0, 1.0, 0.0)]
+    total = 0.0
+    for i1, i2, target in patterns:
+        h1 = sigma(x[0] * i1 + x[1] * i2 + x[4])
+        h2 = sigma(x[2] * i1 + x[3] * i2 + x[5])
+        out = sigma(x[6] * h1 + x[7] * h2 + x[8])
+        total += (out - target) ** 2
+    return total
 
 
 def zettl(x: np.ndarray) -> float:
@@ -908,6 +959,7 @@ def zettl(x: np.ndarray) -> float:
     Global minimum: f ≈ -0.00379 at x ≈ (-0.02990, 0).
     """
     x = np.asarray(x, dtype=float)
+    _check_dim(x, 2, "zettl")
     return (x[0] ** 2 + x[1] ** 2 - 2 * x[0]) ** 2 + 0.25 * x[0]
 
 
@@ -918,6 +970,7 @@ def zimmerman(x: np.ndarray) -> float:
     Dimension: 2.
     """
     x = np.asarray(x, dtype=float)
+    _check_dim(x, 2, "zimmerman")
     zh1 = 9 - x[0] - x[1]
     zh2 = (x[0] - 3) ** 2 + (x[1] - 2) ** 2 - 16
     zh3 = x[0] * x[1] - 14
@@ -930,3 +983,11 @@ def zimmerman(x: np.ndarray) -> float:
         zp(-x[1]) * np.sign(x[1]),
     ]
     return np.max(f_vals)
+
+
+# ---------------------------------------------------------------------------
+# Aliases — backward-compatible spelling corrections
+# ---------------------------------------------------------------------------
+
+#: Correct spelling of the historically mis-typed ``fraudenstein_roth``.
+freudenstein_roth = fraudenstein_roth

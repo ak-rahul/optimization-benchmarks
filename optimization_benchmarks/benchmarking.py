@@ -5,7 +5,7 @@ This module provides tools for systematically testing optimization algorithms
 across multiple benchmark functions, tracking performance metrics, and
 generating comprehensive reports.
 
-Part of optimization-benchmarks package v0.3.0
+Part of optimization-benchmarks package v0.4.0
 
 License: MIT
 """
@@ -89,7 +89,10 @@ class BenchmarkRunner:
         self.n_jobs = n_jobs
         self.results = []
 
+        self.rng = np.random.default_rng(seed)
         if seed is not None:
+            # Also seed global numpy RNG for algorithms that use np.random directly.
+            # Prefer passing seed explicitly to your algorithm when possible.
             np.random.seed(seed)
 
     def run_single(

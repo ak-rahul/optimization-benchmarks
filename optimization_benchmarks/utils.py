@@ -4,7 +4,7 @@ Utility functions for optimization benchmarks.
 This module provides helper functions for working with optimization problems,
 including bounds normalization, point generation, and coordinate transformations.
 
-Part of optimization-benchmarks package v0.2.0
+Part of optimization-benchmarks package v0.4.0
 License: MIT
 """
 

@@ -199,7 +199,7 @@ class TestGlobalMinima:
         assert abs(rastrigin(x)) < 1e-8
 
     def test_rastrigin2_minimum(self):
-        """Rastrigin2: f(0,0) = 0[1]."""
+        """Rastrigin2: f(0,0) = -2 (cos(0)+cos(0) = 2, so 0-2 = -2)[1]."""
         x = np.array([0.0, 0.0])
         assert abs(rastrigin2(x) + 2.0) < 1e-8
 
@@ -300,7 +300,8 @@ class TestMetadata:
     def test_benchmark_suite_exists(self):
         """Test that BENCHMARK_SUITE exists and has functions."""
         assert len(BENCHMARK_SUITE) > 0
-        assert len(BENCHMARK_SUITE) == 55
+        # Don't hardcode the count — adding new functions should not break this test.
+        assert len(BENCHMARK_SUITE) >= 55
 
     def test_get_all_functions(self):
         """Test get_all_functions returns correct list."""
@@ -308,7 +309,7 @@ class TestMetadata:
         assert "ackley" in functions
         assert "sphere" in functions
         assert "rosenbrock" in functions
-        assert len(functions) == 55
+        assert len(functions) >= 55
 
     def test_get_function_info(self):
         """Test get_function_info works correctly."""

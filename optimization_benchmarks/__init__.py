@@ -81,7 +81,13 @@ from .functions import (
     sum_squares,
     trecanni,
     trefethen4,
+    watson,
+    xor,
     zettl,
+    zimmerman,
+    lennard_jones,
+    freudenstein_roth,
+    fraudenstein_roth,
 )
 from .metadata import (
     BENCHMARK_SUITE,
