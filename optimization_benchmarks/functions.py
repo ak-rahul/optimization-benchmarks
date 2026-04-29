@@ -35,12 +35,12 @@ License: MIT
 
 import numpy as np
 
+
 def _check_dim(x: "np.ndarray", expected: int, name: str) -> None:
     """Raise a clear ValueError if *x* does not have *expected* elements."""
     if x.size != expected:
-        raise ValueError(
-            f"{name} requires exactly {expected}-dimensional input, got {x.size}D."
-        )
+        raise ValueError(f"{name} requires exactly {expected}-dimensional input, got {x.size}D.")
+
 
 __all__ = [
     "ackley",
@@ -410,7 +410,7 @@ def griewank(x: np.ndarray) -> float:
     x = np.asarray(x, dtype=float)
     sum_sq = np.sum(x**2) / 4000.0
     prod_cos = np.prod(np.cos(x / np.sqrt(np.arange(1, x.size + 1))))
-    return sum_sq - prod_cos + 1
+    return float(sum_sq - prod_cos + 1)
 
 
 def himmelblau(x: np.ndarray) -> float:

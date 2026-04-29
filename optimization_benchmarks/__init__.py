@@ -43,6 +43,8 @@ from .functions import (
     easom,
     eggholder,
     exp2,
+    fraudenstein_roth,
+    freudenstein_roth,
     gear,
     goldstein_price,
     griewank,
@@ -54,6 +56,7 @@ from .functions import (
     katsuura,
     kowalik,
     langerman,
+    lennard_jones,
     leon,
     levy,
     matyas,
@@ -85,9 +88,6 @@ from .functions import (
     xor,
     zettl,
     zimmerman,
-    lennard_jones,
-    freudenstein_roth,
-    fraudenstein_roth,
 )
 from .metadata import (
     BENCHMARK_SUITE,
