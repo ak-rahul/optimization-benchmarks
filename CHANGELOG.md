@@ -5,6 +5,12 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [Archived] - 2026-08-16
+
+This project has been renamed to **[banana-bench](https://github.com/ak-rahul/banana-bench)**
+(`pip install banana-bench`, `import banana_bench`). No further releases will be made under the
+`optimization-benchmarks` name; all development continues at the new repository.
+
 ## [0.4.0] - 2026-01-29
 
 ### Added

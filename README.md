@@ -1,5 +1,12 @@
 # optimization-benchmarks
 
+> **⚠️ This project has been renamed and moved to [banana-bench](https://github.com/ak-rahul/banana-bench).**
+> `optimization-benchmarks` is archived and no longer maintained under this name — all development,
+> bug fixes, and new features continue at **banana-bench** (`pip install banana-bench`,
+> `import banana_bench`). This repository is kept as a historical reference and redirect only.
+> See the [banana-bench README](https://github.com/ak-rahul/banana-bench#readme) for why the name
+> changed. Everything below describes the last released state of this package before the rename.
+
 [![PyPI version](https://img.shields.io/pypi/v/optimization-benchmarks)](https://pypi.org/project/optimization-benchmarks/)
 [![Python](https://img.shields.io/pypi/pyversions/optimization-benchmarks)](https://pypi.org/project/optimization-benchmarks/)
 [![Downloads](https://pepy.tech/badge/optimization-benchmarks)](https://pepy.tech/project/optimization-benchmarks)

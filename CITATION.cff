@@ -1,5 +1,5 @@
 cff-version: 1.2.0
-message: "If you use this software, please cite it as below."
+message: "This project has been renamed to banana-bench (https://github.com/ak-rahul/banana-bench). Please cite that repository instead. This entry is kept for historical reference to prior releases of optimization-benchmarks."
 authors:
   - family-names: "Rahul"
     given-names: "AK"

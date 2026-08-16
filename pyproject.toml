@@ -5,7 +5,7 @@ build-backend = "setuptools.build_meta"
 [project]
 name = "optimization-benchmarks"
 version = "0.4.0"
-description = "A comprehensive collection of 55+ mathematical benchmark functions for testing optimization algorithms with visualization and benchmarking utilities"
+description = "RENAMED to banana-bench (pip install banana-bench). This package is archived and no longer maintained under this name."
 readme = "README.md"
 requires-python = ">=3.9"
 license = {text = "MIT"}
@@ -29,7 +29,7 @@ keywords = [
     "benchmarking",
 ]
 classifiers = [
-    "Development Status :: 5 - Production/Stable",
+    "Development Status :: 7 - Inactive",
     "Intended Audience :: Science/Research",
     "Intended Audience :: Developers",
     "License :: OSI Approved :: MIT License",
